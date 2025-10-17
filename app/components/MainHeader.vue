@@ -21,43 +21,59 @@
         <NuxtLink to="/demo" class="nav-link">Həkimlər</NuxtLink>
         <NuxtLink to="/reservation" class="nav-link">Rezervasiyalar</NuxtLink>
       </nav>
-
+     
       <!-- Actions -->
       <div class="flex items-center gap-4">
         <button class="icon-btn"><Icon name="mdi:bell-outline" /></button>
         <NuxtLink to="/demo/favorites" class="icon-btn"><Icon name="mdi:heart-outline" /></NuxtLink>
-        <div class="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2"></div>
-        <UModal
-         :close="{ onClick: () => emit('close', false) }"
-        >
-    <UButton class="nav-link" label="Daxil Ol" color="neutral" variant="subtle" />
+        <div v-if="user" class="flex items-center gap-3">
+          <img
+            :src="user.image || '/default-avatar.png'"
+            alt="Avatar"
+            class="w-9 h-9 rounded-full object-cover"
+          />
+          <span class="font-medium text-gray-900 dark:text-white">{{ user.name }}</span>
+        </div>
 
-    <template #content>
-      <LoginModal :close="{ onClick: () => emit('close', false) }" />
-    </template>
-  </UModal>
-  <UModal>
-    <UButton class="nav-link" label="Qeydiyyatdan Keç" color="neutral" variant="subtle" />
+        <!-- Əgər user yoxdursa -->
+        <template v-else>
+          <UModal v-model:open="isOpenLogin">
+            <UButton
+              class="nav-link"
+              label="Daxil Ol"
+              color="neutral"
+              variant="subtle"
+            />
+            <template #content>
+              <LoginModal @close="() => (isOpenLogin = false)" />
+            </template>
+          </UModal>
 
-    <template #content>
-      <RegisterModal />
-    </template>
-  </UModal>
+          <UModal v-model:open="isOpen">
+            <UButton
+              class="nav-link"
+              label="Qeydiyyatdan Keç"
+              color="neutral"
+              variant="subtle"
+            />
+            <template #content>
+              <RegisterModal @close="() => (isOpen = false)" />
+            </template>
+          </UModal>
+        </template>
+   
       </div>
     </div>
-
-    <!-- Modallar -->
-
-   
-<!--     <LoginModal v-model="isOpenLogin" @close="isOpenLogin = false" />
-    <RegisterModal v-model="isOpen" @close="isOpen = false" /> -->
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { User } from '~/utils/useApi';
 
-const isOpen = ref(false)
+const emit = defineEmits<{ close: [boolean] }>()
 const isOpenLogin = ref(false)
+const isOpen = ref(false)
+const user = useState<User | null>("user", () => null)
 </script>
 
 <style scoped>

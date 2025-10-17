@@ -925,10 +925,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Add Favorite */
-        post: operations["add_favorite_api_favorites__model_type___model_id__post"];
+        get: operations["add_favorite_api_favorites__model_type___model_id__get"];
+        put?: never;
+        post?: never;
         /**
          * Remove Favorite
          * @description asdas
@@ -2079,74 +2079,6 @@ export interface components {
             /** Work Experience */
             work_experience: number;
         };
-        /** SuccessResponse */
-        FastApiProject__routers__auth__SuccessResponse: {
-            /** Message */
-            message: string;
-        };
-        /** UpdateUserRequest */
-        FastApiProject__routers__user__user__UpdateUserRequest: {
-            /**
-             * Image
-             * @default
-             */
-            image: string;
-            /**
-             * Phone
-             * @default
-             */
-            phone: string;
-            /**
-             * Address
-             * @default
-             */
-            address: string;
-            /**
-             * City
-             * @default
-             */
-            city: string;
-            /**
-             * Street
-             * @default
-             */
-            street: string;
-            /**
-             * Region
-             * @default
-             */
-            region: string;
-            /**
-             * Password
-             * @default
-             */
-            password: string;
-            /**
-             * Re Password
-             * @default
-             */
-            re_password: string;
-            /**
-             * New Password
-             * @default
-             */
-            new_password: string;
-        };
-        /** UpdateUserRequest */
-        FastApiProject__routers__user__user_admin__UpdateUserRequest: {
-            /** Name */
-            name?: string | null;
-            /** Status */
-            status?: boolean | null;
-            role?: components["schemas"]["UserRole"] | null;
-        };
-        /** SuccessResponse */
-        FastApiProject__schemas__user__SuccessResponse: {
-            /** Access Token */
-            access_token: string;
-            /** Token Type */
-            token_type: string;
-        };
         /**
          * FavoriteType
          * @enum {string}
@@ -2417,11 +2349,6 @@ export interface components {
             created_at: string;
             author: components["schemas"]["UserOut"];
         };
-        /**
-         * RoleEnum
-         * @enum {string}
-         */
-        RoleEnum: "admin" | "customer" | "doctor" | "brunch" | "clinic" | "pharmacy";
         /** StatsSchema */
         StatsSchema: {
             /** Id */
@@ -2450,7 +2377,7 @@ export interface components {
             image: string;
             /** Status */
             status: boolean;
-            role: components["schemas"]["RoleEnum"];
+            role: components["schemas"]["UserRole"];
         };
         /** UserCreate */
         UserCreate: {
@@ -2538,6 +2465,74 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** SuccessResponse */
+        routers__auth__SuccessResponse: {
+            /** Message */
+            message: string;
+        };
+        /** UpdateUserRequest */
+        routers__user__user__UpdateUserRequest: {
+            /**
+             * Image
+             * @default
+             */
+            image: string;
+            /**
+             * Phone
+             * @default
+             */
+            phone: string;
+            /**
+             * Address
+             * @default
+             */
+            address: string;
+            /**
+             * City
+             * @default
+             */
+            city: string;
+            /**
+             * Street
+             * @default
+             */
+            street: string;
+            /**
+             * Region
+             * @default
+             */
+            region: string;
+            /**
+             * Password
+             * @default
+             */
+            password: string;
+            /**
+             * Re Password
+             * @default
+             */
+            re_password: string;
+            /**
+             * New Password
+             * @default
+             */
+            new_password: string;
+        };
+        /** UpdateUserRequest */
+        routers__user__user_admin__UpdateUserRequest: {
+            /** Name */
+            name?: string | null;
+            /** Status */
+            status?: boolean | null;
+            role?: components["schemas"]["UserRole"] | null;
+        };
+        /** SuccessResponse */
+        schemas__user__SuccessResponse: {
+            /** Access Token */
+            access_token: string;
+            /** Token Type */
+            token_type: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -2586,7 +2581,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__schemas__user__SuccessResponse"];
+                    "application/json": components["schemas"]["schemas__user__SuccessResponse"];
                 };
             };
             /** @description Validation Error */
@@ -2701,7 +2696,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
         };
@@ -2723,7 +2718,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
             /** @description Validation Error */
@@ -2756,7 +2751,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
             /** @description Validation Error */
@@ -2789,7 +2784,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
             /** @description Validation Error */
@@ -2865,7 +2860,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["FastApiProject__routers__user__user__UpdateUserRequest"];
+                "application/json": components["schemas"]["routers__user__user__UpdateUserRequest"];
             };
         };
         responses: {
@@ -2971,7 +2966,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["FastApiProject__routers__user__user_admin__UpdateUserRequest"];
+                "application/json": components["schemas"]["routers__user__user_admin__UpdateUserRequest"];
             };
         };
         responses: {
@@ -3861,7 +3856,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
             /** @description Validation Error */
@@ -3892,7 +3887,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
             /** @description Validation Error */
@@ -4702,7 +4697,7 @@ export interface operations {
             };
         };
     };
-    add_favorite_api_favorites__model_type___model_id__post: {
+    add_favorite_api_favorites__model_type___model_id__get: {
         parameters: {
             query?: never;
             header?: never;
@@ -4920,7 +4915,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FastApiProject__routers__auth__SuccessResponse"];
+                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
                 };
             };
             /** @description Validation Error */

@@ -5,8 +5,8 @@
               <button
                 class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors z-10"
               >
-                <Icon name="mdi:heart"  class="text-red-500 text-2xl" v-if="isFavorite" @click="isFavorite = !isFavorite" />
-                <Icon name="mdi:heart-outline" class="text-2xl" v-else @click="isFavorite = !isFavorite" />
+                <Icon  name="mdi:heart"  class="text-red-500 text-2xl" v-if="isFavorite" @click="ToggleFavorite(false)" />
+                <Icon name="mdi:heart-outline" class="text-2xl" v-else @click="ToggleFavorite(true)" />
               </button>
               <img :alt="doctor.user.name" :src="doctor.user.image" class="w-full h-48 object-cover" />
               <div class="p-5 flex flex-col flex-grow">
@@ -36,7 +36,34 @@
 </template>
 <script setup lang="ts">
   import type { Doctors } from '@/utils/useApi'
+import client from '@/utils/useApi';
   type Doctor = Doctors extends (infer T)[] ? T : never
-const isFavorite = ref(false)
   const props = defineProps<{ doctor: Doctor }>()
+const isFavorite = ref(props.doctor.has_favorited)
+
+  const ToggleFavorite = async (value: boolean) => {
+    isFavorite.value = value
+    if(value){
+      const req = await useServer().GET(`/api/favorites/{model_type}/{model_id}`, {
+        params:{
+          path:{
+            model_type: "doctor",
+            model_id: props.doctor.id,
+          }
+        }
+      })
+      console.log(req)
+    }else{
+      const req = await useServer().DELETE(`/api/favorites/{model_type}/{model_id}`, {
+        params:{
+          path:{
+            model_type: "doctor",
+            model_id: props.doctor.id,
+          }
+        },
+      })
+      console.log(req)
+    }
+  }
+
 </script>

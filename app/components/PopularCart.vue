@@ -55,8 +55,9 @@
   onMounted(async () => {
     try {
 
-      const req = await client.GET("/api/doctors/")
+      const req = await useServer().GET("/api/doctors/")
       doctors.value = (req.data ?? []) as Doctors
+      console.log(doctors.value)
     } catch (error) {
       console.log(error)
     } 

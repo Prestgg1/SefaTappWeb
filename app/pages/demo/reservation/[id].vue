@@ -106,9 +106,24 @@ onMounted(async () => {
   }
 })
 
-const confirmBooking = () => {
+const confirmBooking = async () => {
   if (selectedDate.value && selectedTime.value) {
     const dateStr = selectedDate.value.toLocaleDateString("az")
+    const req = await useServer().POST("/api/appointment/{model_type}/{model_id}", {
+      params:{
+        path:{
+          model_type: "doctor",
+          model_id: Number(route.params.id),
+        }
+      },
+      body:{
+        full_name: "",
+        phone: "",
+        fin_code: "",
+        complaint: "",
+        date: dateStr,
+      },
+    })
     alert(`Rezervasiya təsdiqləndi:\nTarix: ${dateStr}\nSaat: ${selectedTime.value}`)
   }
 }

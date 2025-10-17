@@ -6,32 +6,29 @@
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" v-for="doctor in doctors" :key="doctor.id">
  <DoctorCart :doctor="doctor"/>
- <DoctorCart :doctor="doctor"/>
- <DoctorCart :doctor="doctor"/>
- <DoctorCart :doctor="doctor"/>
- 
 
 </div>
 </main>
   </template>
   
-  <script setup>
+  <script setup lang="ts">
+import client from '~/utils/useApi'
+import type { Doctors } from '~/utils/useApi'
+
   definePageMeta({ layout: 'main' })
 
+  const doctors = ref<any[]>([])
+ const token = useCookie("token")
+   onMounted(async ()=>{
+      const req = await client.GET("/api/favorites/doctor", {
+       headers:{
+        "Authorization": `Bearer ${token.value}`,
+       } 
+      })
+      doctors.value = req.data ?? []
+   })
 
   
 
- const doctors = ref([{
-    id: 1,
-    user: {
-      name: 'John Doe',
-      image: 'https://res.cloudinary.com/djfeqtwjx/image/upload/v1760094582/yiqfx8nb4hv2sdn0nvq3.png',
-    },
-    average_rating: 4.5,
-    doctor_category: {
-      id: 1,
-      title: 'Cardiology',
-    },
- }])
 
   </script>

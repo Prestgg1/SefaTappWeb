@@ -29,7 +29,8 @@
   
           <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4">
             <button
-              @click="$emit('close')"
+              @click="console.log('Clicked'); $emit('close')"
+              type="button"
               class="w-full sm:w-auto px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
             >
               Ləğv Et
@@ -77,12 +78,11 @@
   </template>
   
   <script setup lang="ts">
-import client from '~/utils/useApi'
- const isLoading = ref(false)
-  const props = defineProps({
-    close: Function,
-  })
-  
+import client, { type User } from '~/utils/useApi'
+const token = useCookie("token")
+const isLoading = ref(false)
+const emit = defineEmits(['close'])
+  const user = useState<User | null>("user", () => null)
 
   const form = reactive({
     email: '',
@@ -97,13 +97,14 @@ import client from '~/utils/useApi'
         body: form,
       })
       console.log(response)
+      token.value = response.data?.token
+      user.value = response.data?.user ?? null 
+      emit('close')
     } catch (error) {
       console.error(error)
     } finally {
       isLoading.value = false
     }
-    props.close()
-
   }
   </script>
   

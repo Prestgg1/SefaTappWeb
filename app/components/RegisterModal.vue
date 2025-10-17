@@ -59,7 +59,7 @@
 
         <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4">
           <button
-            @click="$emit('close')"
+            @click="emit('close')"
             class="w-full sm:w-auto px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
           >
             Ləğv Et
@@ -75,7 +75,8 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+const emit = defineEmits(['close'])
 
 const form = reactive({
   name: '',
