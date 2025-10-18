@@ -20,17 +20,17 @@
   
       <!-- Kateqoriyalar -->
       <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
-        <a
+        <NuxtLink
           v-for="category in categories"
           :key="category.id"
           class="bg-card-light bg-primary dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center"
-          href="#"
+          :to="`/demo/doctors?category=${category.id}`"
         >
 
         <!-- Backendden gelen svg bu bizim onu rahatlıqla düzenlememiz lazımdır https://res.cloudinary.com/djfeqtwjx/image/upload/v1756282836/Tooth_elanf2.svg -->
           <img :src="category.image"  alt="" class="w-12 h-12 object-contain" />
           <h3 class="text-md font-bold mt-4 text-white ">{{ category.title }}</h3>
-        </a>
+        </NuxtLink>
       </div>
   
       <!-- Heç bir kateqoriya yoxdursa -->

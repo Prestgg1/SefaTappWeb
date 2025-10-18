@@ -1,86 +1,200 @@
 <template>
-    <div class="mt-2 max-h-[70vh] overflow-y-auto pr-2">
-      <form @submit.prevent="submitForm" class="space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ad</label>
-            <input v-model="form.name" type="text" placeholder="Adınız" class="input" />
-          </div>
+  <div
+    class=" overflow-y-auto bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800"
+  >
+    <!-- Başlıq -->
+    <div class="text-center border-b border-gray-200 dark:border-gray-800 p-6">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
+        Qeydiyyatdan Keç
+      </h2>
+    </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-            <input v-model="form.email" type="email" placeholder="email@nümunə.com" class="input" />
-          </div>
+    <!-- Form -->
+    <Form
+      @submit="submitForm"
+      :validation-schema="schema"
+      class="p-10 space-y-4 text-gray-800 dark:text-gray-100"
+    >
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Ad -->
+        <div>
+          <label class="block text-sm font-medium">Ad</label>
+          <Field name="name" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="text"
+              placeholder="Adınız"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Şifrə</label>
-            <input v-model="form.password" type="password" placeholder="••••••••" class="input" />
-          </div>
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <Field name="email" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="email"
+              placeholder="email@nümunə.com"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Telefon</label>
-            <input v-model="form.phone" type="tel" placeholder="+994 (XX) XXX-XX-XX" class="input" />
-          </div>
+        <!-- Şifrə -->
+        <div>
+          <label class="block text-sm font-medium">Şifrə</label>
+          <Field name="password" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="password"
+              placeholder="••••••••"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">FIN Kodu</label>
-            <input v-model="form.fin" type="text" placeholder="1234567" class="input" />
-          </div>
+        <!-- Telefon -->
+        <div>
+          <label class="block text-sm font-medium">Telefon</label>
+          <Field name="phone" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="tel"
+              placeholder="+994 (XX) XXX-XX-XX"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cins</label>
-            <select v-model="form.gender" class="input">
-              <option>Seçin</option>
+        <!-- FIN -->
+        <div>
+          <label class="block text-sm font-medium">FIN Kodu</label>
+          <Field name="fin" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="text"
+              placeholder="1234567"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
+
+        <!-- Cins -->
+        <div>
+          <label class="block text-sm font-medium">Cins</label>
+          <Field name="gender" v-slot="{ field, errorMessage }">
+            <select v-bind="field" class="input">
+              <option value="">Seçin</option>
               <option value="male">Kişi</option>
               <option value="female">Qadın</option>
             </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Doğum tarixi</label>
-            <input v-model="form.birthdate" type="date" class="input" />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Şəhər</label>
-            <input v-model="form.city" type="text" placeholder="Bakı" class="input" />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rayon / Qəsəbə</label>
-            <input v-model="form.district" type="text" placeholder="Nəsimi" class="input" />
-          </div>
-
-          <div class="sm:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ünvan</label>
-            <textarea v-model="form.address" rows="3" placeholder="Küçə, bina, mənzil" class="input"></textarea>
-          </div>
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
         </div>
 
-        <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4">
-          <button
-            @click="emit('close')"
-            class="w-full sm:w-auto px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-          >
-            Ləğv Et
-          </button>
-          <button
-            type="submit"
-            class="w-full sm:w-auto px-4 py-2 rounded-md bg-primary text-white font-medium hover:bg-primary/90 transition"
-          >
-            Qeydiyyatdan Keç
-          </button>
+        <!-- Doğum tarixi -->
+        <div>
+          <label class="block text-sm font-medium">Doğum tarixi</label>
+          <Field name="birthdate" v-slot="{ field, errorMessage }">
+            <input v-bind="field" type="date" class="input" />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
         </div>
-      </form>
-    </div>
+
+        <!-- Şəhər -->
+        <div>
+          <label class="block text-sm font-medium">Şəhər</label>
+          <Field name="city" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="text"
+              placeholder="Bakı"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
+
+        <!-- Rayon -->
+        <div>
+          <label class="block text-sm font-medium">Rayon / Qəsəbə</label>
+          <Field name="district" v-slot="{ field, errorMessage }">
+            <input
+              v-bind="field"
+              type="text"
+              placeholder="Nəsimi"
+              class="input"
+            />
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
+
+        <!-- Ünvan -->
+        <div class="sm:col-span-2">
+          <label class="block text-sm font-medium">Ünvan</label>
+          <Field name="address" v-slot="{ field, errorMessage }">
+            <textarea
+              v-bind="field"
+              rows="3"
+              placeholder="Küçə, bina, mənzil"
+              class="input"
+            ></textarea>
+            <span class="text-red-500 text-sm">{{ errorMessage }}</span>
+          </Field>
+        </div>
+      </div>
+
+      <!-- Butonlar -->
+      <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6">
+        <button
+          type="button"
+          @click="emit('close')"
+          class="w-full sm:w-auto px-4 py-2 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+        >
+          Ləğv Et
+        </button>
+        <button
+          type="submit"
+          class="w-full sm:w-auto px-4 py-2 rounded-md bg-primary text-white font-medium hover:bg-primary/90 transition"
+        >
+          Qeydiyyatdan Keç
+        </button>
+      </div>
+    </Form>
+  </div>
 </template>
 
 <script setup lang="ts">
 import client from '~/utils/useApi';
+import {toTypedSchema} from "@vee-validate/zod";
+import {object,string,enum as zEnum} from "zod";
+
 const toast = useToast()
+
 const token = useCookie("token")
 const user = useState<User | null>("user", () => null)
 const emit = defineEmits(['close'])
+const schema = toTypedSchema(
+  object({
+    name: string().min(2, 'Ad ən az 2 simvol olmalıdır'),
+    email: string().email('Email formatı düzgün deyil'),
+    password: string().min(6, 'Şifrə ən az 6 simvol olmalıdır'),
+    phone: string().min(10, 'Telefon ən az 10 simvol olmalıdır'),
+    fin: string().min(7, 'FIN kodu ən az 7 simvol olmalıdır'),
+    gender: zEnum(['male', 'female']),
+    birthdate: string(),
+    city: string(),
+    district: string(),
+    address: string(),
+  })
+)
 
 const form = reactive({
   name: '',
