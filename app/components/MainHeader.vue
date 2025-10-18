@@ -19,7 +19,7 @@
       <!-- Nav -->
       <nav class="hidden md:flex items-center gap-6">
         <NuxtLink to="/demo/doctors" class="nav-link">Həkimlər</NuxtLink>
-        <NuxtLink to="/demo/reservation" class="nav-link">Rezervasiyalar</NuxtLink>
+        <NuxtLink to="/demo/reservations" class="nav-link">Rezervasiyalar</NuxtLink>
       </nav>
      
       <!-- Actions -->
