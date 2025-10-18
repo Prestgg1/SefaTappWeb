@@ -18,13 +18,14 @@
 
       <!-- Nav -->
       <nav class="hidden md:flex items-center gap-6">
-        <NuxtLink to="/demo" class="nav-link">Həkimlər</NuxtLink>
+        <NuxtLink to="/demo/doctors" class="nav-link">Həkimlər</NuxtLink>
         <NuxtLink to="/reservation" class="nav-link">Rezervasiyalar</NuxtLink>
       </nav>
      
       <!-- Actions -->
       <div class="flex items-center gap-4">
-        <button class="icon-btn"><Icon name="mdi:bell-outline" /></button>
+        <DarkMode/>
+        <NuxtLink to="/demo/notifications" class="icon-btn"><Icon name="mdi:bell-outline" /></NuxtLink>
         <NuxtLink to="/demo/favorites" class="icon-btn"><Icon name="mdi:heart-outline" /></NuxtLink>
         <div v-if="user" class="flex items-center gap-3">
           <img
