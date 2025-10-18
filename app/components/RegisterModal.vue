@@ -31,8 +31,8 @@
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cins</label>
             <select v-model="form.gender" class="input">
               <option>Seçin</option>
-              <option>Kişi</option>
-              <option>Qadın</option>
+              <option value="male">Kişi</option>
+              <option value="female">Qadın</option>
             </select>
           </div>
 
@@ -76,6 +76,10 @@
 </template>
 
 <script setup lang="ts">
+import client from '~/utils/useApi';
+const toast = useToast()
+const token = useCookie("token")
+const user = useState<User | null>("user", () => null)
 const emit = defineEmits(['close'])
 
 const form = reactive({
@@ -91,8 +95,51 @@ const form = reactive({
   address: '',
 })
 
-const submitForm = () => {
-  console.log('Register submitted:', form)
+
+
+async function submitForm() {
+    const req = await client.POST("/api/auth/register", {
+      headers:{
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    body:{
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      finCode: form.fin,
+      gender: form.gender as "male" | "female",
+      phone: form.phone,
+      birthday: form.birthdate,
+      city: form.city,
+      address: form.address,
+      region: form.district,
+      street: form.address,
+    }
+  })
+   if(req.error && req.error?.detail){
+     for(const error of req.error?.detail){
+      toast.add({
+        title: "Xəta",
+        description: error.msg,
+        type: "background",
+        color: "error",
+        
+      })
+     }
+   }
+   if(req.data){
+    toast.add({
+      title: "Məlumat",
+      description: "Qeydiyyatdan keçdiniz.",
+      type: "background",
+      color: "success",      
+    })
+    token.value = req.data.token
+    user.value = req.data.user
+    emit('close')
+
+   }
 }
 </script>
 

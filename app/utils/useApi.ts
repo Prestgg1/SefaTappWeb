@@ -2,7 +2,7 @@ import createClient from "openapi-fetch";
 import type { components, paths } from "../types/schema"; 
 
 const client = createClient<paths>({
-    baseUrl: "https://bimonet.com",
+    baseUrl: "http://192.168.1.69:8000",
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",

@@ -65,14 +65,100 @@
           
           <Calendar @select-date="selectedDate = $event" />
           <TimePicker @select-time="selectedTime = $event" />
+          <UModal v-model:open="isConfirmOpen" prevent-close>
+  <UButton
+    :disabled="!selectedDate || !selectedTime"
+    label="Rezervasiyanı Təsdiqlə"
+    color="primary"
+    class="w-full bg-primary text-white font-semibold py-3 px-6 rounded-xl shadow-md hover:shadow-lg hover:bg-primary/90 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+    variant="solid"
+  />
 
-          <button 
-            @click="confirmBooking"
-            :disabled="!selectedDate || !selectedTime"
-            class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-          >
-            Rezervasiyanı Təsdiqlə
-          </button>
+  <template #content>
+    <div class="p-0 sm:p-10">
+
+        <div class="text-center space-y-1">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Rezervasiyanı tamamla</h2>
+          <p class="text-gray-500 dark:text-gray-400 text-sm">
+            Zəhmət olmasa aşağıdakı məlumatları doldurun
+          </p>
+        </div>
+
+        <UForm :state="form" class="space-y-5 mt-5">
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Ad və Soyad
+            </label>
+            <UInput
+              v-model="form.full_name"
+              placeholder="Məs: Səbuhi Sariyev"
+              size="lg"
+              class="rounded-xl w-full"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Telefon nömrəsi
+            </label>
+            <UInput
+              v-model="form.phone"
+              placeholder="+994 50 123 45 67"
+              size="lg"
+              class="rounded-xl w-full"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              FIN kod
+            </label>
+            <UInput
+              v-model="form.fin_code"
+              maxlength="7"
+              placeholder="7 simvollu FIN kod"
+              size="lg"
+              class="rounded-xl w-full"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Şikayət
+            </label>
+            <UTextarea
+              v-model="form.complaint"
+              placeholder="Qısaca şikayətinizi yazın..."
+              rows="3"
+              class="rounded-xl w-full"
+            />
+          </div>
+
+          <div class="pt-2 flex justify-end">
+            <UButton
+              color="primary"
+              size="lg"
+       
+              type="submit"
+              :leading="true"         
+              class="w-full text-center bg-primary text-white font-semibold rounded-xl py-3 shadow-md hover:shadow-lg transition-all duration-300"
+              @click="submitReservation"
+            >
+          <template #leading>
+           <div class="flex items-center justify-center w-full gap-2">
+            <Icon name="mdi:check" />
+            Təsdiqlə
+           </div>
+
+          </template>
+          </UButton>
+          </div>
+        </UForm>
+      </div>
+  </template>
+</UModal>
+
+
         </div>
       </div>
     </div>
@@ -83,6 +169,15 @@
 import client from "~/utils/useApi"
 import { useRoute } from "vue-router"
 import { onMounted, ref } from "vue"
+const toast = useToast()
+const isLoading = ref(false)
+const isConfirmOpen = ref(false)
+const form = ref({
+  full_name: "",
+  phone: "",
+  fin_code: "",
+  complaint: "",
+})
 
 definePageMeta({ layout: "main" })
 
@@ -106,9 +201,10 @@ onMounted(async () => {
   }
 })
 
-const confirmBooking = async () => {
+const submitReservation = async () => {
   if (selectedDate.value && selectedTime.value) {
-    const dateStr = selectedDate.value.toLocaleDateString("az")
+    const dateStr = selectedDate.value.toISOString().split("T")[0]
+    isLoading.value = true
     const req = await useServer().POST("/api/appointment/{model_type}/{model_id}", {
       params:{
         path:{
@@ -117,14 +213,38 @@ const confirmBooking = async () => {
         }
       },
       body:{
-        full_name: "",
-        phone: "",
-        fin_code: "",
-        complaint: "",
-        date: dateStr,
+        full_name: form.value.full_name,
+        phone: form.value.phone,
+        fin_code: form.value.fin_code,
+        complaint: form.value.complaint,
+        date: dateStr || "",
       },
     })
-    alert(`Rezervasiya təsdiqləndi:\nTarix: ${dateStr}\nSaat: ${selectedTime.value}`)
+    if (req.error && req.error.detail){
+      for (const key in req.error.detail) {
+        toast.add({
+          title: "Xəta",
+          description: req.error.detail[key]?.msg,
+          color: "error",
+        })
+      }
+    }
+    else{
+      toast.add({
+      title: "Məlumatlar yadda saxlanıldı",
+      description: "Rezervasiyanız göndərildi",
+      color: "success",
+    })
+    }
+  
+    isConfirmOpen.value = false
+    form.value = {
+      full_name: "",
+      phone: "",
+      fin_code: "",
+      complaint: "",
+    }
+    isLoading.value = false
   }
 }
 </script>

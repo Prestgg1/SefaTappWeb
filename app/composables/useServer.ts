@@ -6,7 +6,7 @@ const useServer = () => {
   const token = useCookie("token");
 
   return createClient<paths>({
-    baseUrl: "https://bimonet.com",
+    baseUrl: "http://192.168.1.69:8000",
     headers: {
       Authorization: `Bearer ${token.value}`,
     },
