@@ -27,7 +27,8 @@
         <DarkMode/>
         <NuxtLink to="/demo/notifications" class="icon-btn"><Icon name="mdi:bell-outline" /></NuxtLink>
         <NuxtLink to="/demo/favorites" class="icon-btn"><Icon name="mdi:heart-outline" /></NuxtLink>
-        <div v-if="user" class="flex items-center gap-3">
+        <UDropdownMenu v-if="user" :items="items">
+        <div  class="flex items-center gap-3">
           <img
             :src="user.image || '/default-avatar.png'"
             alt="Avatar"
@@ -35,14 +36,16 @@
           />
           <span class="font-medium text-gray-900 dark:text-white">{{ user.name }}</span>
         </div>
+        </UDropdownMenu>
 
         <!-- Əgər user yoxdursa -->
         <template v-else>
           <UModal v-model:open="isOpenLogin">
+
             <UButton
-              class="nav-link"
+              class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary  dark:hover:text-primary transition-colors"
               label="Daxil Ol"
-              color="neutral"
+              color="secondary"
               variant="subtle"
             />
             <template #content>
@@ -52,7 +55,7 @@
 
           <UModal v-model:open="isOpen">
             <UButton
-              class="nav-link"
+              class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
               label="Qeydiyyatdan Keç"
               color="neutral"
               variant="subtle"
@@ -73,8 +76,26 @@ import type { User } from '~/utils/useApi';
 
 const emit = defineEmits<{ close: [boolean] }>()
 const isOpenLogin = ref(false)
+const token = useCookie("token")
 const isOpen = ref(false)
 const user = useState<User | null>("user", () => null)
+const items = [
+  {
+    label: 'Profil',
+    icon: 'mdi:account',
+    to: '/demo/profile'
+  },
+  {
+    label: 'Çıxış',
+    icon: 'mdi:logout',
+    onClick: () => {
+      emit('close', false)
+      user.value = null
+      token.value = null
+    }
+  }
+]
+
 </script>
 
 <style scoped>

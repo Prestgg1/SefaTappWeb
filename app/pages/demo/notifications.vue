@@ -30,14 +30,41 @@
         </div>
       </div>
 
+      <!-- Yüklənmə vəziyyəti -->
+      <div
+        v-if="loading"
+        class="flex justify-center items-center py-20 text-gray-600 dark:text-gray-300"
+      >
+        <Icon name="mdi:loading" class="animate-spin text-3xl mr-2" />
+        Yüklənir...
+      </div>
+
+      <!-- 401 Xətası -->
+      <div
+        v-else-if="errorCode === 401"
+        class="text-center py-20 text-gray-700 dark:text-gray-300"
+      >
+        <Icon name="mdi:lock-alert" class="text-4xl mx-auto mb-3 text-red-500" />
+        Sayta daxil olmamısınız.
+      </div>
+
+      <!-- Boş Array -->
+      <div
+        v-else-if="notifications.length === 0"
+        class="text-center py-20 text-gray-700 flex justify-center flex-col gap-5 items-center dark:text-gray-300"
+      >
+        <Icon name="mdi:bell-off-outline" class="text-4xl mx-auto  text-gray-400" />
+        Sizin hələki bir bildirişiniz yoxdur.
+      </div>
+
       <!-- Bildirişlər siyahısı -->
       <div
+        v-else
         class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 transition-colors"
       >
         <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-          <!-- Bildiriş -->
           <li
-            v-for="(item, index) in notificationss"
+            v-for="(item, index) in notifications"
             :key="index"
             class="p-4 sm:p-6 flex items-start gap-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer relative"
           >
@@ -79,17 +106,26 @@ definePageMeta({
   layout: 'main'
 })
 
+const notifications = ref([])
+const loading = ref(true)
+const errorCode = ref(null)
 
 onMounted(async () => {
- try{
-  const req =await useServer().GET("/api/notifications")
-  console.log(req)
- } catch (error) {
-  console.log(error)
- } 
-
+  try {
+    const req = await useServer().GET("/api/notifications")
+    notifications.value = req.data || []
+  } catch (error) {
+    // 401 üçün xüsusi yoxlama
+    if (error?.response?.status === 401) {
+      errorCode.value = 401
+    } else {
+      console.error("Xəta:", error)
+    }
+  } finally {
+    loading.value = false
+  }
 })
-
+/* 
 const notificationss = [
   {
     title: "Görüş xatırlatması",
@@ -147,7 +183,7 @@ const notificationss = [
     time: "3 gün əvvəl",
     unread: false,
   },
-];
+]; */
 </script>
 
   
