@@ -11,6 +11,11 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  layout: 'main'
+})
+
 import ChatSidebar from '~/components/chat/Sidebar.vue'
 import ChatHeader from '~/components/chat/ChatHeader.vue'
 import ChatMessages from '~/components/chat/ChatMessages.vue'

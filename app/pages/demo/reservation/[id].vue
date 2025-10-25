@@ -129,7 +129,7 @@
             <UTextarea
               v-model="form.complaint"
               placeholder="Qısaca şikayətinizi yazın..."
-              rows="3"
+              :rows="3"
               class="rounded-xl w-full"
             />
           </div>

@@ -1393,6 +1393,11 @@ export interface components {
              */
             created_at: string;
         };
+        /** AIChatRequest */
+        AIChatRequest: {
+            /** Question */
+            question: string;
+        };
         /** AIResponse */
         AIResponse: {
             /** Answer */
@@ -5686,14 +5691,16 @@ export interface operations {
     };
     send_ai_message_api_chats_ai_post: {
         parameters: {
-            query: {
-                question: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AIChatRequest"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

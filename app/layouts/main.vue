@@ -33,20 +33,17 @@ useHead({
 
 <template>
 
-    <MainHeader />
-<div class="relative w-full min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-    <slot />
+<div class="relative w-full  min-h-screen  flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <MainHeader />
+
+  <slot />
     </div>
     <Footer />
 </template>
   
 
 <style>
-html {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Helvetica Neue', sans-serif;
-  scroll-behavior: smooth;
-}
+
 ::-webkit-scrollbar {
     width: 6px;
   }
