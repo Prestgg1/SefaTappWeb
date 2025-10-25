@@ -5,8 +5,8 @@
     >
       <img :src="avatar" alt="incoming" class="w-10 h-10 rounded-full object-cover" />
       <div class="bg-gray-100 dark:bg-card-dark p-3 rounded-lg rounded-tl-none max-w-lg">
-        <p class="text-sm text-gray-800 dark:text-gray-200">{{ message }}</p>
-        <span class="text-xs text-gray-500 dark:text-gray-400 mt-2 block text-right">{{ time }}</span>
+        <p class="text-sm text-gray-800 dark:text-black">{{ message }}</p>
+        <span class="text-xs text-gray-500 dark:text-gray-800 mt-2 block text-right">{{ time }}</span>
       </div>
     </div>
   

@@ -221,6 +221,14 @@ const submitReservation = async () => {
       },
     })
     if (req.error && req.error.detail){
+      if(typeof req.error.detail === "string") {
+        toast.add({
+          title: "Xəta",
+          description: req.error.detail,
+          color: "error",
+        })
+      } 
+      else {
       for (const key in req.error.detail) {
         toast.add({
           title: "Xəta",
@@ -228,6 +236,7 @@ const submitReservation = async () => {
           color: "error",
         })
       }
+    }
     }
     else{
       toast.add({

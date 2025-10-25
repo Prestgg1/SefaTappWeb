@@ -8,7 +8,7 @@ const useServer = () => {
   return createClient<paths>({
     baseUrl: "http://192.168.1.69:8000",
     headers: {
-      Authorization: `Bearer ${token.value}`,
+      Authorization: `Bearer ${token.value ?? ""}`,
     },
   });
 };

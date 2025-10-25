@@ -1387,6 +1387,11 @@ export interface components {
             message: string;
             /** Sender Id */
             sender_id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** AIResponse */
         AIResponse: {

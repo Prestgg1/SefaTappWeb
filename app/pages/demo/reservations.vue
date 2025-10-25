@@ -1,11 +1,8 @@
 <template>
-  <div class="flex flex-col min-h-screen bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
-    <div class="flex-grow flex h-[calc(100vh-160px)] overflow-hidden">
-      <!-- Sidebar -->
+  <div class="flex flex-col flex-1  font-display text-gray-800 dark:text-gray-200">
+    <div class="flex-grow flex flex-1 overflow-hidden">
       <ChatSidebar />
-
-      <!-- Chat Area -->
-      <div class="flex-1 flex flex-col bg-white dark:bg-background-dark">
+      <div class="flex-1 flex flex-col">
         <ChatHeader />
         <ChatMessages />
       </div>

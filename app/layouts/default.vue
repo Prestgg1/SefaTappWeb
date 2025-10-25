@@ -32,10 +32,10 @@ useHead({
 </script>
 
 <template>
-  <Header />
     <div class="relative w-full min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <Header />
+    
       <!-- Put this part before </body> tag -->
-
     <slot />
     </div>
     <Footer />
