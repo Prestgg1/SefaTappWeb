@@ -1,0 +1,27 @@
+{
+  "name": "sefatapp",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/image": "1.11.0",
+    "@nuxt/test-utils": "3.20.1",
+    "@nuxt/ui": "4.1.0",
+    "@pinia/nuxt": "^0.11.2",
+    "@tailwindcss/vite": "^4.1.16",
+    "@vee-validate/zod": "^4.15.1",
+    "nuxt": "^4.2.0",
+    "openapi-fetch": "^0.15.0",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.6.3",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
+  }
+}
