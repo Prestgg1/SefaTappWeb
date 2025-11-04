@@ -16,12 +16,17 @@
         <p class="max-w-2xl text-base sm:text-lg text-gray-200 leading-relaxed px-4">
           ŞefaTapp ilə həkim konsultasiyaları, süni intellekt dəstəyi, canlı müayinələr və aptek xidmətləri bir arada! Sağlamlığınızı idarə etmək heç bu qədər rahat olmamışdı.
         </p>
+ <div class="flex gap-4">
+  <NuxtLink to="/application" class="bg-transparent border-teal-600 border-2 text-white text-base sm:text-lg font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-teal-700 hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
+          İndi Yoxlayın
+        </NuxtLink>
         <button
           @click="downloadApp"
           class="bg-primary text-white text-base sm:text-lg font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-teal-700 hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
         >
           Tətbiqi Yükləyin
         </button>
+ </div>
       </div>
     </section>
   

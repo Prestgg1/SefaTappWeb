@@ -1,4 +1,8 @@
-<script setup>
+<script setup lang="ts">
+import { useMainStore } from '~/stores'
+
+import ChatSidebar from '@/components/chat/Sidebar.vue'
+import ChatHeader from '@/components/chat/ChatHeader.vue'
 useHead({
   title: 'ŞefaTapp - Sağlam və Rahat',
   meta: [
@@ -28,16 +32,45 @@ useHead({
     },
   ],
 })
-</script>
- <template>
 
-    <div class="relative w-full min-h-screen flex flex-col bg-gray-50  transition-colors duration-300">
-      <Header />
-      
-      <slot />
-  
+
+const mainStore = useMainStore()
+const isLoading = ref(true)
+onMounted(() => {
+  client.GET("/api/chats/").then(res => {
+    console.log(res)
+    isLoading.value = false
+    mainStore.setMessages(res.data!)
+    console.log(mainStore.messages)
+  })    
+})
+const token = useCookie('token')
+
+const { socket, messages, isConnected, send } = useWebSocket('ws://http://192.168.1.69:8000/ws/chats?token=' + token.value)
+
+
+</script>
+
+<template>
+
+<div class="relative w-full  min-h-screen  flex flex-col bg-gray-50 transition-colors duration-300">
+  <MainHeader />
+  <div class="flex flex-col flex-1  font-display text-gray-800 dark:text-gray-200">
+      <div class="grow flex flex-1 overflow-hidden">
+        <ClientOnly>
+        <USkeleton v-if="isLoading" />
+        <ChatSidebar v-else />
+        <div class="flex-1 flex flex-col">
+          <USkeleton v-if="isLoading" />
+          <template v-else>
+            <ChatHeader />
+            <slot/>
+          </template>
+        </div>
+        </ClientOnly>
       </div>
-      <Footer /> 
+    </div>
+    </div>
+    <Footer />
+</template>
   
-  </template>
-    

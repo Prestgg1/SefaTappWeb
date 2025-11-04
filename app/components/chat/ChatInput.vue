@@ -18,7 +18,7 @@
     
     <script setup lang="ts">
     import { ref } from 'vue'
-    import { useMainStore } from '~/store'
+    import { useMainStore } from '~/stores'
     
     const message = ref<string>('')
     const user = useState<User | null>('user', () => null)

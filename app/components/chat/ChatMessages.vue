@@ -17,7 +17,7 @@
   <script setup lang="ts">
   import ChatMessage from '@/components/chat/ChatMessage.vue'
 
-  import { useMainStore } from '@/store'
+  import { useMainStore } from '~/stores'
     const mainStore = useMainStore()
     const loading = ref(false)
     const error = ref(false)

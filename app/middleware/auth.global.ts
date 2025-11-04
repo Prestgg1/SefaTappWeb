@@ -7,7 +7,7 @@ import {
   } from "#app";
   
   export default defineNuxtRouteMiddleware(async (to) => {
-  /*   const user = useState<User | null | { error: string }>("user");
+    const user = useState<User | null | { error: string }>("user");
   
     const token = useCookie("token");
     console.log(token.value)
@@ -33,7 +33,7 @@ import {
             status: data.status,
             role: data.role,
           };
-          if (!data && to.path === "/profile") {
+          if (!data && (to.path === "/profile" || to.path === "/reservations")) {
             return navigateTo("/");
           }
         } catch (error) {
@@ -48,5 +48,5 @@ import {
           return navigateTo("/");
         }
       }
-    } */
+    } 
   });

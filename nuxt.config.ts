@@ -5,17 +5,20 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   ui:{
     fonts: false,
+    colorMode: false,
   },
   routeRules: {
     '/*': {
-      ssr: false,
+      ssr: true,
     },
     
   },
+
   pinia:{
     storesDirs: [
-      "@/store"
+      "stores",
+      "app/store"
     ],
   },
-  modules: ['@nuxt/image', '@nuxt/test-utils', '@nuxt/ui',"@pinia/nuxt"]
+  modules: ['@nuxt/image', '@nuxt/test-utils', '@nuxt/ui','@pinia/nuxt']
 })
