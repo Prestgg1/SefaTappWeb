@@ -2,7 +2,6 @@
 import { useMainStore } from '~/stores'
 
 import ChatSidebar from '@/components/chat/Sidebar.vue'
-import ChatHeader from '@/components/chat/ChatHeader.vue'
 useHead({
   title: 'ŞefaTapp - Sağlam və Rahat',
   meta: [
@@ -40,37 +39,53 @@ onMounted(() => {
   client.GET("/api/chats/").then(res => {
     console.log(res)
     isLoading.value = false
-    mainStore.setMessages(res.data!)
+    res.data!.forEach((chat: Chats[number]) => {
+      mainStore.addSidebarChat(chat)
+      mainStore.addMessage(chat.chat_id,chat.messages)
+    })
+    console.log(mainStore.sidebar_chats)
     console.log(mainStore.messages)
   })    
 })
 const token = useCookie('token')
 
-const { socket, messages, isConnected, send } = useWebSocket('ws://http://192.168.1.69:8000/ws/chats?token=' + token.value)
+const chatSocket= useWebSocket(
+  'wss://bimonet.com/ws/chats?token=' + token.value
+)
+ 
+
+// ✅ Provide it to all child pages/components
+provide<UseWebSocketReturn>('chatSocket', chatSocket)
 
 
 </script>
 
 <template>
+  <div class="relative w-full min-h-screen flex flex-col bg-gray-50 transition-colors duration-300">
+    <MainHeader />
 
-<div class="relative w-full  min-h-screen  flex flex-col bg-gray-50 transition-colors duration-300">
-  <MainHeader />
-  <div class="flex flex-col flex-1  font-display text-gray-800 dark:text-gray-200">
-      <div class="grow flex flex-1 overflow-hidden">
-        <ClientOnly>
-        <USkeleton v-if="isLoading" />
-        <ChatSidebar v-else />
-        <div class="flex-1 flex flex-col">
+    <!-- Main area -->
+    <div class="flex-1 flex min-h-0 font-display text-gray-300">
+      <ClientOnly>
+        <div class="flex flex-1 overflow-hidden min-h-0">
           <USkeleton v-if="isLoading" />
-          <template v-else>
-            <ChatHeader />
-            <slot/>
-          </template>
+          <ChatSidebar v-else />
+
+          <!-- Chat content area -->
+          <div class="flex-1 flex flex-col min-h-0">
+            <USkeleton v-if="isLoading" />
+            <template v-else>
+              <slot />
+            </template>
+          </div>
         </div>
-        </ClientOnly>
-      </div>
+      </ClientOnly>
     </div>
-    </div>
+
     <Footer />
+  </div>
 </template>
-  
+
+
+ <!--    <Footer /> -->
+

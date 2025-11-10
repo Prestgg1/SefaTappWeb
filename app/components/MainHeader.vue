@@ -19,6 +19,7 @@
         <!-- Nav -->
         <nav class="hidden md:flex items-center gap-6">
           <NuxtLink to="/application/doctors" class="nav-link">Həkimlər</NuxtLink>
+          <NuxtLink to="/application/ai" class="nav-link">AI Dəstək</NuxtLink>
           <NuxtLink to="/application/reservations" class="nav-link">Rezervasiyalar</NuxtLink>
         </nav>
        
@@ -36,39 +37,14 @@
             <span class="font-medium text-gray-900">{{ user.name }}</span>
           </div>
           </UDropdownMenu>
-  
-          <!-- Əgər user yoxdursa -->
-          <template v-else>
-            <UModal 
-            :ui="{ content: 'bg-white/80 backdrop-blur-sm border border-gray-200' }"
-            v-model:open="isOpenLogin">
-  
-              <UButton
-                class="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-                label="Daxil Ol"
-                color="secondary"
-                variant="subtle"
-              />
-              <template #content>
-                <LoginModal @close="() => (isOpenLogin = false)" />
-              </template>
-            </UModal>
-  
-            <UModal 
-            :ui="{ content: 'bg-white/80 backdrop-blur-sm border border-gray-200' }"
-            v-model:open="isOpen">
-              <UButton
-                class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
-                label="Qeydiyyatdan Keç"
-                color="neutral"
-                variant="subtle"
-              />
-              <template #content>
-                <RegisterModal @close="() => (isOpen = false)" />
-              </template>
-            </UModal>
-          </template>
-     
+   <template v-if="!user">
+
+    <NuxtLink to="/application/login" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Daxil Ol</NuxtLink>
+<NuxtLink to="/application/register" as="button" class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                        Qeydiyyatdan Keç
+</NuxtLink>
+       
+   </template>
         </div>
       </div>
     </header>
@@ -86,7 +62,7 @@
     {
       label: 'Profil',
       icon: 'mdi:account',
-      to: '/demo/profile'
+      to: '/application/profile'
     },
     {
       label: 'Çıxış',

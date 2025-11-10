@@ -39,7 +39,7 @@
         <p class="text-sm text-primary font-semibold mb-4">
           {{ doctor.doctor_category.title }}
         </p>
-        <NuxtLink :to="`/demo/reservation/${doctor.id}`">
+        <NuxtLink :to="`/application/reservation/${doctor.id}`">
           <button
             class="mt-auto w-full bg-primary text-white text-sm font-bold py-2.5 rounded-lg hover:bg-primary/90 transition-colors"
           >

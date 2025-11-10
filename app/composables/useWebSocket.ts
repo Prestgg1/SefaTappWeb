@@ -1,4 +1,3 @@
-// composables/useWebSocket.ts
 import { ref, onUnmounted } from 'vue'
 
 export function useWebSocket(url: string) {
@@ -48,3 +47,6 @@ export function useWebSocket(url: string) {
 
   return { socket, messages, isConnected, send }
 }
+
+// ✅ Add this export for strong typing
+export type UseWebSocketReturn = ReturnType<typeof useWebSocket>

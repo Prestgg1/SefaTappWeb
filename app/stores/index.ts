@@ -1,35 +1,39 @@
 import { defineStore } from 'pinia';
-import type { AiChats } from '../utils/client';
 export const useMainStore = defineStore('main', {
   state: () => ({
-    ai_messages: [] as AiChats,
-    messages: [] as Chats,
+    sidebar_chats: new Map(),
+    messages: new Map(),
   }),
   actions: {
-    setAiMessages(messages: AiChats) {
-      this.ai_messages = messages
+    addSidebarChat(message: Chats[number]) {
+      this.sidebar_chats.set(message.chat_id, {
+        other_user_id: message.other_user_id,
+        other_user_name: message.other_user_name,
+        other_user_image: message.other_user_image,
+        last_message: message.messages[message.messages.length - 1]?.message,
+        last_message_date: message.last_message_date,
+        unread_count: message.unread_count,
+      })
     },
-    addAiMessage(message: AiChats[number]) {
-      this.ai_messages.push(message)
+    addMessage(id: number, message: Chats[number]['messages']) {
+      // Set/replace the entire messages array for a chat
+      this.messages.set(id, message)
     },
-    clearAiMessages() {
-      this.ai_messages = []
+    appendMessage(id: number, message: Chats[number]['messages'][number]) {
+      // Append a single message to the chat's message list
+      const existing = this.messages.get(id) as Chats[number]['messages'] | undefined
+      if (existing) {
+        existing.push(message)
+        this.messages.set(id, existing)
+      } else {
+        this.messages.set(id, [message] as Chats[number]['messages'])
+      }
     },
-    removeAiMessage(index: number) {
-      this.ai_messages.splice(index, 1)
+    clearSidebarChats() {
+      this.sidebar_chats.clear()
     },
-    setMessages(messages: Chats) {
-      this.messages = messages
-    },
-    addMessage(message: Chats[number]) {
-      this.messages.push(message)
-    },
-    clearMessages() {
-      this.messages = []
-    },
-    removeMessage(index: number) {
-      this.messages.splice(index, 1)
+    removeSidebarChat(index: number) {
+      this.sidebar_chats.delete(index)
     },
   },
 })
-

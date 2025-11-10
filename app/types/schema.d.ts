@@ -1342,24 +1342,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/chats/ai": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Ai Chats */
-        get: operations["get_ai_chats_api_chats_ai_get"];
-        put?: never;
-        /** Send Ai Message */
-        post: operations["send_ai_message_api_chats_ai_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/chat/": {
         parameters: {
             query?: never;
@@ -1432,32 +1414,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** AIChatMessages */
-        AIChatMessages: {
-            /** Id */
-            id: number;
-            /** Message */
-            message: string;
-            /** Sender Id */
-            sender_id: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-        };
-        /** AIChatRequest */
-        AIChatRequest: {
-            /** Question */
-            question: string;
-        };
-        /** AIResponse */
-        AIResponse: {
-            /** Answer */
-            answer: string;
-            /** Question */
-            question: string;
-        };
         /** AnalyzesResultResponse */
         AnalyzesResultResponse: {
             /** Message */
@@ -1752,8 +1708,8 @@ export interface components {
             other_user_name: string;
             /** Other User Image */
             other_user_image: string;
-            /** Last Message */
-            last_message?: string | null;
+            /** Messages */
+            messages: components["schemas"]["Message"][];
             /** Is Closed */
             is_closed: boolean;
             /** Last Message Date */
@@ -2158,6 +2114,20 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** Message */
+        Message: {
+            /** Id */
+            id: number;
+            /** Message */
+            message: string;
+            /** Sender Id */
+            sender_id: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /**
          * ModelType
@@ -5925,59 +5895,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ChatResponse"][];
-                };
-            };
-        };
-    };
-    get_ai_chats_api_chats_ai_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AIChatMessages"][];
-                };
-            };
-        };
-    };
-    send_ai_message_api_chats_ai_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AIChatRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AIResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

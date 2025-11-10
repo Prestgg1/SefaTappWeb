@@ -1,13 +1,14 @@
 <template>
-    Hiii
-    <ChatMessages />
+   <div class="w-full full-center p-2">
+        <h1 class="text-black text-3xl font-bold">Bütün Rezervasiyalar</h1>
+   </div>
   </template>
   
   <script setup lang="ts">
-import ChatSidebar from '@/components/chat/Sidebar.vue'
-import ChatHeader from '@/components/chat/ChatHeader.vue'
-import ChatMessages from '@/components/chat/ChatMessages.vue'
 import { useMainStore } from '~/stores'
+const route = useRoute()
+const mainStore = useMainStore()
+console.log(mainStore.$state.messages)
 definePageMeta({
     layout: 'chat',
 })
