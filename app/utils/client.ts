@@ -1,10 +1,10 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "../types/schema"; 
 /* ip_1:https://bimonet.com/
-   ip_2: http://192.100.2.30:8000
+   ip_2: http://192.100.1.69:8000
 */
 const client = createClient<paths>({
-    baseUrl: "http://bimonet.com",
+    baseUrl: "http://192.168.1.69:8000/api",
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -26,9 +26,9 @@ const client = createClient<paths>({
 });
 export default client;
 export type ServerClient = typeof client;
-export type Doctors = paths['/api/doctors/']['get']['responses']['200']['content']['application/json']
-export type Categories = paths['/api/doctor_category/']['get']['responses']['200']['content']['application/json']
-export type Reviews = paths['/api/reviews/{model}/{model_id}']['get']['responses']['200']['content']['application/json']
-export type User = components['schemas']['UserBase']
-export type Chats = paths['/api/chats/']['get']['responses']['200']['content']['application/json']
+export type Doctors = paths['/doctors']['get']['responses']['200']['content']['application/json']
+export type Categories = paths['/doctor-categories']['get']['responses']['200']['content']['application/json']
+export type Reviews = paths['/reviews/{model}{model_id}']['get']['responses']['200']['content']['application/json']
+export type User = components['schemas']['UserResource']
+export type Chats = paths['/chats']['get']['responses']['200']['content']['application/json']
 

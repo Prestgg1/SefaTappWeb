@@ -255,9 +255,10 @@ import { toTypedSchema } from '@vee-validate/zod'
   const register = async (values: any) => {
     try {
         isLoading.value = true
-       const { data } = await client.POST('/api/auth/register', { 
-        body: { name: values.name, email: values.email, password: values.password, finCode: values.fin, gender: values.gender, phone: values.phone, birthday: values.birthdate, city: values.city, region: values.district, street: values.address, address: values.address } })
-       token.value = data?.token
+       const { data } = await client.POST('/auth/register', { 
+        body: { name: values.name, email: values.email, password: values.password,
+          fin_code: values.fin, gender: values.gender, phone: values.phone, birthday: values.birthdate, city: values.city, region: values.district, street: values.address, address: values.address } })
+       token.value = data?.access_token
        user.value = data?.user ?? null
        router.replace('/application')
     } catch (err) {
@@ -267,7 +268,7 @@ import { toTypedSchema } from '@vee-validate/zod'
   }
   
   definePageMeta({
-    layout: 'main', // mövcud layout-unuzun adı
+    layout: 'main', 
   })
   </script>
   

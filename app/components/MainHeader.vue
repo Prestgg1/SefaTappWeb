@@ -11,7 +11,7 @@
               d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
             />
           </svg>
-          <NuxtLink to="/demo">
+          <NuxtLink to="/application">
             <h2 class="text-xl font-bold text-gray-900">ŞefaTapp</h2>
           </NuxtLink>
         </div>

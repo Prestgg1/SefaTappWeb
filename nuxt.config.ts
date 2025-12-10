@@ -3,6 +3,23 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   css: ['@/assets/css/main.css'],
   devtools: { enabled: false },
+  nitro: {
+    openAPI:{
+      
+      route: "/_docs/openapi.json",
+      ui: {
+        scalar: {
+          route: "/_docs/scalar"
+        },
+        swagger: {
+          route: "/_docs/swagger"
+        }
+      }
+    },
+    experimental:{
+      openAPI: true,
+    }
+  },
   ui:{
     fonts: false,
     colorMode: false,
@@ -20,5 +37,10 @@ export default defineNuxtConfig({
       "app/store"
     ],
   },
-  modules: ['@nuxt/image', '@nuxt/test-utils', '@nuxt/ui','@pinia/nuxt']
+  modules: [
+    '@nuxt/image',
+    '@nuxt/test-utils',
+    '@nuxt/ui',
+    '@pinia/nuxt',
+  ]
 })

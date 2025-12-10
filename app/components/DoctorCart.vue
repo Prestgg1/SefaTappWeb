@@ -21,9 +21,10 @@
   
       <img
         :alt="doctor.user.name"
-        :src="doctor.user.image"
+        :src="doctor.user.image || ''"
         class="w-full h-48 object-cover"
       />
+      <!-- TODO: Buradaki image deyismeli -->
       <div class="p-5 flex flex-col grow">
         <div class="flex items-center justify-between mb-2">
           <h3 class="text-lg font-bold text-gray-900 ">
@@ -58,26 +59,26 @@
   type Doctor = Doctors extends (infer T)[] ? T : never
   const props = defineProps<{ doctor: Doctor }>()
   
-  const isFavorite = ref(props.doctor.has_favorited)
+  const isFavorite = ref<boolean>(props.doctor.has_favorited)
   
   
   const updateFavoriteApi = useDebounce(async (favorited: boolean) => {
     try {
       if (favorited) {
-        await client.GET(`/api/favorites/{model_type}/{model_id}`, {
+        await client.GET(`/favorites/{modelType}/{modelId}`, {
           params: {
             path: {
-              model_type: 'doctor',
-              model_id: props.doctor.id
+              modelType: 'doctor',
+              modelId: Number(props.doctor.id)
             }
           }
         })
       } else {
-        await client.DELETE(`/api/favorites/{model_type}/{model_id}`, {
+        await client.DELETE(`/favorites/{modelType}/{modelId}`, {
           params: {
             path: {
-              model_type: 'doctor',
-              model_id: props.doctor.id
+              modelType: 'doctor',
+              modelId: Number(props.doctor.id)
             }
           }
         })

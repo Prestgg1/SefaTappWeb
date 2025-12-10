@@ -98,8 +98,8 @@
   const submitLogin = async () => {
     isLoading.value = true
     try {
-      const res = await client.POST('/api/auth/login', { body: form })
-      token.value = res.data?.token
+      const res = await client.POST('/auth/login', { body: form })
+      token.value = res.data?.access_token
       user.value = res.data?.user ?? null
       emit('close')
     } catch (err) {

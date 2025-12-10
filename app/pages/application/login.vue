@@ -127,7 +127,7 @@
   <script setup lang="ts">
   const email = ref('')
   const isLoading = ref(false)
-  const password = ref('')
+const password = ref('')
   const user = useState<User | null>('user', () => null)
   const token = useCookie('token')
   const router = useRouter()
@@ -136,8 +136,8 @@
     try {
         isLoading.value = true
       console.log('Login attempt:', email.value, password.value)
-       const { data } = await client.POST('/api/auth/login', { body: { email: email.value, password: password.value } })
-       token.value = data?.token
+       const { data } = await client.POST('/auth/login', { body: { email: email.value, password: password.value } })
+       token.value = data?.access_token
        user.value = data?.user ?? null
        router.replace('/application')
     } catch (err) {

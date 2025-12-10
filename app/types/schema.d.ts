@@ -4,15 +4,15 @@
  */
 
 export interface paths {
-    "/": {
+    "/appointments/doctor": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Root */
-        get: operations["root__get"];
+        /** Customer: Doctor appointmentləri */
+        get: operations["appointment.getDoctorAppointments"];
         put?: never;
         post?: never;
         delete?: never;
@@ -21,7 +21,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/token": {
+    "/appointments/{modelType}/{modelId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -30,15 +30,83 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Login */
-        post: operations["login_token_post"];
+        /** Yeni appointment yarat */
+        post: operations["appointment.createAppointment"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/auth/login": {
+    "/appointments/{appointmentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Appointment ləğv et */
+        put: operations["appointment.cancelAppointment"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/appointments/customer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Doctor: Customer appointmentləri */
+        get: operations["appointment.getCustomerAppointments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/appointments/accept/{appointmentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Doctor: Appointment qəbul et */
+        get: operations["appointment.acceptAppointment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/appointments/complete/{appointmentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Doctor: Appointment tamamla */
+        get: operations["appointment.completeAppointment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/login": {
         parameters: {
             query?: never;
             header?: never;
@@ -47,15 +115,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Login */
-        post: operations["login_api_auth_login_post"];
+        /** Login user */
+        post: operations["auth.login"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/auth/register": {
+    "/auth/register": {
         parameters: {
             query?: never;
             header?: never;
@@ -64,23 +132,23 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Register */
-        post: operations["register_api_auth_register_post"];
+        /** Register customer */
+        post: operations["auth.register"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/auth/me": {
+    "/auth/me": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Me */
-        get: operations["me_api_auth_me_get"];
+        /** Get authenticated user */
+        get: operations["auth.me"];
         put?: never;
         post?: never;
         delete?: never;
@@ -89,24 +157,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Logout */
-        get: operations["logout_api_auth_logout_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/auth/forgot-password": {
+    "/auth/logout": {
         parameters: {
             query?: never;
             header?: never;
@@ -115,15 +166,66 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Forgot Password */
-        post: operations["forgot_password_api_auth_forgot_password_post"];
+        /** Logout user */
+        post: operations["auth.logout"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/auth/check-otp": {
+    "/blogs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Display a listing of blogs */
+        get: operations["blog.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/blogs/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search blogs */
+        get: operations["blog.search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/blogs/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Display the specified blog */
+        get: operations["blog.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/blogs": {
         parameters: {
             query?: never;
             header?: never;
@@ -132,673 +234,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Check Otp */
-        post: operations["check_otp_api_auth_check_otp_post"];
+        /** Store a newly created blog */
+        post: operations["blog.store"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/auth/reset-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Reset Password */
-        post: operations["reset_password_api_auth_reset_password_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/auth/google-login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Google Login
-         * @description idinfo = id_token.verify_oauth2_token(
-         *             data.id_token,
-         *             requests.Request(),
-         *             GOOGLE_CLIENT_ID
-         *     )
-         */
-        post: operations["google_login_api_auth_google_login_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/user/profile": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Profile */
-        get: operations["get_profile_api_user_profile_get"];
-        /** Update User Profile */
-        put: operations["update_user_profile_api_user_profile_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/user/profile/doctor": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Doctor Profile */
-        get: operations["get_doctor_profile_api_user_profile_doctor_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/user": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Users */
-        get: operations["list_users_api_admin_user_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/user/{user_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get User */
-        get: operations["get_user_api_admin_user__user_id__get"];
-        /** Update User */
-        put: operations["update_user_api_admin_user__user_id__put"];
-        post?: never;
-        /** Delete User */
-        delete: operations["delete_user_api_admin_user__user_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/blogs/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get All Blogs */
-        get: operations["get_all_blogs_api_blogs__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/blogs/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Blog */
-        get: operations["get_blog_api_blogs__slug__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/blogs/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get All Blogs */
-        get: operations["get_all_blogs_api_admin_blogs__get"];
-        put?: never;
-        /** Create Blog */
-        post: operations["create_blog_api_admin_blogs__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/blogs/yukle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Upload Blogs */
-        get: operations["upload_blogs_api_admin_blogs_yukle_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/blogs/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update Blog */
-        put: operations["update_blog_api_admin_blogs__slug__put"];
-        post?: never;
-        /** Delete Blog */
-        delete: operations["delete_blog_api_admin_blogs__slug__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/doctor_category/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get All */
-        get: operations["get_all_api_doctor_category__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/doctor_category/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get One */
-        get: operations["get_one_api_doctor_category__slug__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/doctor_category/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get All */
-        get: operations["get_all_api_admin_doctor_category__get"];
-        put?: never;
-        /** Create */
-        post: operations["create_api_admin_doctor_category__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/doctor_category/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update */
-        put: operations["update_api_admin_doctor_category__slug__put"];
-        post?: never;
-        /** Delete */
-        delete: operations["delete_api_admin_doctor_category__slug__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/customers/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get All Customers */
-        get: operations["get_all_customers_api_admin_customers__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/customers/{customer_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Customer */
-        get: operations["get_customer_api_admin_customers__customer_id__get"];
-        /** Update Customer */
-        put: operations["update_customer_api_admin_customers__customer_id__put"];
-        post?: never;
-        /** Delete Customer */
-        delete: operations["delete_customer_api_admin_customers__customer_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/product_stats/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Stats */
-        get: operations["list_stats_api_product_stats_stats_get"];
-        put?: never;
-        /** Create Stat */
-        post: operations["create_stat_api_product_stats_stats_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/product_stats/stats/{stat_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Stat */
-        get: operations["get_stat_api_product_stats_stats__stat_id__get"];
-        /** Update Stat */
-        put: operations["update_stat_api_product_stats_stats__stat_id__put"];
-        post?: never;
-        /** Delete Stat */
-        delete: operations["delete_stat_api_product_stats_stats__stat_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/reviews/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Reviews */
-        get: operations["get_reviews_api_reviews__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/reviews/{model}/{model_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Reviews For Model */
-        get: operations["get_reviews_for_model_api_reviews__model___model_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/reviews/{user_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create Review */
-        post: operations["create_review_api_reviews__user_id__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/reviews/{review_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update Review */
-        put: operations["update_review_api_reviews__review_id__put"];
-        post?: never;
-        /** Delete Review */
-        delete: operations["delete_review_api_reviews__review_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/appointment/doctor": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Appointments Doctors */
-        get: operations["get_appointments_doctors_api_appointment_doctor_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/appointment/customer": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Appointment Customer */
-        get: operations["get_appointment_customer_api_appointment_customer_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/appointment/accept/{appoiment_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Accept Appointment */
-        get: operations["accept_appointment_api_appointment_accept__appoiment_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/appointment/complate/{appointment_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Complate Appointment */
-        get: operations["complate_appointment_api_appointment_complate__appointment_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/appointment/{model_type}/{model_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create Appointment */
-        post: operations["create_appointment_api_appointment__model_type___model_id__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/appointment/{item_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Cancel Appointment */
-        put: operations["cancel_appointment_api_appointment__item_id__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/appointment/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Appointments */
-        get: operations["list_appointments_api_admin_appointment__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/appointment/{item_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Show Appointment */
-        get: operations["show_appointment_api_admin_appointment__item_id__get"];
-        /** Update Appointment */
-        put: operations["update_appointment_api_admin_appointment__item_id__put"];
-        post?: never;
-        /** Delete Appointment */
-        delete: operations["delete_appointment_api_admin_appointment__item_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/appointment/{model_type}/{model_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create Appointment */
-        post: operations["create_appointment_api_admin_appointment__model_type___model_id__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/baskets/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Baskets */
-        get: operations["get_baskets_api_baskets__get"];
-        put?: never;
-        /** Create Basket */
-        post: operations["create_basket_api_baskets__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/baskets/{basket_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Basket */
-        get: operations["get_basket_api_baskets__basket_id__get"];
-        /** Update Basket */
-        put: operations["update_basket_api_baskets__basket_id__put"];
-        post?: never;
-        /** Delete Basket */
-        delete: operations["delete_basket_api_baskets__basket_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/transactions/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Transactions */
-        get: operations["list_transactions_api_transactions__get"];
-        put?: never;
-        /** Create Transaction */
-        post: operations["create_transaction_api_transactions__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/transactions/{transaction_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Transaction */
-        get: operations["get_transaction_api_transactions__transaction_id__get"];
-        /** Update Transaction */
-        put: operations["update_transaction_api_transactions__transaction_id__put"];
-        post?: never;
-        /** Delete Transaction */
-        delete: operations["delete_transaction_api_transactions__transaction_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/brunches/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Brunches */
-        get: operations["list_brunches_api_brunches__get"];
-        put?: never;
-        /** Create Brunch */
-        post: operations["create_brunch_api_brunches__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/brunches/{brunch_id}": {
+    "/admin/blogs/{slug}": {
         parameters: {
             query?: never;
             header?: never;
@@ -808,40 +252,23 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Delete Brunch */
-        delete: operations["delete_brunch_api_brunches__brunch_id__delete"];
+        /** Remove the specified blog */
+        delete: operations["blog.destroy"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Update the specified blog */
+        patch: operations["blog.update"];
         trace?: never;
     };
-    "/api/product/": {
+    "/clinics": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List Products */
-        get: operations["list_products_api_product__get"];
-        put?: never;
-        /** Create Product */
-        post: operations["create_product_api_product__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/product/{pharmacy_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List By Pharmacy */
-        get: operations["list_by_pharmacy_api_product__pharmacy_id__get"];
+        /** Public: Clinic list */
+        get: operations["clinic.index"];
         put?: never;
         post?: never;
         delete?: never;
@@ -850,7 +277,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/product/{product_id}": {
+    "/clinics/{clinicId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Clinic detail */
+        get: operations["clinic.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/clinics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin: Clinic list */
+        get: operations["clinic.adminIndex"];
+        put?: never;
+        /** Admin: Yeni clinic yarat */
+        post: operations["clinic.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/clinics/{clinicId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -858,42 +320,25 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Update Product */
-        put: operations["update_product_api_product__product_id__put"];
+        /** Admin: Clinic yenilə */
+        put: operations["clinic.update"];
         post?: never;
-        delete?: never;
+        /** Admin: Clinic sil */
+        delete: operations["clinic.destroy"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/admin/product/": {
+    "/admin/customers": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List Products */
-        get: operations["list_products_api_admin_product__get"];
-        put?: never;
-        /** Create Product */
-        post: operations["create_product_api_admin_product__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/product/{pharmacy_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List By Pharmacy */
-        get: operations["list_by_pharmacy_api_admin_product__pharmacy_id__get"];
+        /** Bütün customer-ləri göstər */
+        get: operations["customer.index"];
         put?: never;
         post?: never;
         delete?: never;
@@ -902,7 +347,77 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/product/{product_id}": {
+    "/admin/customers/{customerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Xüsusi customer məlumatlarını göstər */
+        get: operations["customer.show"];
+        /** Customer məlumatlarını yenilə */
+        put: operations["customer.update"];
+        post?: never;
+        /** Customer-i sil */
+        delete: operations["customer.destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/doctors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Doctor list */
+        get: operations["doctor.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/doctors/{doctorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Doctor detail */
+        get: operations["doctor.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/doctors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin: Doctor list */
+        get: operations["doctor.adminIndex"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/doctors/register": {
         parameters: {
             query?: never;
             header?: never;
@@ -910,157 +425,16 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Update Product */
-        put: operations["update_product_api_admin_product__product_id__put"];
-        post?: never;
-        /** Delete Product */
-        delete: operations["delete_product_api_admin_product__product_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/favorites/doctor": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Doctor Favorites */
-        get: operations["get_doctor_favorites_api_favorites_doctor_get"];
         put?: never;
-        post?: never;
+        /** Admin: Yeni doctor yarat */
+        post: operations["doctor.store"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/favorites/pharmacy": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Pharmacy Favorites */
-        get: operations["get_pharmacy_favorites_api_favorites_pharmacy_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/favorites/clinic": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Clinic Favorites */
-        get: operations["get_clinic_favorites_api_favorites_clinic_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/favorites/{model_type}/{model_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Add Favorite */
-        get: operations["add_favorite_api_favorites__model_type___model_id__get"];
-        put?: never;
-        post?: never;
-        /**
-         * Remove Favorite
-         * @description asdas
-         */
-        delete: operations["remove_favorite_api_favorites__model_type___model_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/doctors/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Doctors */
-        get: operations["list_doctors_api_doctors__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/doctors/{doctor_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Doctor */
-        get: operations["get_doctor_api_doctors__doctor_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/doctors/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Doctors */
-        get: operations["list_doctors_api_admin_doctors__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/doctors/yukle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Upload Doctor */
-        get: operations["upload_doctor_api_admin_doctors_yukle_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/doctors/{doctor_id}": {
+    "/admin/doctors/{doctorId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1070,14 +444,83 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Delete Doctor */
-        delete: operations["delete_doctor_api_admin_doctors__doctor_id__delete"];
+        /** Admin: Doctor sil */
+        delete: operations["doctor.destroy"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/admin/doctors/register": {
+    "/doctor-categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Bütün kateqoriyalar (sadə list) */
+        get: operations["doctorCategory.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/doctor-categories/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Axtarış */
+        get: operations["doctorCategory.search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/doctor-categories/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Bir kateqoriya */
+        get: operations["doctorCategory.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/doctor-categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin: Bütün kateqoriyalar (tam məlumat) */
+        get: operations["doctorCategory.adminIndex"];
+        put?: never;
+        /** Admin: Yeni kateqoriya yarat */
+        post: operations["doctorCategory.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/doctor-categories/{slug}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1086,78 +529,24 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Register Doctor */
-        post: operations["register_doctor_api_admin_doctors_register_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/clinic/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Clinics */
-        get: operations["list_clinics_api_clinic__get"];
-        put?: never;
-        /** Create Clinic */
-        post: operations["create_clinic_api_clinic__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/clinic/{clinic_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Clinic */
-        get: operations["get_clinic_api_clinic__clinic_id__get"];
-        /** Update Clinic */
-        put: operations["update_clinic_api_clinic__clinic_id__put"];
         post?: never;
-        /** Delete Clinic */
-        delete: operations["delete_clinic_api_clinic__clinic_id__delete"];
+        /** Admin: Kateqoriya sil */
+        delete: operations["doctorCategory.destroy"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Admin: Kateqoriya yenilə */
+        patch: operations["doctorCategory.update"];
         trace?: never;
     };
-    "/api/admin/clinic/": {
+    "/favorites/doctor": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List Clinics */
-        get: operations["list_clinics_api_admin_clinic__get"];
-        put?: never;
-        /** Create Clinic */
-        post: operations["create_clinic_api_admin_clinic__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/clinic/yukle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Upload Clinic */
-        get: operations["upload_clinic_api_admin_clinic_yukle_get"];
+        /** Doctor favoritələri */
+        get: operations["favorite.getDoctorFavorites"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1166,7 +555,111 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/clinic/{clinic_id}": {
+    "/favorites/pharmacy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Pharmacy favoritələri */
+        get: operations["favorite.getPharmacyFavorites"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/favorites/clinic": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Clinic favoritələri */
+        get: operations["favorite.getClinicFavorites"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/favorites/{modelType}/{modelId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Favorite əlavə et */
+        get: operations["favorite.addFavorite"];
+        put?: never;
+        post?: never;
+        /** Favorite sil */
+        delete: operations["favorite.removeFavorite"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pharmacies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Pharmacy list */
+        get: operations["pharmacy.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pharmacies/{pharmacyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Pharmacy detail */
+        get: operations["pharmacy.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/pharmacies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin: Pharmacy list */
+        get: operations["pharmacy.adminIndex"];
+        put?: never;
+        /** Admin: Yeni pharmacy yarat */
+        post: operations["pharmacy.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/pharmacies/{pharmacyId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1174,80 +667,25 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Update Clinic */
-        put: operations["update_clinic_api_admin_clinic__clinic_id__put"];
+        /** Admin: Pharmacy yenilə */
+        put: operations["pharmacy.update"];
         post?: never;
-        /** Delete Clinic */
-        delete: operations["delete_clinic_api_admin_clinic__clinic_id__delete"];
+        /** Admin: Pharmacy sil */
+        delete: operations["pharmacy.destroy"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/pharmacies/": {
+    "/products": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get Pharmacies */
-        get: operations["get_pharmacies_api_pharmacies__get"];
-        put?: never;
-        /** Create Pharmacy */
-        post: operations["create_pharmacy_api_pharmacies__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/pharmacies/{pharmacy_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Pharmacy */
-        get: operations["get_pharmacy_api_pharmacies__pharmacy_id__get"];
-        /** Update Pharmacy */
-        put: operations["update_pharmacy_api_pharmacies__pharmacy_id__put"];
-        post?: never;
-        /** Delete Pharmacy */
-        delete: operations["delete_pharmacy_api_pharmacies__pharmacy_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/pharmacy/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Pharmacies */
-        get: operations["get_pharmacies_api_admin_pharmacy__get"];
-        put?: never;
-        /** Create Pharmacy */
-        post: operations["create_pharmacy_api_admin_pharmacy__post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/pharmacy/yukle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Upload Pharmacy */
-        get: operations["upload_pharmacy_api_admin_pharmacy_yukle_get"];
+        /** Public: Product list */
+        get: operations["product.index"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1256,7 +694,25 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/pharmacy/{pharmacy_id}": {
+    "/admin/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin: Bütün productlar */
+        get: operations["product.adminIndex"];
+        put?: never;
+        /** Admin: Yeni product yarat */
+        post: operations["product.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/products/{productId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1264,147 +720,11 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        /** Update Pharmacy */
-        put: operations["update_pharmacy_api_admin_pharmacy__pharmacy_id__put"];
+        /** Admin: Product yenilə */
+        put: operations["product.update"];
         post?: never;
-        /** Delete Pharmacy */
-        delete: operations["delete_pharmacy_api_admin_pharmacy__pharmacy_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/analyzesresult/upload": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Upload Result */
-        post: operations["upload_result_api_analyzesresult_upload_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/analyzesresult/results/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Results */
-        get: operations["list_results_api_analyzesresult_results__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/analyzesresult/download/{result_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Download Result */
-        get: operations["download_result_api_analyzesresult_download__result_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/chats/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Customer Chats */
-        get: operations["get_customer_chats_api_chats__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/chat/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get */
-        get: operations["get_api_chat__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/stats/doctor": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Doctor Stats */
-        get: operations["list_doctor_stats_api_stats_doctor_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/notifications/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Notifications */
-        get: operations["list_notifications_api_notifications__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mail/contact": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Contact */
-        post: operations["contact_api_mail_contact_post"];
-        delete?: never;
+        /** Admin: Product sil */
+        delete: operations["product.destroy"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1414,1202 +734,477 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** AnalyzesResultResponse */
-        AnalyzesResultResponse: {
-            /** Message */
-            message: string;
-            /** Id */
-            id: number;
-            /** File Path */
-            file_path: string;
-        };
-        /** AppointmentBase */
-        AppointmentBase: {
-            /** Full Name */
+        /** AppointmentBaseResource */
+        AppointmentBaseResource: {
             full_name: string;
-            /** Phone */
             phone: string;
-            /** Fin Code */
             fin_code: string;
-            /** Complaint */
             complaint: string;
-            /**
-             * Date
-             * Format: date-time
-             */
             date: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
             created_at: string;
-            /** Model Type */
             model_type: string;
         };
-        /** AppointmentCreate */
-        AppointmentCreate: {
-            /** Full Name */
+        /** AppointmentCustomerResource */
+        AppointmentCustomerResource: {
+            id: string;
             full_name: string;
-            /** Phone */
             phone: string;
-            /** Fin Code */
+            image: string | "";
             fin_code: string;
-            /** Complaint */
             complaint: string;
-            /**
-             * Date
-             * Format: date-time
-             */
+            status: string;
             date: string;
         };
-        /** AppointmentCustomerResponse */
-        AppointmentCustomerResponse: {
-            /** Id */
-            id: number;
-            /** Full Name */
-            full_name: string;
-            /** Phone */
-            phone: string;
-            /** Image */
-            image: string;
-            /** Fin Code */
-            fin_code: string;
-            /** Complaint */
-            complaint: string;
-            /**
-             * Date
-             * Format: date-time
-             */
-            date: string;
-        };
-        /** AppointmentUpdate */
-        AppointmentUpdate: {
-            /** Full Name */
-            full_name: string;
-            /** Phone */
-            phone: string;
-            /** Fin Code */
-            fin_code: string;
-            /** Complaint */
-            complaint: string;
-            /**
-             * Date
-             * Format: date-time
-             */
-            date: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Model Type */
-            model_type: string;
-        };
-        /** AppointmentsDoctorResponse */
-        AppointmentsDoctorResponse: {
-            /** Id */
-            id: number;
-            /** Appointment Id */
-            appointment_id: number;
-            /** Clinic */
-            clinic?: string | null;
-            user: components["schemas"]["UserField"];
-            doctor_category: components["schemas"]["Doctor_CategorySchema"];
-            /** Has Favorited */
+        /** AppointmentDoctorResource */
+        AppointmentDoctorResource: {
+            id: string;
+            appointment_id: string;
+            clinic: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
+            doctor_category: {
+                id: string;
+                title: string;
+            };
             has_favorited: boolean;
-            /** Average Rating */
             average_rating: number;
-            /**
-             * Date
-             * Format: date-time
-             */
             date: string;
         };
-        /** AuthResponse */
-        AuthResponse: {
-            user: components["schemas"]["UserBase"];
-            /** Token */
-            token: string;
-        };
-        /** BasketCreate */
-        BasketCreate: {
-            /** Total Price */
-            total_price: number;
-            /** @default pending */
-            status: components["schemas"]["BasketStatus"] | null;
-        };
-        /** BasketResponse */
-        BasketResponse: {
-            /** Total Price */
-            total_price: number;
-            /** @default pending */
-            status: components["schemas"]["BasketStatus"] | null;
-            /** Id */
+        /** BlogResource */
+        BlogResource: {
             id: number;
-            /** User Id */
-            user_id: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-        };
-        /**
-         * BasketStatus
-         * @enum {string}
-         */
-        BasketStatus: "pending" | "shipped" | "delivered" | "cancelled";
-        /** BasketUpdate */
-        BasketUpdate: {
-            /** Total Price */
-            total_price?: number | null;
-            /** @default pending */
-            status: components["schemas"]["BasketStatus"] | null;
-        };
-        /** BlogCreate */
-        BlogCreate: {
-            /** Title */
-            title: string;
-            /** Description */
-            description: string;
-            /** Text */
-            text: string;
-            /** Keywords */
-            keywords?: string | null;
-            /** Image */
-            image?: string | null;
-            /**
-             * Status
-             * @default true
-             */
-            status: boolean | null;
-        };
-        /** BlogResponse */
-        BlogResponse: {
-            /** Title */
-            title: string;
-            /** Description */
-            description: string;
-            /** Text */
-            text: string;
-            /** Keywords */
-            keywords?: string | null;
-            /** Image */
-            image?: string | null;
-            /**
-             * Status
-             * @default true
-             */
-            status: boolean | null;
-            /** Id */
-            id: number;
-            /** Slug */
+            title: string | null;
             slug: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
+            description: string;
+            text: string;
+            keywords: string | null;
+            image: string | null;
+            status: boolean;
             created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
             updated_at: string;
         };
-        /** BlogUpdate */
-        BlogUpdate: {
-            /** Title */
-            title: string;
-            /** Description */
-            description: string;
-            /** Text */
-            text: string;
-            /** Keywords */
-            keywords?: string | null;
-            /** Image */
-            image?: string | null;
-            /**
-             * Status
-             * @default true
-             */
-            status: boolean | null;
+        /** CancelAppointmentRequest */
+        CancelAppointmentRequest: {
+            reason: string;
         };
-        /** Body_login_token_post */
-        Body_login_token_post: {
-            /** Grant Type */
-            grant_type?: string | null;
-            /** Username */
-            username: string;
-            /**
-             * Password
-             * Format: password
-             */
-            password: string;
-            /**
-             * Scope
-             * @default
-             */
-            scope: string;
-            /** Client Id */
-            client_id?: string | null;
-            /**
-             * Client Secret
-             * Format: password
-             */
-            client_secret?: string | null;
-        };
-        /** Body_upload_result_api_analyzesresult_upload_post */
-        Body_upload_result_api_analyzesresult_upload_post: {
-            /** Message */
-            message: string;
-            /**
-             * File
-             * Format: binary
-             */
-            file: string;
-        };
-        /** BrunchCreate */
-        BrunchCreate: {
-            /** User Id */
-            user_id: number;
-            /** Clinic Id */
-            clinic_id: number;
-            /** Location */
-            location: string;
-            /** Slug */
-            slug?: string | null;
-            /** Image */
-            image?: string | null;
-        };
-        /** BrunchOut */
-        BrunchOut: {
-            /** Id */
-            id: number;
-            /** User Id */
-            user_id: number;
-            /** Clinic Id */
-            clinic_id: number;
-            /** Location */
-            location: string;
-            /** Slug */
-            slug?: string | null;
-            /** Image */
-            image?: string | null;
-            /** Average Rating */
-            average_rating: number;
-        };
-        /** ChatResponse */
-        ChatResponse: {
-            /** Chat Id */
-            chat_id: number;
-            /** Other User Id */
-            other_user_id: number;
-            /** Other User Name */
-            other_user_name: string;
-            /** Other User Image */
-            other_user_image: string;
-            /** Messages */
-            messages: components["schemas"]["Message"][];
-            /** Is Closed */
-            is_closed: boolean;
-            /** Last Message Date */
-            last_message_date?: string | null;
-            /** Unread Count */
-            unread_count: number;
-        };
-        /** CheckOtpRequest */
-        CheckOtpRequest: {
-            /** Email */
-            email: string;
-            /** Otp */
-            otp: string;
-        };
-        /** ClinicCreate */
-        ClinicCreate: {
-            /** Id */
-            id: number;
-            /** Address */
+        /** ClinicAdminResource */
+        ClinicAdminResource: {
+            id: string;
+            city: string;
+            user: {
+                id: string;
+                name: string;
+                status: boolean;
+                image: string;
+            };
+            phone: string;
             address: string;
-            /** Phone */
-            phone: string | null;
-            /** City */
-            city: string;
-            /** State */
-            state: string;
-            /** Country */
-            country: string;
-            /**
-             * Average Rating
-             * @default 0
-             */
-            average_rating: number | null;
-        };
-        /** ClinicResponse */
-        ClinicResponse: {
-            /** Id */
-            id: number;
-            user: components["schemas"]["UserField"];
-            /** City */
-            city: string;
-            /** Average Rating */
             average_rating: number;
-            /** Reviews Count */
             reviews_count: number;
-            /** Address */
+        };
+        /** ClinicDetailResource */
+        ClinicDetailResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
+            city: string;
+            average_rating: number;
+            reviews_count: number;
             address: string;
-            /** Work Experience */
+            about: string;
             work_experience: number;
-            /** About */
-            about?: string | null;
-            /** Patient Count */
             patient_count: number;
         };
-        /** ClinicUpdate */
-        ClinicUpdate: {
-            /** Address */
-            address: string | null;
-            /** Phone */
-            phone: string | null;
-            /** City */
-            city: string | null;
-            /** State */
-            state: string | null;
-            /** Country */
-            country: string | null;
-            /** Average Rating */
-            average_rating: number | null;
-        };
-        /** ClinicsAdminResponse */
-        ClinicsAdminResponse: {
-            /** Id */
-            id: number;
-            user: components["schemas"]["UserField"];
-            /** City */
+        /** ClinicFavoriteResource */
+        ClinicFavoriteResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
             city: string;
-            /** Average Rating */
             average_rating: number;
-            /** Reviews Count */
             reviews_count: number;
-            /** Phone */
-            phone: string | null;
-            /** Address */
-            address: string;
-        };
-        /** ClinicsResponse */
-        ClinicsResponse: {
-            /** Id */
-            id: number;
-            user: components["schemas"]["UserField"];
-            /** City */
-            city: string;
-            /** Average Rating */
-            average_rating: number;
-            /** Reviews Count */
-            reviews_count: number;
-            /** Has Favorited */
             has_favorited: boolean;
         };
-        /** ContactRequest */
-        ContactRequest: {
-            /** Name */
-            name: string;
-            /**
-             * Email
-             * Format: email
-             */
-            email: string;
-            /** Message */
-            message: string;
-        };
-        /** ContactResponse */
-        ContactResponse: {
-            /** Message */
-            message: string;
-        };
-        /** CustomerBase */
-        CustomerBase: {
-            /** Fincode */
-            finCode: string;
-            /** Phone */
-            phone: string;
-            gender: components["schemas"]["GenderEnumSchema"];
-            /**
-             * Birthday
-             * Format: date
-             */
-            birthday: string;
-            /** City */
+        /** ClinicListResource */
+        ClinicListResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
             city: string;
-            /** Region */
-            region: string;
-            /** Street */
-            street: string;
-            /** Address */
-            address: string;
+            has_favorited: boolean;
+            average_rating: number;
+            reviews_count: number;
         };
-        /** CustomerOut */
-        CustomerOut: {
-            /** Fincode */
-            finCode: string;
-            /** Phone */
+        /** CreateAppointmentRequest */
+        CreateAppointmentRequest: {
+            full_name: string;
             phone: string;
-            gender: components["schemas"]["GenderEnumSchema"];
-            /**
-             * Birthday
-             * Format: date
-             */
-            birthday: string;
-            /** City */
-            city: string;
-            /** Region */
-            region: string;
-            /** Street */
-            street: string;
-            /** Address */
-            address: string;
-            /** Id */
-            id: number;
-            user: components["schemas"]["UserField"];
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
+            fin_code: string;
+            complaint: string;
+            /** Format: date-time */
+            date: string;
         };
-        /** CustomerUpdate */
-        CustomerUpdate: {
-            /** Fincode */
-            finCode?: string | null;
-            /** Phone */
-            phone?: string | null;
-            /** Gender */
-            gender?: string | null;
-            /** Birthday */
-            birthday?: string | null;
-            /** City */
-            city?: string | null;
-            /** Region */
-            region?: string | null;
-            /** Street */
-            street?: string | null;
-            /** Address */
+        /** CreateClinicRequest */
+        CreateClinicRequest: {
+            user_id: number;
+            phone: string;
+            city: string;
             address?: string | null;
+            about?: string | null;
         };
-        /** DetailsSchema */
-        DetailsSchema: {
-            doctor: components["schemas"]["DoctorProfileSchema"];
-            doctor_category: components["schemas"]["Doctor_CategorySchema"];
-        };
-        /** DoctorCategoryCreate */
-        DoctorCategoryCreate: {
-            /** Title */
+        /** CreateDoctorCategoryRequest */
+        CreateDoctorCategoryRequest: {
             title: string;
-            /** Keywords */
             keywords?: string | null;
-            /** Image */
             image?: string | null;
-            /**
-             * Status
-             * @default true
-             */
-            status: boolean | null;
+            status?: boolean | null;
         };
-        /** DoctorCategoryList */
-        DoctorCategoryList: {
-            /** Id */
-            id: number;
-            /** Title */
-            title: string;
-            /** Slug */
-            slug: string;
-            /** Image */
-            image: string;
-        };
-        /** DoctorCategoryResponse */
-        DoctorCategoryResponse: {
-            /** Title */
-            title: string;
-            /** Keywords */
-            keywords?: string | null;
-            /** Image */
-            image?: string | null;
-            /**
-             * Status
-             * @default true
-             */
-            status: boolean | null;
-            /** Id */
-            id: number;
-            /** Slug */
-            slug: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-        };
-        /** DoctorCategoryUpdate */
-        DoctorCategoryUpdate: {
-            /** Title */
-            title: string;
-            /** Keywords */
-            keywords?: string | null;
-            /** Image */
-            image?: string | null;
-            /**
-             * Status
-             * @default true
-             */
-            status: boolean | null;
-        };
-        /** DoctorOut */
-        DoctorOut: {
-            /** Id */
-            id: number;
-            /** Average Rating */
-            average_rating: number;
-            user: components["schemas"]["UserField"];
-            doctor_category: components["schemas"]["Doctor_CategorySchema"];
-            /** Clinic */
-            clinic?: string | null;
-            /** Has Favorited */
-            has_favorited: boolean;
-        };
-        /** DoctorProfile */
-        DoctorProfile: {
-            user: components["schemas"]["UserBase"];
-            details: components["schemas"]["DetailsSchema"];
-        };
-        /** DoctorProfileSchema */
-        DoctorProfileSchema: {
-            /** City */
-            city: string;
-            /** State */
-            state: string;
-            /** Country */
-            country: string;
-            /** Address */
-            address: string;
-            /** Clinic */
-            clinic: string;
-            /** About */
-            about: string;
-            /** Phone */
-            phone: string;
-            gender: components["schemas"]["GenderEnumSchema"];
-            /**
-             * Birthday
-             * Format: date
-             */
-            birthday: string;
-            /** Fincode */
-            finCode: string;
-        };
-        /** DoctorRegisterSchama */
-        DoctorRegisterSchama: {
-            /** Name */
+        /** CreateDoctorRequest */
+        CreateDoctorRequest: {
             name: string;
-            /**
-             * Email
-             * Format: email
-             */
+            /** Format: email */
             email: string;
-            /** Password */
             password: string;
-            /** Clinic */
             clinic: string;
-            /** About */
-            about: string;
-            /** Phone */
+            about?: string | null;
             phone: string;
-            /** Image */
-            image: string;
-            /** Fincode */
-            finCode: string;
-            gender: components["schemas"]["GenderEnumSchema"];
-            /**
-             * Birthday
-             * Format: date
-             */
+            image?: string | null;
+            fin_code: string;
+            /** @enum {string} */
+            gender: "male" | "female";
+            /** Format: date-time */
             birthday: string;
-            /** City */
             city: string;
-            /** State */
             state: string;
-            /** Country */
             country: string;
-            /** Address */
             address: string;
-            /** Doctor Category Id */
             doctor_category_id: number;
         };
-        /** DoctorResponse */
-        DoctorResponse: {
-            /** Id */
-            id: number;
-            /** Clinic */
-            clinic?: string | null;
-            user: components["schemas"]["UserField"];
-            doctor_category: components["schemas"]["Doctor_CategorySchema"];
-            /** Abouts */
-            abouts?: string | null;
-            /** Average Rating */
-            average_rating: number;
-            /** Total Reviews */
-            total_reviews: number;
-            /** Work Experience */
-            work_experience: number;
-            /** Patient Count */
-            patient_count: number;
-        };
-        /** Doctor_CategorySchema */
-        Doctor_CategorySchema: {
-            /** Id */
-            id: number;
-            /** Title */
-            title: string;
-        };
-        /** DoctorsAdminResponse */
-        DoctorsAdminResponse: {
-            /** Id */
-            id: number;
-            /** Clinic */
-            clinic?: string | null;
-            user: components["schemas"]["UserField"];
-            /** Phone */
-            phone: string;
-            doctor_category: components["schemas"]["Doctor_CategorySchema"];
-            /** Average Rating */
-            average_rating: number;
-            /** Status */
-            status: boolean;
-            /** Total Reviews */
-            total_reviews: number;
-            /** Patient Count */
-            patient_count: number;
-            /** Work Experience */
-            work_experience: number;
-        };
-        /**
-         * FavoriteType
-         * @enum {string}
-         */
-        FavoriteType: "doctor" | "pharmacy" | "clinic";
-        /**
-         * GenderEnumSchema
-         * @enum {string}
-         */
-        GenderEnumSchema: "male" | "female";
-        /** GoogleAuthRequest */
-        GoogleAuthRequest: {
-            /** Id Token */
-            id_token: string;
-        };
-        /** HTTPValidationError */
-        HTTPValidationError: {
-            /** Detail */
-            detail?: components["schemas"]["ValidationError"][];
-        };
-        /** Message */
-        Message: {
-            /** Id */
-            id: number;
-            /** Message */
-            message: string;
-            /** Sender Id */
-            sender_id: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-        };
-        /**
-         * ModelType
-         * @enum {string}
-         */
-        ModelType: "doctor" | "clinic" | "pharmacy";
-        /** Notifications */
-        Notifications: {
-            /** Id */
-            id: number;
-            /** Title */
-            title: string;
-            /** Path */
-            path: string;
-            /** Image */
-            image: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-        };
-        /** PharmaciesResponse */
-        PharmaciesResponse: {
-            /** Id */
-            id: number;
-            user: components["schemas"]["UserField"];
-            /** Average Rating */
-            average_rating: number;
-            /** Slug */
-            slug: string | null;
-            /** City */
-            city: string;
-            /** Has Favorited */
-            has_favorited: boolean;
-            /** Reviews Count */
-            reviews_count: number;
-        };
-        /** PharmacyCreate */
-        PharmacyCreate: {
-            /**
-             * Average Rating
-             * @default 0
-             */
-            average_rating: number | null;
-            /** Slug */
-            slug: string | null;
-            /** Address */
+        /** CreatePharmacyRequest */
+        CreatePharmacyRequest: {
+            user_id: number;
+            slug?: string | null;
             address: string;
-            /** City */
             city: string;
-            /** State */
             state: string;
-            /** Country */
             country: string;
-        };
-        /** PharmacyResponse */
-        PharmacyResponse: {
-            /** Id */
-            id: number;
-            user: components["schemas"]["UserField"];
-            /** Average Rating */
-            average_rating: number;
-            /** City */
-            city: string;
-            /** About */
             about?: string | null;
-            /** Address */
-            address: string;
-            /** Work Experience */
-            work_experience: number;
-            /** Patient Count */
-            patient_count: number;
-            /** Reviews Count */
-            reviews_count: number;
         };
-        /** PharmacyUpdate */
-        PharmacyUpdate: {
-            /** Average Rating */
-            average_rating: number | null;
-            /** Slug */
-            slug: string | null;
-            /** Address */
-            address: string | null;
-            /** City */
-            city: string | null;
-            /** State */
-            state: string | null;
-            /** Country */
-            country: string | null;
-        };
-        /** Product */
-        Product: {
-            /** Id */
-            id: number;
-            /** Name */
-            name: string;
-            /** Stock */
-            stock: number;
-            /** Price */
-            price: number;
-            /** Image */
-            image: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-            /** Has Favorited */
-            has_favorited: boolean;
-            /** Average Rating */
-            average_rating: number;
-            /** Reviews Count */
-            reviews_count: number;
-            /** Purchases */
-            purchases: number;
-        };
-        /** ProductBase */
-        ProductBase: {
-            /** Id */
-            id: number;
-            /** Name */
-            name: string;
-            /** Stock */
-            stock: number;
-            /** Price */
-            price: number;
-            /** Image */
-            image: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-        };
-        /** ProductCreate */
-        ProductCreate: {
-            /** Id */
-            id: number;
-            /** Name */
-            name: string;
-            /** Stock */
-            stock: number;
-            /** Price */
-            price: number;
-            /** Image */
-            image: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-            /** Pharmacy Id */
+        /** CreateProductRequest */
+        CreateProductRequest: {
             pharmacy_id: number;
+            name: string;
+            stock: number;
+            price: number;
+            image?: string | null;
         };
-        /** ProductStats */
-        ProductStats: {
-            /** Product Id */
-            product_id: number;
-            /** Average Rating */
-            average_rating: number;
-            /** Reviews Count */
-            reviews_count: number;
-            /** Purchases */
-            purchases: number;
-            /** Id */
+        /** CustomerResource */
+        CustomerResource: {
             id: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
+            user_id: number;
+            fin_code: string;
+            gender: string;
+            phone: string;
+            /** Format: date-time */
+            birthday: string;
+            city: string;
+            region: string;
+            street: string;
+            address: string;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
+        /** DoctorAdminResource */
+        DoctorAdminResource: {
+            id: string;
+            clinic: string;
+            phone: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
+            doctor_category: {
+                id: string;
+                title: string;
+            };
+            status: boolean;
+            average_rating: number;
+            total_reviews: number;
+            patient_count: number;
+            work_experience: number;
+        };
+        /** DoctorCategoryListResource */
+        DoctorCategoryListResource: {
+            id: string;
+            title: string;
+            slug: string;
+            image: string;
+        };
+        /** DoctorCategoryResource */
+        DoctorCategoryResource: {
+            id: number;
+            title: string;
+            slug: string;
+            keywords: string | null;
+            image: string | null;
+            status: boolean;
             created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
             updated_at: string;
         };
-        /** ProductStatsCreate */
-        ProductStatsCreate: {
-            /** Product Id */
-            product_id: number;
-            /** Average Rating */
+        /** DoctorDetailResource */
+        DoctorDetailResource: {
+            [key: string]: unknown;
+        };
+        /** DoctorFavoriteResource */
+        DoctorFavoriteResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
             average_rating: number;
-            /** Reviews Count */
-            reviews_count: number;
-            /** Purchases */
-            purchases: number;
-        };
-        /** ProductTransactionCreate */
-        ProductTransactionCreate: {
-            /** Basket Id */
-            basket_id: number;
-            /** Product Id */
-            product_id: number;
-            /** Quantity */
-            quantity: number;
-            /** Price */
-            price: number;
-        };
-        /** ProductTransactionResponse */
-        ProductTransactionResponse: {
-            /** Basket Id */
-            basket_id: number;
-            /** Product Id */
-            product_id: number;
-            /** Quantity */
-            quantity: number;
-            /** Price */
-            price: number;
-            /** Id */
-            id: number;
-        };
-        /** ProductTransactionUpdate */
-        ProductTransactionUpdate: {
-            /** Basket Id */
-            basket_id?: number | null;
-            /** Product Id */
-            product_id?: number | null;
-            /** Quantity */
-            quantity?: number | null;
-            /** Price */
-            price?: number | null;
-        };
-        /** Profile */
-        Profile: {
-            user: components["schemas"]["UserBase"];
-            details: components["schemas"]["CustomerBase"];
-        };
-        /** ResetPasswordRequest */
-        ResetPasswordRequest: {
-            /** Email */
-            email: string;
-            /** Otp */
-            otp: string;
-            /** New Password */
-            new_password: string;
-        };
-        /** ReviewCreate */
-        ReviewCreate: {
-            /** Rating */
-            rating: number;
-            /** Review */
-            review: string;
-        };
-        /** ReviewResponse */
-        ReviewResponse: {
-            /** Id */
-            id: number;
-            /** Review */
-            review: string;
-            /** Rating */
-            rating: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-        };
-        /** ReviewUpdate */
-        ReviewUpdate: {
-            /** Rating */
-            rating: number;
-            /** Review */
-            review?: string | null;
-        };
-        /** ReviewsResponse */
-        ReviewsResponse: {
-            /** Id */
-            id: number;
-            /** Review */
-            review: string;
-            /** Rating */
-            rating: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            author: components["schemas"]["UserOut"];
-        };
-        /** StatsSchema */
-        StatsSchema: {
-            /** Id */
-            id: number;
-            /** Average Rating */
-            average_rating: number;
-            /** Total Reviews */
             total_reviews: number;
-            /** Work Experience */
-            work_experience: number;
-            /** Patient Count */
-            patient_count: number;
+            has_favorited: boolean;
+            clinic: string;
+            doctor_category: {
+                id: string;
+                title: string;
+            };
         };
-        /** UserBase */
-        UserBase: {
-            /** Id */
-            id: number;
-            /** Name */
-            name: string;
-            /**
-             * Email
-             * Format: email
-             */
-            email: string;
-            /** Image */
-            image: string;
-            /** Status */
-            status: boolean;
-            role: components["schemas"]["UserRole"];
-        };
-        /** UserCreate */
-        UserCreate: {
-            /** Name */
-            name: string;
-            /**
-             * Email
-             * Format: email
-             */
-            email: string;
-            /** Password */
-            password: string;
-            /** Fincode */
-            finCode: string;
-            gender: components["schemas"]["GenderEnumSchema"];
-            /** Phone */
-            phone: string;
-            /**
-             * Birthday
-             * Format: date
-             */
-            birthday: string;
-            /** City */
-            city: string;
-            /** Region */
-            region: string;
-            /** Street */
-            street: string;
-            /** Address */
-            address: string;
-        };
-        /** UserField */
-        UserField: {
-            /** Id */
-            id: number;
-            /** Name */
-            name: string;
-            /** Image */
-            image: string;
-        };
-        /** UserLogin */
-        UserLogin: {
-            /**
-             * Email
-             * Format: email
-             */
-            email: string;
-            /** Password */
-            password: string;
-        };
-        /** UserOut */
-        UserOut: {
-            /** Id */
-            id: number;
-            /** Name */
-            name: string;
-            /** Image */
-            image: string;
-        };
-        /** UserResponse */
-        UserResponse: {
-            /** Id */
-            id: number;
-            /** Name */
-            name?: string | null;
-            /** Email */
-            email: string;
-            /** Image */
-            image?: string | null;
-            /** Status */
-            status: boolean;
-            role: components["schemas"]["UserRole"];
+        /** DoctorListResource */
+        DoctorListResource: {
+            id: string;
+            average_rating: string | 0;
+            user: components["schemas"]["UserResource"];
+            doctor_category: {
+                id: string;
+                title: string;
+            };
+            clinic: string;
+            has_favorited: boolean;
         };
         /**
-         * UserRole
+         * FavoriteTypeEnum
          * @enum {string}
          */
-        UserRole: "admin" | "customer" | "doctor" | "brunch" | "clinic" | "pharmacy";
-        /** ValidationError */
-        ValidationError: {
-            /** Location */
-            loc: (string | number)[];
-            /** Message */
-            msg: string;
-            /** Error Type */
-            type: string;
-        };
-        /** SuccessResponse */
-        routers__auth__SuccessResponse: {
-            /** Message */
-            message: string;
-        };
-        /** UpdateUserRequest */
-        routers__user__user__UpdateUserRequest: {
-            /**
-             * Image
-             * @default
-             */
-            image: string;
-            /**
-             * Phone
-             * @default
-             */
-            phone: string;
-            /**
-             * Address
-             * @default
-             */
-            address: string;
-            /**
-             * City
-             * @default
-             */
-            city: string;
-            /**
-             * Street
-             * @default
-             */
-            street: string;
-            /**
-             * Region
-             * @default
-             */
-            region: string;
-            /**
-             * Password
-             * @default
-             */
+        FavoriteTypeEnum: "doctor" | "pharmacy" | "clinic";
+        /**
+         * GenderEnum
+         * @enum {string}
+         */
+        GenderEnum: "male" | "female";
+        /** LoginRequest */
+        LoginRequest: {
+            /** Format: email */
+            email: string;
             password: string;
-            /**
-             * Re Password
-             * @default
-             */
-            re_password: string;
-            /**
-             * New Password
-             * @default
-             */
-            new_password: string;
         };
-        /** UpdateUserRequest */
-        routers__user__user_admin__UpdateUserRequest: {
-            /** Name */
-            name?: string | null;
-            /** Status */
+        /** PharmacyDetailResource */
+        PharmacyDetailResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
+            address: string;
+            about: string;
+            city: string;
+            average_rating: number;
+            reviews_count: number;
+            work_experience: number;
+            patient_count: number;
+        };
+        /** PharmacyFavoriteResource */
+        PharmacyFavoriteResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
+            slug: string;
+            city: string;
+            average_rating: number;
+            reviews_count: number;
+            has_favorited: boolean;
+        };
+        /** PharmacyListResource */
+        PharmacyListResource: {
+            id: string;
+            user: {
+                id: string;
+                name: string;
+                image: string;
+            };
+            slug: string;
+            city: string;
+            has_favorited: boolean;
+            average_rating: number;
+            reviews_count: number;
+        };
+        /** ProductResource */
+        ProductResource: {
+            id: number;
+            name: string;
+            stock: number;
+            price: number;
+            image: string | null;
+            pharmacy_id: number;
+            has_favorited: boolean;
+            average_rating: number;
+            reviews_count: number;
+            purchases: number;
+        };
+        /** RegisterCustomerRequest */
+        RegisterCustomerRequest: {
+            name: string;
+            /** Format: email */
+            email: string;
+            password: string;
+            fin_code: string;
+            gender: components["schemas"]["GenderEnum"];
+            phone: string;
+            /** Format: date-time */
+            birthday: string;
+            city: string;
+            region: string;
+            street: string;
+            address: string;
+        };
+        /** StoreBlogRequest */
+        StoreBlogRequest: {
+            title?: string | null;
+            slug?: string | null;
+            description: string;
+            text: string;
+            keywords?: string | null;
+            image?: string | null;
+            status?: boolean;
+        };
+        /** UpdateBlogRequest */
+        UpdateBlogRequest: {
+            title?: string | null;
+            slug?: string | null;
+            description?: string;
+            text?: string;
+            keywords?: string | null;
+            image?: string | null;
+            status?: boolean;
+        };
+        /** UpdateClinicRequest */
+        UpdateClinicRequest: {
+            user_id?: number;
+            phone?: string;
+            city?: string;
+            address?: string | null;
+            about?: string | null;
+        };
+        /** UpdateCustomerRequest */
+        UpdateCustomerRequest: {
+            fin_code?: string;
+            /** @enum {string} */
+            gender?: "male" | "female" | "other";
+            phone?: string;
+            /** Format: date-time */
+            birthday?: string;
+            city?: string;
+            region?: string;
+            street?: string;
+            address?: string;
+        };
+        /** UpdateDoctorCategoryRequest */
+        UpdateDoctorCategoryRequest: {
+            title: string;
+            keywords?: string | null;
+            image?: string | null;
             status?: boolean | null;
-            role?: components["schemas"]["UserRole"] | null;
         };
-        /** SuccessResponse */
-        schemas__user__SuccessResponse: {
-            /** Access Token */
-            access_token: string;
-            /** Token Type */
-            token_type: string;
+        /** UpdateProductRequest */
+        UpdateProductRequest: {
+            pharmacy_id?: number;
+            name?: string;
+            stock?: number;
+            price?: number;
+            image?: string | null;
+        };
+        /** UserResource */
+        UserResource: {
+            id: number;
+            name: string;
+            image: string | null;
         };
     };
-    responses: never;
+    responses: {
+        /** @description Validation error */
+        ValidationException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Errors overview. */
+                    message: string;
+                    /** @description A detailed description of each field that failed validation. */
+                    errors: {
+                        [key: string]: string[];
+                    };
+                };
+            };
+        };
+        /** @description Unauthenticated */
+        AuthenticationException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
+        /** @description Authorization error */
+        AuthorizationException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
+        /** @description Not found */
+        ModelNotFoundException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
+    };
     parameters: never;
     requestBodies: never;
     headers: never;
@@ -2617,7 +1212,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    root__get: {
+    "appointment.getDoctorAppointments": {
         parameters: {
             query?: never;
             header?: never;
@@ -2626,117 +1221,111 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `AppointmentDoctorResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["AppointmentDoctorResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    } | {
+                        /** @enum {string} */
+                        message: "Appointment tapılmadı";
+                    };
                 };
             };
         };
     };
-    login_token_post: {
+    "appointment.createAppointment": {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                modelType: string;
+                modelId: number;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/x-www-form-urlencoded": components["schemas"]["Body_login_token_post"];
+                "application/json": components["schemas"]["CreateAppointmentRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
-            200: {
+            /** @description `AppointmentBaseResource` */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["schemas__user__SuccessResponse"];
+                    "application/json": components["schemas"]["AppointmentBaseResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        message: string;
+                    };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
-    login_api_auth_login_post: {
+    "appointment.cancelAppointment": {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                appointmentId: number;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UserLogin"];
+                "application/json": components["schemas"]["CancelAppointmentRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AuthResponse"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Appointment cancelled";
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        message: string;
+                    };
                 };
             };
+            422: components["responses"]["ValidationException"];
         };
     };
-    register_api_auth_register_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UserCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AuthResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    me_api_auth_me_get: {
+    "appointment.getCustomerAppointments": {
         parameters: {
             query?: never;
             header?: never;
@@ -2745,18 +1334,190 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `AppointmentCustomerResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserBase"] | null;
+                    "application/json": components["schemas"]["AppointmentCustomerResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    } | {
+                        /** @enum {string} */
+                        message: "Appointment tapılmadı";
+                    };
                 };
             };
         };
     };
-    logout_api_auth_logout_get: {
+    "appointment.acceptAppointment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                appointmentId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Appointment accepted";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Appointment tapılmadı";
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "appointment.completeAppointment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                appointmentId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Appointment completed";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Appointment tapılmadı";
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "auth.login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        user: components["schemas"]["UserResource"];
+                        access_token: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Giriş zamanı xəta baş verdi";
+                        error: string | "Server xətası";
+                    };
+                };
+            };
+        };
+    };
+    "auth.register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterCustomerRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        user: components["schemas"]["UserResource"];
+                        access_token: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "auth.me": {
         parameters: {
             query?: never;
             header?: never;
@@ -2765,21 +1526,74 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description `UserResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
+                    "application/json": {
+                        data: components["schemas"]["UserResource"];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "auth.logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Uğurla çıxış edildi";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "blog.index": {
+        parameters: {
+            query?: {
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `BlogResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["BlogResource"][];
+                    };
                 };
             };
         };
     };
-    forgot_password_api_auth_forgot_password_post: {
+    "blog.search": {
         parameters: {
             query: {
-                email: string;
+                q: string;
+                skip?: number;
+                limit?: number;
             };
             header?: never;
             path?: never;
@@ -2787,336 +1601,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `BlogResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
+                    "application/json": {
+                        data: components["schemas"]["BlogResource"][];
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            422: components["responses"]["ValidationException"];
         };
     };
-    check_otp_api_auth_check_otp_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CheckOtpRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    reset_password_api_auth_reset_password_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ResetPasswordRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    google_login_api_auth_google_login_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["GoogleAuthRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AuthResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_profile_api_user_profile_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Profile"];
-                };
-            };
-        };
-    };
-    update_user_profile_api_user_profile_put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["routers__user__user__UpdateUserRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_doctor_profile_api_user_profile_doctor_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorProfile"];
-                };
-            };
-        };
-    };
-    list_users_api_admin_user_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponse"][];
-                };
-            };
-        };
-    };
-    get_user_api_admin_user__user_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                user_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_user_api_admin_user__user_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                user_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["routers__user__user_admin__UpdateUserRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_user_api_admin_user__user_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                user_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_all_blogs_api_blogs__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BlogResponse"][];
-                };
-            };
-        };
-    };
-    get_blog_api_blogs__slug__get: {
+    "blog.show": {
         parameters: {
             query?: never;
             header?: never;
@@ -3127,47 +1626,20 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description `BlogResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BlogResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        data: components["schemas"]["BlogResource"];
+                    };
                 };
             };
         };
     };
-    get_all_blogs_api_admin_blogs__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BlogResponse"][];
-                };
-            };
-        };
-    };
-    create_blog_api_admin_blogs__post: {
+    "blog.store": {
         parameters: {
             query?: never;
             header?: never;
@@ -3176,1049 +1648,161 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["BlogCreate"];
+                "application/json": components["schemas"]["StoreBlogRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BlogResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    upload_blogs_api_admin_blogs_yukle_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    update_blog_api_admin_blogs__slug__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BlogUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BlogResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_blog_api_admin_blogs__slug__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BlogResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_all_api_doctor_category__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryList"][];
-                };
-            };
-        };
-    };
-    get_one_api_doctor_category__slug__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_all_api_admin_doctor_category__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryResponse"][];
-                };
-            };
-        };
-    };
-    create_api_admin_doctor_category__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DoctorCategoryCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_api_admin_doctor_category__slug__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DoctorCategoryUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_api_admin_doctor_category__slug__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_all_customers_api_admin_customers__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerOut"][];
-                };
-            };
-        };
-    };
-    get_customer_api_admin_customers__customer_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                customer_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_customer_api_admin_customers__customer_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                customer_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CustomerUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CustomerOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_customer_api_admin_customers__customer_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                customer_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_stats_api_product_stats_stats_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductStats"][];
-                };
-            };
-        };
-    };
-    create_stat_api_product_stats_stats_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProductStatsCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductStats"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_stat_api_product_stats_stats__stat_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                stat_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductStats"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_stat_api_product_stats_stats__stat_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                stat_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProductStatsCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductStats"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_stat_api_product_stats_stats__stat_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                stat_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_reviews_api_reviews__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReviewsResponse"][];
-                };
-            };
-        };
-    };
-    get_reviews_for_model_api_reviews__model___model_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                model: string;
-                model_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReviewsResponse"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_review_api_reviews__user_id__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                user_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReviewCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
+            /** @description `BlogResource` */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ReviewResponse"];
+                    "application/json": {
+                        data: components["schemas"]["BlogResource"];
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
-    update_review_api_reviews__review_id__put: {
+    "blog.destroy": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                review_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReviewUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ReviewResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_review_api_reviews__review_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                review_id: number;
+                slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Validation Error */
-            422: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Blog uğurla silindi";
+                    };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
         };
     };
-    get_appointments_doctors_api_appointment_doctor_get: {
+    "blog.update": {
         parameters: {
             query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UpdateBlogRequest"];
+            };
+        };
+        responses: {
+            /** @description `BlogResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["BlogResource"];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "clinic.index": {
+        parameters: {
+            query?: {
+                search?: string;
+                limit?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `ClinicListResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AppointmentsDoctorResponse"][];
+                    "application/json": components["schemas"]["ClinicListResource"][];
                 };
             };
         };
     };
-    get_appointment_customer_api_appointment_customer_get: {
+    "clinic.show": {
         parameters: {
             query?: never;
+            header?: never;
+            path: {
+                clinicId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `ClinicDetailResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClinicDetailResource"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Clinic not found";
+                    };
+                };
+            };
+        };
+    };
+    "clinic.adminIndex": {
+        parameters: {
+            query?: {
+                search?: string;
+                limit?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `ClinicAdminResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AppointmentCustomerResponse"][];
+                    "application/json": components["schemas"]["ClinicAdminResource"][];
                 };
             };
+            401: components["responses"]["AuthenticationException"];
         };
     };
-    accept_appointment_api_appointment_accept__appoiment_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                appoiment_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    complate_appointment_api_appointment_complate__appointment_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                appointment_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_appointment_api_appointment__model_type___model_id__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                model_type: components["schemas"]["ModelType"];
-                model_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AppointmentCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AppointmentBase"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    cancel_appointment_api_appointment__item_id__put: {
-        parameters: {
-            query: {
-                reason: string;
-            };
-            header?: never;
-            path: {
-                item_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_appointments_api_admin_appointment__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AppointmentBase"][];
-                };
-            };
-        };
-    };
-    show_appointment_api_admin_appointment__item_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                item_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AppointmentBase"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_appointment_api_admin_appointment__item_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                item_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AppointmentUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AppointmentBase"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_appointment_api_admin_appointment__item_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                item_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_appointment_api_admin_appointment__model_type___model_id__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                model_type: string;
-                model_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AppointmentCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AppointmentBase"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_baskets_api_baskets__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BasketResponse"][];
-                };
-            };
-        };
-    };
-    create_basket_api_baskets__post: {
+    "clinic.store": {
         parameters: {
             query?: never;
             header?: never;
@@ -4227,126 +1811,111 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["BasketCreate"];
+                "application/json": components["schemas"]["CreateClinicRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description `ClinicDetailResource` */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BasketResponse"];
+                    "application/json": components["schemas"]["ClinicDetailResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Failed to create clinic";
+                        error: string;
+                    };
                 };
             };
         };
     };
-    get_basket_api_baskets__basket_id__get: {
+    "clinic.update": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                basket_id: number;
+                clinicId: number;
             };
             cookie?: never;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BasketResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_basket_api_baskets__basket_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                basket_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
+        requestBody?: {
             content: {
-                "application/json": components["schemas"]["BasketUpdate"];
+                "application/json": components["schemas"]["UpdateClinicRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description `ClinicDetailResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BasketResponse"];
+                    "application/json": components["schemas"]["ClinicDetailResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Clinic not found";
+                    };
                 };
             };
+            422: components["responses"]["ValidationException"];
         };
     };
-    delete_basket_api_baskets__basket_id__delete: {
+    "clinic.destroy": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                basket_id: number;
+                clinicId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Validation Error */
-            422: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        content: "Clinic deleted successfully";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Clinic not found";
+                    };
                 };
             };
         };
     };
-    list_transactions_api_transactions__get: {
+    "customer.index": {
         parameters: {
             query?: never;
             header?: never;
@@ -4355,18 +1924,236 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `CustomerResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductTransactionResponse"][];
+                    "application/json": {
+                        data: components["schemas"]["CustomerResource"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "customer.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `CustomerResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CustomerResource"];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Müştəri tapılmadı";
+                    };
                 };
             };
         };
     };
-    create_transaction_api_transactions__post: {
+    "customer.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UpdateCustomerRequest"];
+            };
+        };
+        responses: {
+            /** @description `CustomerResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CustomerResource"];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Müştəri tapılmadı";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Müştəri yenilənərkən xəta baş verdi";
+                        error: string;
+                    };
+                };
+            };
+        };
+    };
+    "customer.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Müştəri uğurla silindi";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Müştəri tapılmadı";
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Müştəri silinərkən xəta baş verdi";
+                        error: string;
+                    };
+                };
+            };
+        };
+    };
+    "doctor.index": {
+        parameters: {
+            query?: {
+                search?: string;
+                category?: string;
+                limit?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `DoctorListResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorListResource"][];
+                };
+            };
+        };
+    };
+    "doctor.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doctorId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `DoctorDetailResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorDetailResource"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor not found";
+                    };
+                };
+            };
+        };
+    };
+    "doctor.adminIndex": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `DoctorAdminResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorAdminResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "doctor.store": {
         parameters: {
             query?: never;
             header?: never;
@@ -4375,126 +2162,66 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProductTransactionCreate"];
+                "application/json": components["schemas"]["CreateDoctorRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductTransactionResponse"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor registered successfully";
+                        /** @enum {integer} */
+                        status_code: 200;
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
-    get_transaction_api_transactions__transaction_id__get: {
+    "doctor.destroy": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                transaction_id: number;
+                doctorId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductTransactionResponse"];
+                    "application/json": {
+                        /** @enum {string} */
+                        content: "Doctor deleted successfully";
+                        /** @enum {integer} */
+                        status_code: 200;
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor not found";
+                    };
                 };
             };
         };
     };
-    update_transaction_api_transactions__transaction_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                transaction_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProductTransactionUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductTransactionResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_transaction_api_transactions__transaction_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                transaction_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_brunches_api_brunches__get: {
+    "doctorCategory.index": {
         parameters: {
             query?: never;
             header?: never;
@@ -4503,86 +2230,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `DoctorCategoryListResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BrunchOut"][];
+                    "application/json": components["schemas"]["DoctorCategoryListResource"][];
                 };
             };
         };
     };
-    create_brunch_api_brunches__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BrunchCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BrunchOut"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_brunch_api_brunches__brunch_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                brunch_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_products_api_product__get: {
+    "doctorCategory.search": {
         parameters: {
             query?: {
-                search?: string | null;
-                limit?: number;
+                q?: string;
             };
             header?: never;
             path?: never;
@@ -4590,161 +2252,72 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `DoctorCategoryListResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Product"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["DoctorCategoryListResource"][];
                 };
             };
         };
     };
-    create_product_api_product__post: {
+    "doctorCategory.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `DoctorCategoryResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DoctorCategoryResource"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor Category not found";
+                    };
+                };
+            };
+        };
+    };
+    "doctorCategory.adminIndex": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProductCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_by_pharmacy_api_product__pharmacy_id__get: {
-        parameters: {
-            query?: {
-                search?: string | null;
-                limit?: number;
-            };
-            header?: never;
-            path: {
-                pharmacy_id: number;
-            };
-            cookie?: never;
-        };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `DoctorCategoryResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Product"][];
+                    "application/json": components["schemas"]["DoctorCategoryResource"][];
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
-    update_product_api_product__product_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                product_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProductCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Product"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_products_api_admin_product__get: {
-        parameters: {
-            query?: {
-                search?: string | null;
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ProductBase"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_product_api_admin_product__post: {
+    "doctorCategory.store": {
         parameters: {
             query?: never;
             header?: never;
@@ -4753,131 +2326,99 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProductCreate"];
+                "application/json": components["schemas"]["CreateDoctorCategoryRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
-            200: {
+            /** @description `DoctorCategoryResource` */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["DoctorCategoryResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
-    list_by_pharmacy_api_admin_product__pharmacy_id__get: {
+    "doctorCategory.destroy": {
         parameters: {
-            query?: {
-                search?: string | null;
-                limit?: number;
-            };
+            query?: never;
             header?: never;
             path: {
-                pharmacy_id: number;
+                slug: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductBase"][];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor Category deleted successfully";
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor Category not found";
+                    };
                 };
             };
         };
     };
-    update_product_api_admin_product__product_id__put: {
+    "doctorCategory.update": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                product_id: number;
+                slug: string;
             };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProductCreate"];
+                "application/json": components["schemas"]["UpdateDoctorCategoryRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description `DoctorCategoryResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductBase"];
+                    "application/json": components["schemas"]["DoctorCategoryResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor Category not found";
+                    };
                 };
             };
+            422: components["responses"]["ValidationException"];
         };
     };
-    delete_product_api_admin_product__product_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                product_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_doctor_favorites_api_favorites_doctor_get: {
+    "favorite.getDoctorFavorites": {
         parameters: {
             query?: never;
             header?: never;
@@ -4886,18 +2427,29 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `DoctorFavoriteResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorOut"][];
+                    "application/json": components["schemas"]["DoctorFavoriteResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    };
                 };
             };
         };
     };
-    get_pharmacy_favorites_api_favorites_pharmacy_get: {
+    "favorite.getPharmacyFavorites": {
         parameters: {
             query?: never;
             header?: never;
@@ -4906,18 +2458,29 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `PharmacyFavoriteResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PharmaciesResponse"][];
+                    "application/json": components["schemas"]["PharmacyFavoriteResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    };
                 };
             };
         };
     };
-    get_clinic_favorites_api_favorites_clinic_get: {
+    "favorite.getClinicFavorites": {
         parameters: {
             query?: never;
             header?: never;
@@ -4926,87 +2489,108 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `ClinicFavoriteResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClinicsResponse"][];
+                    "application/json": components["schemas"]["ClinicFavoriteResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message: string;
+                    };
                 };
             };
         };
     };
-    add_favorite_api_favorites__model_type___model_id__get: {
+    "favorite.addFavorite": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                model_type: components["schemas"]["FavoriteType"];
-                model_id: number;
+                /** @description The model type ID */
+                modelType: components["schemas"]["FavoriteTypeEnum"];
+                modelId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": string;
                 };
             };
-            /** @description Validation Error */
-            422: {
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        detail: "Favorite added";
+                    };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
-    remove_favorite_api_favorites__model_type___model_id__delete: {
+    "favorite.removeFavorite": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                model_type: components["schemas"]["FavoriteType"];
-                model_id: number;
+                /** @description The model type ID */
+                modelType: components["schemas"]["FavoriteTypeEnum"];
+                modelId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": {
+                        /** @enum {string} */
+                        detail: "Favorite removed";
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Invalid model type";
+                    };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
-    list_doctors_api_doctors__get: {
+    "pharmacy.index": {
         parameters: {
             query?: {
                 search?: string;
-                category?: number;
-                limit?: number;
+                limit?: string;
             };
             header?: never;
             path?: never;
@@ -5014,328 +2598,55 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `PharmacyListResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorOut"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["PharmacyListResource"][];
                 };
             };
         };
     };
-    get_doctor_api_doctors__doctor_id__get: {
+    "pharmacy.show": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                doctor_id: number;
+                pharmacyId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description `PharmacyDetailResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorResponse"];
+                    "application/json": components["schemas"]["PharmacyDetailResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Pharmacy not found";
+                    };
                 };
             };
         };
     };
-    list_doctors_api_admin_doctors__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorsAdminResponse"][];
-                };
-            };
-        };
-    };
-    upload_doctor_api_admin_doctors_yukle_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    delete_doctor_api_admin_doctors__doctor_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                doctor_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    register_doctor_api_admin_doctors_register_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DoctorRegisterSchama"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["routers__auth__SuccessResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_clinics_api_clinic__get: {
-        parameters: {
-            query?: {
-                search?: string | null;
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ClinicsResponse"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_clinic_api_clinic__post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ClinicCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ClinicResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_clinic_api_clinic__clinic_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                clinic_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ClinicResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_clinic_api_clinic__clinic_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                clinic_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ClinicUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ClinicResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_clinic_api_clinic__clinic_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                clinic_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_clinics_api_admin_clinic__get: {
+    "pharmacy.adminIndex": {
         parameters: {
             query?: {
                 search?: string;
-                limit?: number;
+                limit?: string;
             };
             header?: never;
             path?: never;
@@ -5343,27 +2654,19 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `PharmacyListResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClinicsAdminResponse"][];
+                    "application/json": components["schemas"]["PharmacyListResource"][];
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
-    create_clinic_api_admin_clinic__post: {
+    "pharmacy.store": {
         parameters: {
             query?: never;
             header?: never;
@@ -5372,121 +2675,112 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ClinicCreate"];
+                "application/json": components["schemas"]["CreatePharmacyRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
-            200: {
+            /** @description `PharmacyDetailResource` */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClinicResponse"];
+                    "application/json": components["schemas"]["PharmacyDetailResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Failed to create pharmacy";
+                        error: string;
+                    };
                 };
             };
         };
     };
-    upload_clinic_api_admin_clinic_yukle_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    update_clinic_api_admin_clinic__clinic_id__put: {
+    "pharmacy.update": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                clinic_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ClinicUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ClinicResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_clinic_api_admin_clinic__clinic_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                clinic_id: number;
+                pharmacyId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description `PharmacyDetailResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["PharmacyDetailResource"];
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Pharmacy not found";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "pharmacy.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pharmacyId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        detail: "Pharmacy deleted successfully";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Pharmacy not found";
+                    };
                 };
             };
         };
     };
-    get_pharmacies_api_pharmacies__get: {
+    "product.index": {
         parameters: {
             query?: {
                 search?: string;
-                limit?: number;
+                limit?: string;
             };
             header?: never;
             path?: never;
@@ -5494,189 +2788,38 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Array of `ProductResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PharmaciesResponse"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ProductResource"][];
                 };
             };
         };
     };
-    create_pharmacy_api_pharmacies__post: {
+    "product.adminIndex": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PharmacyCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_pharmacy_api_pharmacies__pharmacy_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                pharmacy_id: number;
-            };
-            cookie?: never;
-        };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PharmacyResponse"];
+                    "application/json": string;
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
-    update_pharmacy_api_pharmacies__pharmacy_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                pharmacy_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PharmacyUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_pharmacy_api_pharmacies__pharmacy_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                pharmacy_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_pharmacies_api_admin_pharmacy__get: {
-        parameters: {
-            query?: {
-                search?: string;
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PharmaciesResponse"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_pharmacy_api_admin_pharmacy__post: {
+    "product.store": {
         parameters: {
             query?: never;
             header?: never;
@@ -5685,309 +2828,92 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["PharmacyCreate"];
+                "application/json": components["schemas"]["CreateProductRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
-            200: {
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
-    upload_pharmacy_api_admin_pharmacy_yukle_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    update_pharmacy_api_admin_pharmacy__pharmacy_id__put: {
+    "product.update": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                pharmacy_id: number;
+                productId: number;
             };
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: {
             content: {
-                "application/json": components["schemas"]["PharmacyUpdate"];
+                "application/json": components["schemas"]["UpdateProductRequest"];
             };
         };
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": Record<string, never>;
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Product tapılmadı";
+                    };
                 };
             };
+            422: components["responses"]["ValidationException"];
         };
     };
-    delete_pharmacy_api_admin_pharmacy__pharmacy_id__delete: {
+    "product.destroy": {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                pharmacy_id: number;
+                productId: number;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": unknown;
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Product silindi";
+                    };
                 };
             };
-            /** @description Validation Error */
-            422: {
+            401: components["responses"]["AuthenticationException"];
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    upload_result_api_analyzesresult_upload_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/x-www-form-urlencoded": components["schemas"]["Body_upload_result_api_analyzesresult_upload_post"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AnalyzesResultResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_results_api_analyzesresult_results__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AnalyzesResultResponse"][];
-                };
-            };
-        };
-    };
-    download_result_api_analyzesresult_download__result_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                result_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_customer_chats_api_chats__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ChatResponse"][];
-                };
-            };
-        };
-    };
-    get_api_chat__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    list_doctor_stats_api_stats_doctor_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StatsSchema"];
-                };
-            };
-        };
-    };
-    list_notifications_api_notifications__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Notifications"][];
-                };
-            };
-        };
-    };
-    contact_api_mail_contact_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ContactRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ContactResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Product tapılmadı";
+                    };
                 };
             };
         };

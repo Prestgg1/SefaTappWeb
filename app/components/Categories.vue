@@ -50,7 +50,7 @@
   
   onMounted(async () => {
     try {
-      const req = await client.GET('/api/doctor_category/')
+      const req = await client.GET('/doctor-categories')
       categories.value = req.data ?? []
     } catch (err) {
       console.error('Kategoriya yüklənmədi:', err)
