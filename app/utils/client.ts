@@ -1,10 +1,10 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "../types/schema"; 
-/* ip_1:https://bimonet.com/
-   ip_2: http://192.100.1.69:8000
+/* 
+   a
 */
 const client = createClient<paths>({
-    baseUrl: "http://192.168.1.69:8000/api",
+    baseUrl: "http://api.safatapp.com/api",
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
