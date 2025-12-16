@@ -1,28 +1,28 @@
 import createClient from "openapi-fetch";
-import type { components, paths } from "../types/schema"; 
+import type { components, paths } from "../types/schema";
 /* 
    a
 */
 const client = createClient<paths>({
-    baseUrl: "http://api.safatapp.com/api",
-    headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-    },
-    async fetch(input) {
-        const token = useCookie("token");
-        if (token.value) {
-          input.headers.set('Authorization', `Bearer ${token.value}`)
-        }
-    
-        const response = await fetch(input)
-    
-        if (response.status === 401) {
-            token.value = undefined
-            window.location.href = '/application/login'
-        }
-        return response
-      },
+  baseUrl: "https://api.safatapp.com/api",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
+  async fetch(input) {
+    const token = useCookie("token");
+    if (token.value) {
+      input.headers.set('Authorization', `Bearer ${token.value}`)
+    }
+
+    const response = await fetch(input)
+
+    if (response.status === 401) {
+      token.value = undefined
+      window.location.href = '/application/login'
+    }
+    return response
+  },
 });
 export default client;
 export type ServerClient = typeof client;
