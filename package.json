@@ -3,11 +3,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "NODE_OPTIONS='--no-webstorage' nuxt build",
-    "dev": "NODE_OPTIONS='--no-webstorage' nuxt dev",
-    "generate": "NODE_OPTIONS='--no-webstorage' nuxt generate",
-    "preview": "NODE_OPTIONS='--no-webstorage' nuxt preview",
-    "postinstall": "NODE_OPTIONS='--no-webstorage' nuxt prepare"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@nuxt/image": "1.11.0",
