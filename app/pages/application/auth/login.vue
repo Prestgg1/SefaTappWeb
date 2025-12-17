@@ -27,7 +27,7 @@
               <label class="block text-sm font-medium text-gray-700 mb-2" for="password">
                 Şifrə
               </label>
-              <NuxtLink to="/application/forgot_password" class="text-sm text-primary hover:underline">
+              <NuxtLink to="/application/auth/forgot-password" class="text-sm text-primary hover:underline">
                 Şifrəni unutmusunuz?
               </NuxtLink>
             </div>
