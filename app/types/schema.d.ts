@@ -4,6 +4,43 @@
  */
 
 export interface paths {
+    "/admin/admin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Display a listing of the resource */
+        get: operations["admin.index"];
+        put?: never;
+        /** Store a newly created resource in storage */
+        post: operations["admin.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/admin/{admin}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Display the specified resource */
+        get: operations["admin.show"];
+        /** Update the specified resource in storage */
+        put: operations["admin.update"];
+        post?: never;
+        /** Remove the specified resource from storage */
+        delete: operations["admin.destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/appointments/doctor": {
         parameters: {
             query?: never;
@@ -116,7 +153,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** Login user */
-        post: operations["auth.login"];
+        post: operations["login"];
         delete?: never;
         options?: never;
         head?: never;
@@ -133,7 +170,58 @@ export interface paths {
         get?: never;
         put?: never;
         /** Register customer */
-        post: operations["auth.register"];
+        post: operations["register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/forgot_password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send password reset link */
+        post: operations["forgot_password"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/check_otp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** OTP kodunu yoxla */
+        post: operations["check_otp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/reset_password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Yeni şifrə təyin et */
+        post: operations["resetPassword"];
         delete?: never;
         options?: never;
         head?: never;
@@ -694,6 +782,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/products/{pharmacyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public: Pharmacy-yə görə product list */
+        get: operations["product.listByPharmacy"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/admin/products": {
         parameters: {
             query?: never;
@@ -706,6 +811,23 @@ export interface paths {
         put?: never;
         /** Admin: Yeni product yarat */
         post: operations["product.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/products/{pharmacyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Admin: Pharmacy-yə görə productlar */
+        get: operations["product.adminListByPharmacy"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -730,10 +852,88 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Bütün reviewlar */
+        get: operations["review.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reviews/{model}/{modelId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Model üçün reviewlar (doctor, pharmacy, clinic) */
+        get: operations["review.getReviewsForModel"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reviews/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Yeni review yarat */
+        post: operations["review.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reviews/{reviewId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Review yenilə */
+        put: operations["review.update"];
+        post?: never;
+        /** Review sil */
+        delete: operations["review.destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Admin */
+        Admin: {
+            id: number;
+            user_id: number;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         /** AppointmentBaseResource */
         AppointmentBaseResource: {
             full_name: string;
@@ -773,6 +973,11 @@ export interface components {
             average_rating: number;
             date: string;
         };
+        /**
+         * AppointmentModelTypeEnum
+         * @enum {string}
+         */
+        AppointmentModelTypeEnum: "doctor" | "clinic" | "pharmacy";
         /** BlogResource */
         BlogResource: {
             id: number;
@@ -913,7 +1118,6 @@ export interface components {
         /** CustomerResource */
         CustomerResource: {
             id: number;
-            user_id: number;
             fin_code: string;
             gender: string;
             phone: string;
@@ -923,10 +1127,7 @@ export interface components {
             region: string;
             street: string;
             address: string;
-            /** Format: date-time */
-            created_at: string | null;
-            /** Format: date-time */
-            updated_at: string | null;
+            user: components["schemas"]["UserResource"];
         };
         /** DoctorAdminResource */
         DoctorAdminResource: {
@@ -1004,6 +1205,11 @@ export interface components {
          * @enum {string}
          */
         FavoriteTypeEnum: "doctor" | "pharmacy" | "clinic";
+        /** ForgotPasswordRequest */
+        ForgotPasswordRequest: {
+            /** Format: email */
+            email: string;
+        };
         /**
          * GenderEnum
          * @enum {string}
@@ -1059,6 +1265,17 @@ export interface components {
             average_rating: number;
             reviews_count: number;
         };
+        /** ProductBaseResource */
+        ProductBaseResource: {
+            id: string;
+            name: string;
+            stock: string;
+            price: number;
+            image: string;
+            pharmacy_id: string;
+            created_at: string;
+            updated_at: string;
+        };
         /** ProductResource */
         ProductResource: {
             id: number;
@@ -1088,6 +1305,29 @@ export interface components {
             street: string;
             address: string;
         };
+        /** ReviewResource */
+        ReviewResource: {
+            id: number;
+            review: string;
+            rating: number;
+            created_at: string;
+        };
+        /** ReviewsResource */
+        ReviewsResource: {
+            id: number;
+            review: string;
+            rating: number;
+            author?: components["schemas"]["UserResource"];
+            created_at: string;
+        };
+        /** StoreAdminRequest */
+        StoreAdminRequest: {
+            name: string;
+            /** Format: email */
+            email: string;
+            password: string;
+            password_confirmation: string;
+        };
         /** StoreBlogRequest */
         StoreBlogRequest: {
             title?: string | null;
@@ -1097,6 +1337,11 @@ export interface components {
             keywords?: string | null;
             image?: string | null;
             status?: boolean;
+        };
+        /** StoreReviewRequest */
+        StoreReviewRequest: {
+            rating: number;
+            review: string;
         };
         /** UpdateBlogRequest */
         UpdateBlogRequest: {
@@ -1144,12 +1389,23 @@ export interface components {
             price?: number;
             image?: string | null;
         };
+        /** UpdateReviewRequest */
+        UpdateReviewRequest: {
+            rating: number;
+            review?: string | null;
+        };
         /** UserResource */
         UserResource: {
             id: number;
             name: string;
             image: string | null;
+            role: components["schemas"]["UserRole"];
         };
+        /**
+         * UserRole
+         * @enum {string}
+         */
+        UserRole: "admin" | "customer" | "doctor" | "brunch" | "clinic" | "pharmacy";
     };
     responses: {
         /** @description Validation error */
@@ -1180,8 +1436,8 @@ export interface components {
                 };
             };
         };
-        /** @description Authorization error */
-        AuthorizationException: {
+        /** @description Not found */
+        ModelNotFoundException: {
             headers: {
                 [name: string]: unknown;
             };
@@ -1192,8 +1448,8 @@ export interface components {
                 };
             };
         };
-        /** @description Not found */
-        ModelNotFoundException: {
+        /** @description Authorization error */
+        AuthorizationException: {
             headers: {
                 [name: string]: unknown;
             };
@@ -1212,6 +1468,156 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "admin.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Admin"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "admin.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreAdminRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        /** @enum {string} */
+                        message: "Admin uğurla yaradıldı";
+                        data: components["schemas"]["Admin"];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /**
+             * @description Ümumi xətalar
+             *
+             *     Database xətaları
+             */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        /** @enum {string} */
+                        message: "Admin yaradılarkən xəta baş verdi";
+                        error: string | "Xəta baş verdi";
+                    } | {
+                        success: boolean;
+                        /** @enum {string} */
+                        message: "Database xətası baş verdi";
+                        error: string | "Xəta baş verdi";
+                    };
+                };
+            };
+        };
+    };
+    "admin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The admin ID */
+                admin: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `Admin` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Admin"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "admin.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The admin ID */
+                admin: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `Admin` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Admin"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "admin.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The admin ID */
+                admin: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description `Admin` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Admin"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
     "appointment.getDoctorAppointments": {
         parameters: {
             query?: never;
@@ -1251,7 +1657,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                modelType: string;
+                /** @description The model type ID */
+                modelType: components["schemas"]["AppointmentModelTypeEnum"];
                 modelId: number;
             };
             cookie?: never;
@@ -1282,6 +1689,7 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
         };
     };
@@ -1451,7 +1859,7 @@ export interface operations {
             };
         };
     };
-    "auth.login": {
+    login: {
         parameters: {
             query?: never;
             header?: never;
@@ -1490,7 +1898,7 @@ export interface operations {
             };
         };
     };
-    "auth.register": {
+    register: {
         parameters: {
             query?: never;
             header?: never;
@@ -1511,6 +1919,143 @@ export interface operations {
                     "application/json": {
                         user: components["schemas"]["UserResource"];
                         access_token: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    forgot_password: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ForgotPasswordRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "OTP kodu email ünvanınıza göndərildi.";
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Bu email ünvanıdd ilə istifadəçi tapılmadı";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Email göndərilməsində xəta baş verdi";
+                        error: string | "Server xətası";
+                    };
+                };
+            };
+        };
+    };
+    check_otp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    otp: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "OTP təsdiqləndi. Şifrəni dəyişmək üçün token istifadə et.";
+                        reset_token: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "OTP kodu yalnış və ya vaxtı bitmişdir.";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    resetPassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    reset_token: string;
+                    password: string;
+                    password_confirmation: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Şifrəniz uğurla yeniləndi.";
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Reset token yalnış və ya vaxtı bitmişdir.";
                     };
                 };
             };
@@ -2799,6 +3344,42 @@ export interface operations {
             };
         };
     };
+    "product.listByPharmacy": {
+        parameters: {
+            query?: {
+                search?: string;
+                limit?: string;
+            };
+            header?: never;
+            path: {
+                pharmacyId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ProductResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResource"][];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Product tapılmadı";
+                    };
+                };
+            };
+        };
+    };
     "product.adminIndex": {
         parameters: {
             query?: never;
@@ -2808,12 +3389,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Array of `ProductBaseResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["ProductBaseResource"][];
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -2832,16 +3414,51 @@ export interface operations {
             };
         };
         responses: {
+            /** @description `ProductBaseResource` */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>;
+                    "application/json": components["schemas"]["ProductBaseResource"];
                 };
             };
             401: components["responses"]["AuthenticationException"];
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "product.adminListByPharmacy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pharmacyId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ProductBaseResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductBaseResource"][];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Product tapılmadı";
+                    };
+                };
+            };
         };
     };
     "product.update": {
@@ -2859,12 +3476,13 @@ export interface operations {
             };
         };
         responses: {
+            /** @description `ProductBaseResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>;
+                    "application/json": components["schemas"]["ProductBaseResource"];
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -2913,6 +3531,209 @@ export interface operations {
                     "application/json": {
                         /** @enum {string} */
                         message: "Product tapılmadı";
+                    };
+                };
+            };
+        };
+    };
+    "review.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ReviewsResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewsResource"][];
+                };
+            };
+        };
+    };
+    "review.getReviewsForModel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                model: string;
+                modelId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ReviewsResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewsResource"][];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Invalid model type. Must be 'doctor', 'clinic', or 'pharmacy'.";
+                    };
+                };
+            };
+        };
+    };
+    "review.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description `ReviewResource` */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewResource"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Invalid user role for review";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor not found";
+                    } | {
+                        /** @enum {string} */
+                        message: "Pharmacy not found";
+                    } | {
+                        /** @enum {string} */
+                        message: "User not found";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "review.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                reviewId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description `ReviewsResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewsResource"];
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Unauthorized";
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Review not found";
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "review.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                reviewId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Unauthorized";
+                    };
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Review not found";
                     };
                 };
             };
