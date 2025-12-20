@@ -1,7 +1,8 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "../types/schema";
 /* 
-   a
+http://127.0.0.1:8000/api
+   "
 */
 const client = createClient<paths>({
   baseUrl: "https://api.safatapp.com/api",

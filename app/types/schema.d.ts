@@ -1169,7 +1169,18 @@ export interface components {
         };
         /** DoctorDetailResource */
         DoctorDetailResource: {
-            [key: string]: unknown;
+            id: string;
+            clinic: string;
+            about: string;
+            user: string;
+            category: {
+                id: string;
+                title: string;
+            };
+            average_rating: string | 0;
+            total_reviews: string | 0;
+            work_experience: string | 0;
+            patient_count: string | 0;
         };
         /** DoctorFavoriteResource */
         DoctorFavoriteResource: {

@@ -35,10 +35,10 @@
         </UDropdownMenu>
         <template v-if="!user">
 
-          <NuxtLink to="/application/login"
+          <NuxtLink to="/application/auth/login"
             class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">
             Daxil Ol</NuxtLink>
-          <NuxtLink to="/application/register" as="button"
+          <NuxtLink to="/application/auth/register" as="button"
             class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
             Qeydiyyatdan Keç
           </NuxtLink>

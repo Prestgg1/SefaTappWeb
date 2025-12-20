@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow container mx-auto px-6 py-12">
+  <main class="grow container mx-auto px-6 py-12">
     <div class="grid lg:grid-cols-3 gap-8">
 
       <!-- Sol tərəf -->
@@ -26,7 +26,7 @@
                 {{ doctor.user.name }}
               </h1>
               <p class="text-lg font-semibold text-primary mt-1">
-                {{ doctor?.doctor_category?.title }}
+                {{ doctor?.category?.title }}
               </p>
               <div class="flex items-center gap-4 mt-3 text-gray-500 dark:text-gray-400">
                 <div class="flex items-center gap-1.5">
@@ -45,7 +45,7 @@
           <!-- Haqqında -->
           <div v-if="doctor" class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-6 animate-fade-in-delay">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Haqqında</h2>
-            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ doctor?.abouts }}</p>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ doctor?.about }}</p>
           </div>
         </div>
 
@@ -135,6 +135,8 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router"
 import { onMounted, ref } from "vue"
+import Calendar from "~/components/Calendar.vue"
+import TimePicker from "~/components/TimePicker.vue"
 const toast = useToast()
 const isLoading = ref(false)
 const isConfirmOpen = ref(false)
@@ -156,8 +158,8 @@ const selectedTime = ref<string | null>(null)
 onMounted(async () => {
   try {
     loading.value = true
-    const res = await client.GET("/api/doctors/{doctor_id}", {
-      params: { path: { doctor_id: Number(route.params.id) } },
+    const res = await client.GET("/doctors/{doctorId}", {
+      params: { path: { doctorId: Number(route.params.id) } },
     })
     if (res.data) doctor.value = res.data
   } catch (err) {
@@ -188,20 +190,20 @@ const submitReservation = async () => {
     })
     /* TODO: Buraya bax. */
     if (req.error && req.error) {
-      if (typeof req.error.detail === "string") {
+      if (typeof req.error.message === "string") {
         toast.add({
           title: "Xəta",
-          description: req.error.detail,
+          description: req.error.message,
           color: "error",
         })
       }
       else {
-        for (const key in req.error.detail) {
-          toast.add({
-            title: "Xəta",
-            description: req.error.detail[key]?.msg,
-            color: "error",
-          })
+        for (const key in req.error) {
+          /*  toast.add({
+             title: "Xəta",
+             description: req.error[key]
+             color: "error",
+           }) */
         }
       }
     }

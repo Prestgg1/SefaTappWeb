@@ -36,23 +36,23 @@ useHead({
 const mainStore = useMainStore()
 const isLoading = ref(true)
 onMounted(() => {
-  client.GET("/api/chats/").then(res => {
+  client.GET("/chats").then(res => {
     console.log(res)
     isLoading.value = false
     res.data!.forEach((chat: Chats[number]) => {
       mainStore.addSidebarChat(chat)
-      mainStore.addMessage(chat.chat_id,chat.messages)
+      mainStore.addMessage(chat.chat_id, chat.messages)
     })
     console.log(mainStore.sidebar_chats)
     console.log(mainStore.messages)
-  })    
+  })
 })
 const token = useCookie('token')
 
-const chatSocket= useWebSocket(
+const chatSocket = useWebSocket(
   'wss://bimonet.com/ws/chats?token=' + token.value
 )
- 
+
 
 // ✅ Provide it to all child pages/components
 provide<UseWebSocketReturn>('chatSocket', chatSocket)
@@ -87,5 +87,4 @@ provide<UseWebSocketReturn>('chatSocket', chatSocket)
 </template>
 
 
- <!--    <Footer /> -->
-
+<!--    <Footer /> -->
