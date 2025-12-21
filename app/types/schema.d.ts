@@ -348,6 +348,23 @@ export interface paths {
         patch: operations["blog.update"];
         trace?: never;
     };
+    "/chats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** İstifadəçinin bütün chat-larını gətirir */
+        get: operations["chat.getUserChats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/clinics": {
         parameters: {
             query?: never;
@@ -618,12 +635,28 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        /** Admin: Kateqoriya sil */
-        delete: operations["doctorCategory.destroy"];
+        delete?: never;
         options?: never;
         head?: never;
         /** Admin: Kateqoriya yenilə */
         patch: operations["doctorCategory.update"];
+        trace?: never;
+    };
+    "/admin/doctor-categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Admin: Kateqoriya sil */
+        delete: operations["doctorCategory.destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/favorites/doctor": {
@@ -994,6 +1027,10 @@ export interface components {
         /** CancelAppointmentRequest */
         CancelAppointmentRequest: {
             reason: string;
+        };
+        /** ChatsResource */
+        ChatsResource: {
+            chat_id: string;
         };
         /** ClinicAdminResource */
         ClinicAdminResource: {
@@ -2278,6 +2315,29 @@ export interface operations {
             422: components["responses"]["ValidationException"];
         };
     };
+    "chat.getUserChats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Array of `ChatsResource` */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ChatsResource"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
     "clinic.index": {
         parameters: {
             query?: {
@@ -2899,42 +2959,6 @@ export interface operations {
             422: components["responses"]["ValidationException"];
         };
     };
-    "doctorCategory.destroy": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor Category deleted successfully";
-                    };
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor Category not found";
-                    };
-                };
-            };
-        };
-    };
     "doctorCategory.update": {
         parameters: {
             query?: never;
@@ -2972,6 +2996,42 @@ export interface operations {
                 };
             };
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "doctorCategory.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor Category deleted successfully";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Doctor Category not found";
+                    };
+                };
+            };
         };
     };
     "favorite.getDoctorFavorites": {

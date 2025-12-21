@@ -29,7 +29,7 @@ export default client;
 export type ServerClient = typeof client;
 export type Doctors = paths['/doctors']['get']['responses']['200']['content']['application/json']
 export type Categories = paths['/doctor-categories']['get']['responses']['200']['content']['application/json']
-export type Reviews = paths['/reviews/{model}{model_id}']['get']['responses']['200']['content']['application/json']
+export type Reviews = paths['/reviews/{model}/{modelId}']['get']['responses']['200']['content']['application/json']
 export type User = components['schemas']['UserResource']
 export type Chats = paths['/chats']['get']['responses']['200']['content']['application/json']
 

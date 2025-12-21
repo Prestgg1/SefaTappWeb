@@ -187,12 +187,11 @@ const resetPassword = async () => {
 
         isSuccess.value = true
 
-        // Countdown başlat və yönləndir
         const timer = setInterval(() => {
             countdown.value--
             if (countdown.value <= 0) {
                 clearInterval(timer)
-                router.push('/application/login')
+                router.push('/application/auth/login')
             }
         }, 1000)
 
@@ -205,8 +204,8 @@ const resetPassword = async () => {
 }
 
 onMounted(() => {
-    if (!token.value) {
-        router.push('/auth/forgot-password')
+    if (!token.value || !email.value) {
+        router.push('/application/auth/forgot-password')
     }
 })
 
@@ -214,13 +213,3 @@ definePageMeta({
     layout: 'auth',
 })
 </script>
-
-<style scoped>
-.bg-primary {
-    background-color: #226d63;
-}
-
-.text-primary {
-    color: #226d63;
-}
-</style>

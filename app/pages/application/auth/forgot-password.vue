@@ -97,7 +97,7 @@ const resetPassword = async () => {
                 color: 'success',
                 duration: 5000,
             })
-            router.push(`/application/otp?email=${email.value}`)
+            router.push(`/application/auth/otp?email=${email.value}`)
             isSuccess.value = true
             isLoading.value = false
         }

@@ -35,7 +35,7 @@
                     Təsdiq Kodu
                 </label>
                 <div class="flex gap-2 justify-center">
-                    <input v-for="(digit, index) in otpDigits" :key="index" :ref="el => otpInputs[index] = el"
+                    <input v-for="(digit, index) in otpDigits" :key="index" :ref="(el) => setInputRef(el, index)"
                         v-model="otpDigits[index]" type="text" inputmode="numeric" maxlength="1"
                         class="w-12 h-14 text-center text-2xl font-bold rounded-lg bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                         @input="handleInput(index, $event)" @keydown="handleKeyDown(index, $event)"
@@ -71,7 +71,7 @@
                 </p>
             </div>
             <div class="text-center">
-                <NuxtLink to="/auth/forgot-password"
+                <NuxtLink to="/application/auth/forgot-password"
                     class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline">
                     <Icon name="mdi:arrow-left" class="w-4 h-4" />
                     Geriyə qayıt
@@ -87,7 +87,8 @@ const router = useRouter()
 
 const email = ref(route.query.email as string || '')
 const otpDigits = ref(['', '', '', '', '', ''])
-const otpInputs = ref<HTMLInputElement[]>([])
+const otpInputs = ref<(HTMLInputElement | null)[]>([])
+
 const isLoading = ref(false)
 const isResending = ref(false)
 const error = ref('')
@@ -96,6 +97,13 @@ const countdown = ref(0)
 const isOTPComplete = computed(() => {
     return otpDigits.value.every(digit => digit !== '')
 })
+
+// Function to set input refs properly
+const setInputRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+    if (el instanceof HTMLInputElement) {
+        otpInputs.value[index] = el
+    }
+}
 
 const handleInput = (index: number, event: Event) => {
     const input = event.target as HTMLInputElement
@@ -146,8 +154,7 @@ const verifyOTP = async () => {
 
         console.log(req)
 
-        // OTP doğru olarsa, şifrə sıfırlama səhifəsinə yönləndir
-        router.push(`/reset-password?token=${req.data?.reset_token}`)
+        router.push(`/application/auth/reset_password?token=${req.data?.reset_token}&email=${email.value}`)
     } catch (err: any) {
         console.error('OTP verification failed:', err)
         error.value = err?.response?.data?.message || 'OTP yanlışdır və ya vaxtı bitib'
@@ -185,7 +192,7 @@ const resendOTP = async () => {
 
 onMounted(() => {
     if (!email.value) {
-        router.push('/auth/forgot-password')
+        router.push('/application/auth/forgot-password')
     }
     otpInputs.value[0]?.focus()
 })
