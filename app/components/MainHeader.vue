@@ -3,10 +3,7 @@
     <div class="container mx-auto px-6 py-4 flex items-center justify-between">
       <!-- Logo -->
       <div class="flex items-center gap-3">
-        <svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 48 48">
-          <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
-            d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" />
-        </svg>
+        <Logo />
         <NuxtLink to="/application">
           <h2 class="text-xl font-bold text-gray-900">ŞafaTapp</h2>
         </NuxtLink>
@@ -51,6 +48,7 @@
 
 <script setup lang="ts">
 import type { User } from '~/utils/client';
+import Logo from './Logo.vue';
 
 const emit = defineEmits<{ close: [boolean] }>()
 const isOpenLogin = ref(false)
