@@ -16,21 +16,19 @@ import {
     } else {
       if (token.value) {
         try {
-          const res = await client.GET("/api/auth/me", {
+          const res = await client.GET("/auth/me", {
             headers: {
               Authorization: `Bearer ${token.value}`,
             },
           });
           console.log(res)
-          const data = res.data!;
+          const {data} = res.data!;
   
           console.log("Kullanıcı verisi:", data);
           user.value = {
             id: data.id,
             name: data.name,
-            email: data.email,
             image: data.image,
-            status: data.status,
             role: data.role,
           };
           if (!data && (to.path === "/profile" || to.path === "/reservations")) {

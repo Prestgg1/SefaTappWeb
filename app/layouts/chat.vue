@@ -50,11 +50,10 @@ onMounted(() => {
 const token = useCookie('token')
 
 const chatSocket = useWebSocket(
-  'wss://bimonet.com/ws/chats?token=' + token.value
+  'ws://api.safatapp.com/ws/chats?token=' + token.value
 )
 
 
-// ✅ Provide it to all child pages/components
 provide<UseWebSocketReturn>('chatSocket', chatSocket)
 
 

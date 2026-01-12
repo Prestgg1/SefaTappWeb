@@ -20,7 +20,7 @@ const client = createClient<paths>({
 
     if (response.status === 401) {
       token.value = undefined
-      window.location.href = '/application/login'
+      navigateTo('/application/auth/login')
     }
     return response
   },
