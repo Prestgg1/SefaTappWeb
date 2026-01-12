@@ -49,7 +49,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const req = await client.GET('/doctor-categories')
+    const req = await client().GET('/doctor-categories')
     categories.value = req.data ?? []
   } catch (err) {
     console.error('Kategoriya yüklənmədi:', err)

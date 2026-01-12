@@ -158,7 +158,7 @@ const selectedTime = ref<string | null>(null)
 onMounted(async () => {
   try {
     loading.value = true
-    const res = await client.GET("/doctors/{doctorId}", {
+    const res = await client().GET("/doctors/{doctorId}", {
       params: { path: { doctorId: Number(route.params.id) } },
     })
     if (res.data) doctor.value = res.data
@@ -173,7 +173,7 @@ const submitReservation = async () => {
   if (selectedDate.value && selectedTime.value) {
     const dateStr = selectedDate.value.toISOString().split("T")[0]
     isLoading.value = true
-    const req = await client.POST("/appointments/{modelType}/{modelId}", {
+    const req = await client().POST("/appointments/{modelType}/{modelId}", {
       params: {
         path: {
           modelType: "doctor",

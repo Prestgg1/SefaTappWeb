@@ -65,7 +65,7 @@
   const updateFavoriteApi = useDebounce(async (favorited: boolean) => {
     try {
       if (favorited) {
-        await client.GET(`/favorites/{modelType}/{modelId}`, {
+        await client().GET(`/favorites/{modelType}/{modelId}`, {
           params: {
             path: {
               modelType: 'doctor',
@@ -74,7 +74,7 @@
           }
         })
       } else {
-        await client.DELETE(`/favorites/{modelType}/{modelId}`, {
+        await client().DELETE(`/favorites/{modelType}/{modelId}`, {
           params: {
             path: {
               modelType: 'doctor',

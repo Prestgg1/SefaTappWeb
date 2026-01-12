@@ -19,7 +19,7 @@
       const doctors = ref<any[]>([])
      const token = useCookie("token")
        onMounted(async ()=>{
-          const req = await client.GET("/api/favorites/doctor", {
+          const req = await client().GET("/favorites/doctor", {
            headers:{
             "Authorization": `Bearer ${token.value}`,
            } 

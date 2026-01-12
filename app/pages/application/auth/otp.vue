@@ -145,7 +145,7 @@ const verifyOTP = async () => {
         const otp = otpDigits.value.join('')
         console.log('Verifying OTP:', otp, 'for email:', email.value)
 
-        const req = await client.POST('/auth/check_otp', {
+        const req = await client().POST('/auth/check_otp', {
             body: {
                 email: email.value,
                 otp: otp
@@ -167,7 +167,7 @@ const resendOTP = async () => {
         isResending.value = true
         error.value = ''
 
-        const req = await client.POST('/auth/forgot_password', {
+        const req = await client().POST('/auth/forgot_password', {
             body: { email: email.value }
         })
 

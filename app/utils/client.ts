@@ -1,31 +1,38 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "../types/schema";
-/* 
-http://127.0.0.1:8000/api
-   "
-*/
-const client = createClient<paths>({
-  baseUrl: "https://api.safatapp.com/api",
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  },
-  async fetch(input) {
-    const token = useCookie("token");
-    if (token.value) {
-      input.headers.set('Authorization', `Bearer ${token.value}`)
-    }
+/* [nuxt] A composable that requires access to the Nuxt instance was called outside of a plugin, Nuxt hook, Nuxt middleware, or Vue setup function. This is probably not a Nuxt bug. Find out more at `https://nuxt.com/docs/4.x/guide/concepts/auto-imports#vue-and-nuxt-composables`. */
 
-    const response = await fetch(input)
+export const useApi = () => {
+  const config = useRuntimeConfig()
+  const token = useCookie("token")
 
-    if (response.status === 401) {
-      token.value = undefined
-      navigateTo('/application/auth/login')
+  const client = createClient<paths>({
+    baseUrl: config.public.API_BASE_URL,
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+  })
+
+  client.use({
+    onRequest({ request }) {
+      if (token.value) {
+        request.headers.set('Authorization', `Bearer ${token.value}`)
+      }
+    },
+    async onResponse({ response }) {
+      if (response.status === 401) {
+        token.value = null
+        
+        await navigateTo('/login')
+      }
     }
-    return response
-  },
-});
-export default client;
+  })
+
+  return client
+}
+
+export default useApi;
 export type ServerClient = typeof client;
 export type Doctors = paths['/doctors']['get']['responses']['200']['content']['application/json']
 export type Categories = paths['/doctor-categories']['get']['responses']['200']['content']['application/json']

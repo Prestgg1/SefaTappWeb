@@ -41,7 +41,7 @@
     if (specialization.value !== "Bütün ixtisaslar") query.category = specialization.value
     await navigateTo({ path: route.path, query }, { replace: true })
     try {
-      const { data } = await client.GET("/doctors", { params: { query } })
+      const { data } = await client().GET("/doctors", { params: { query } })
       doctors.value = data ?? []
     } catch {
       doctors.value = []

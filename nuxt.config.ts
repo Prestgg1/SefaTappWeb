@@ -6,6 +6,12 @@ export default defineNuxtConfig({
   experimental:{
     typedPages:true
   },
+  runtimeConfig:{
+    public:{
+      API_BASE_URL: process.env.API_BASE_URL,
+      WEB_SOCKET_URL: process.env.WEB_SOCKET_URL,
+    }
+  },
   nitro: {
     openAPI:{
       
@@ -23,6 +29,7 @@ export default defineNuxtConfig({
       openAPI: true,
     }
   },
+  
   ui:{
     fonts: false,
     colorMode: false,
@@ -33,7 +40,7 @@ export default defineNuxtConfig({
     },
     
   },
-
+  
   pinia:{
     storesDirs: [
       "stores",

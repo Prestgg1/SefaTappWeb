@@ -146,7 +146,7 @@ const schema = toTypedSchema(
 )
 
 async function submitForm(values: any) {
-  const req = await client.POST("/auth/register", {
+  const req = await client().POST("/auth/register", {
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",

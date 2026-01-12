@@ -99,7 +99,7 @@ const login = async () => {
   try {
     isLoading.value = true
     console.log('Login attempt:', email.value, password.value)
-    const { data } = await client.POST('/auth/login', { body: { email: email.value, password: password.value } })
+    const { data } = await client().POST('/auth/login', { body: { email: email.value, password: password.value } })
     token.value = data?.access_token
     user.value = data?.user ?? null
     router.replace('/application')

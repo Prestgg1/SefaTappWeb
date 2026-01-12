@@ -98,7 +98,7 @@
   const submitLogin = async () => {
     isLoading.value = true
     try {
-      const res = await client.POST('/auth/login', { body: form })
+      const res = await client().POST('/auth/login', { body: form })
       token.value = res.data?.access_token
       user.value = res.data?.user ?? null
       emit('close')

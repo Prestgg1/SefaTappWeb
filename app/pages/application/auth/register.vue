@@ -195,7 +195,7 @@ const schema = toTypedSchema(
 const register = async (values: any) => {
   try {
     isLoading.value = true
-    const req = await client.POST('/auth/register', {
+    const req = await client().POST('/auth/register', {
       body: {
         name: values.name, email: values.email, password: values.password,
         fin_code: values.fin, gender: values.gender, phone: values.phone, birthday: values.birthdate, city: values.city, region: values.district, street: values.address, address: values.address

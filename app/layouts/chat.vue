@@ -32,38 +32,38 @@ useHead({
   ],
 })
 
-
+const config = useRuntimeConfig()
 const mainStore = useMainStore()
 const isLoading = ref(true)
 onMounted(() => {
-  client.GET("/chats").then(res => {
+  client().GET("/chats").then(res => {
     console.log(res)
     isLoading.value = false
-    res.data!.forEach((chat: Chats[number]) => {
+   /*  res.data!.forEach((chat: Chats[number]) => {
       mainStore.addSidebarChat(chat)
       mainStore.addMessage(chat.chat_id, chat.messages)
-    })
+    }) */
     console.log(mainStore.sidebar_chats)
     console.log(mainStore.messages)
   })
 })
 const token = useCookie('token')
-
+/* Burada neden se envden oxumur */
 const chatSocket = useWebSocket(
-  'ws://api.safatapp.com/ws/chats?token=' + token.value
+  config.public.WEB_SOCKET_URL + '/chats?token=' + token.value
 )
 
 
 provide<UseWebSocketReturn>('chatSocket', chatSocket)
 
 
+/* ws://api.safatapp.com/ws */
 </script>
 
 <template>
   <div class="relative w-full min-h-screen flex flex-col bg-gray-50 transition-colors duration-300">
     <MainHeader />
 
-    <!-- Main area -->
     <div class="flex-1 flex min-h-0 font-display text-gray-300">
       <ClientOnly>
         <div class="flex flex-1 overflow-hidden min-h-0">

@@ -163,7 +163,8 @@
   async function fetchProfile() {
     loading.value = true;
     try {
-      const res = await client.GET("/api/user/profile");
+      /* BUG: Burasi tamamlanmasi lazim  */
+      const res = await client().GET("/PRO");
       if (res.data && res.response.status === 200) {
         profile.value = {
           image: res.data.user.image,
@@ -188,7 +189,7 @@
   async function saveProfile() {
     saving.value = true;
     try {
-      const res = await client.PUT("/api/user/profile", {
+      const res = await client().PUT("/api/user/profile", {
         body: {
           address: profile.value.address,
           city: profile.value.city,

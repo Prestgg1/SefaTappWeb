@@ -85,7 +85,7 @@ const resetPassword = async () => {
         isLoading.value = true
         console.log('Password reset request for:', email.value)
 
-        const req = await client.POST('/auth/forgot_password', {
+        const req = await client().POST('/auth/forgot_password', {
             body: { email: email.value }
         })
 

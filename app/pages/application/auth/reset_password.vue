@@ -174,7 +174,7 @@ const resetPassword = async () => {
 
         console.log('Resetting password with token:', token.value)
 
-        const req = await client.POST('/auth/reset_password', {
+        const req = await client().POST('/auth/reset_password', {
             body: {
                 email: email.value,
                 reset_token: token.value,

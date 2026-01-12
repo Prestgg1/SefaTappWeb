@@ -16,7 +16,7 @@ import {
     } else {
       if (token.value) {
         try {
-          const res = await client.GET("/auth/me", {
+          const res = await client().GET("/auth/me", {
             headers: {
               Authorization: `Bearer ${token.value}`,
             },
