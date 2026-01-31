@@ -94,15 +94,31 @@ const password = ref('')
 const user = useState<User | null>('user', () => null)
 const token = useCookie('token')
 const router = useRouter()
+const toast = useToast()
 
 const login = async () => {
   try {
     isLoading.value = true
     console.log('Login attempt:', email.value, password.value)
-    const { data } = await client().POST('/auth/login', { body: { email: email.value, password: password.value } })
-    token.value = data?.access_token
-    user.value = data?.user ?? null
-    router.replace('/application')
+    const req = await client().POST('/auth/login', { body: { email: email.value, password: password.value } })
+    if ( req.data && req.data.access_token ) {
+      token.value = req.data.access_token
+      user.value = req.data.user
+      router.replace('/application')
+      toast.add({
+        title: 'Daxil oldunuz',
+        type: 'background',
+        color: 'success'
+      })
+    }
+    else{
+      toast.add({
+        title: req.error?.message,
+        type: 'background',
+        color: 'error'
+      })
+    }
+    isLoading.value = false
   } catch (err) {
     console.error('Login failed:', err)
     isLoading.value = false
@@ -110,7 +126,7 @@ const login = async () => {
 }
 
 definePageMeta({
-  layout: 'main', // mövcud layout-unuzun adı
+  layout: 'main', 
 })
 </script>
 

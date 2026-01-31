@@ -110,7 +110,7 @@
   
   onMounted(async () => {
     try {
-      const req = await useServer().GET("/api/notifications")
+      const req = await client().GET("/notifications")
       notifications.value = req.data || []
     } catch (error) {
       // 401 üçün xüsusi yoxlama

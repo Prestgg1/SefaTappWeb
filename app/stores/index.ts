@@ -9,10 +9,10 @@ export const useMainStore = defineStore('main', {
       this.sidebar_chats.set(message.chat_id, {
         other_user_id: message.other_user_id,
         other_user_name: message.other_user_name,
-        other_user_image: message.other_user_image,
+        other_user_image: message.other_user_photo,
         last_message: message.messages[message.messages.length - 1]?.message,
-        last_message_date: message.last_message_date,
-        unread_count: message.unread_count,
+        last_message_date: message.messages[message.messages.length - 1]?.created_at,
+        unread_count: 0,
       })
     },
     addMessage(id: number, message: Chats[number]['messages']) {

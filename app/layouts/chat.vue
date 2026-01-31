@@ -39,23 +39,24 @@ onMounted(() => {
   client().GET("/chats").then(res => {
     console.log(res)
     isLoading.value = false
-   /*  res.data!.forEach((chat: Chats[number]) => {
+    res.data!.data.forEach((chat: Chats[number]) => {
       mainStore.addSidebarChat(chat)
       mainStore.addMessage(chat.chat_id, chat.messages)
-    }) */
+   })
+
     console.log(mainStore.sidebar_chats)
     console.log(mainStore.messages)
   })
 })
 const token = useCookie('token')
 /* Burada neden se envden oxumur */
-const chatSocket = useWebSocket(
+/* const chatSocket = useWebSocket(
   config.public.WEB_SOCKET_URL + '/chats?token=' + token.value
 )
 
 
 provide<UseWebSocketReturn>('chatSocket', chatSocket)
-
+ */
 
 /* ws://api.safatapp.com/ws */
 </script>

@@ -19,10 +19,9 @@
 
 <script setup lang="ts">
 import ChatMessage from '@/components/chat/ChatMessage.vue'
-import { onMounted, onUnmounted } from 'vue'
 const route = useRoute()
 const user = useState<User | null>('user', () => null)
-const {socket,isConnected,messages:socket_messages,send} = inject<UseWebSocketReturn>('chatSocket')!
+/* const {socket,isConnected,messages:socket_messages,send} = inject<UseWebSocketReturn>('chatSocket')!
 onMounted(() => {
   const handler = (event: MessageEvent) => {
     console.log(event)
@@ -35,7 +34,7 @@ onMounted(() => {
     socket.value?.removeEventListener('message', handler)
   })
 })
-
+ */
 definePageMeta({
     layout: 'chat',
 })

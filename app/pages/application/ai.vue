@@ -86,6 +86,7 @@
           'Salam! Mən ŞefaTapp AI sağlamlıq asistanıyam. Sizə necə kömək edə bilərəm? Məsələn, “Başım ağrıyır” və ya “Bakıda kardioloq tap” kimi suallar verə bilərsiniz.'
       }
     ]
+    
   })
   
   // Handle sending messages

@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/admin/admin": {
+    "/admin": {
         parameters: {
             query?: never;
             header?: never;
@@ -22,7 +22,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/admin/{admin}": {
+    "/admin/{admin}": {
         parameters: {
             query?: never;
             header?: never;
@@ -109,7 +109,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/appointments/accept/{appointmentId}": {
+    "/appointments/accept/{appointment}": {
         parameters: {
             query?: never;
             header?: never;
@@ -355,10 +355,27 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** İstifadəçinin bütün chat-larını gətirir */
-        get: operations["chat.getUserChats"];
+        /** User-in bütün chatlarını gətir */
+        get: operations["chat.index"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chats/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Yeni mesaj göndər */
+        post: operations["chat.sendMessage"];
         delete?: never;
         options?: never;
         head?: never;
@@ -885,6 +902,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/profile/customer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get customer profile */
+        get: operations["profile.getCustomerProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/profile/doctor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get doctor profile with statistics */
+        get: operations["profile.getDoctorProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user notifications */
+        get: operations["profile.getNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notifications/mark-as-read/{notificationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark a notification as read */
+        post: operations["profile.markNotificationAsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/reviews": {
         parameters: {
             query?: never;
@@ -1028,9 +1113,27 @@ export interface components {
         CancelAppointmentRequest: {
             reason: string;
         };
+        /** ChatMessage */
+        ChatMessage: {
+            id: number;
+            chat_id: number;
+            sender_id: number;
+            message: string;
+            type: components["schemas"]["MessageEnum"];
+            is_read: boolean;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         /** ChatsResource */
         ChatsResource: {
-            chat_id: string;
+            chat_id: number;
+            other_user_id: string;
+            other_user_name: string;
+            other_user_photo: string;
+            messages: components["schemas"]["MessageResource"][];
+            is_closed: boolean;
         };
         /** ClinicAdminResource */
         ClinicAdminResource: {
@@ -1152,6 +1255,24 @@ export interface components {
             price: number;
             image?: string | null;
         };
+        /** Customer */
+        Customer: {
+            id: number;
+            user_id: number;
+            fin_code: string;
+            gender: string;
+            phone: string;
+            /** Format: date-time */
+            birthday: string;
+            city: string;
+            region: string;
+            street: string;
+            address: string;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         /** CustomerResource */
         CustomerResource: {
             id: number;
@@ -1269,6 +1390,21 @@ export interface components {
             email: string;
             password: string;
         };
+        /**
+         * MessageEnum
+         * @enum {string}
+         */
+        MessageEnum: "text" | "image" | "video";
+        /** MessageResource */
+        MessageResource: {
+            id: string;
+            sender_id: string;
+            message: string;
+            type: string;
+            attachments: string;
+            is_read: string;
+            created_at: string;
+        };
         /** PharmacyDetailResource */
         PharmacyDetailResource: {
             id: string;
@@ -1368,6 +1504,27 @@ export interface components {
             author?: components["schemas"]["UserResource"];
             created_at: string;
         };
+        /** SendMessageRequest */
+        SendMessageRequest: {
+            message: string;
+            /** @enum {string|null} */
+            type?: "text" | "image" | "file" | null;
+            attachments?: string[] | null;
+        };
+        /** Stat */
+        Stat: {
+            id: number;
+            model_type: string;
+            model_id: number;
+            average_rating: number;
+            total_reviews: number;
+            work_experience: number;
+            patient_count: number;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         /** StoreAdminRequest */
         StoreAdminRequest: {
             name: string;
@@ -1442,6 +1599,21 @@ export interface components {
             rating: number;
             review?: string | null;
         };
+        /** User */
+        User: {
+            id: number;
+            name: string;
+            email: string;
+            role: components["schemas"]["UserRole"];
+            /** Format: date-time */
+            email_verified_at: string | null;
+            image: string | null;
+            status: boolean;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         /** UserResource */
         UserResource: {
             id: number;
@@ -1484,8 +1656,8 @@ export interface components {
                 };
             };
         };
-        /** @description Not found */
-        ModelNotFoundException: {
+        /** @description Authorization error */
+        AuthorizationException: {
             headers: {
                 [name: string]: unknown;
             };
@@ -1496,8 +1668,8 @@ export interface components {
                 };
             };
         };
-        /** @description Authorization error */
-        AuthorizationException: {
+        /** @description Not found */
+        ModelNotFoundException: {
             headers: {
                 [name: string]: unknown;
             };
@@ -1692,9 +1864,6 @@ export interface operations {
                 content: {
                     "application/json": {
                         message: string;
-                    } | {
-                        /** @enum {string} */
-                        message: "Appointment tapılmadı";
                     };
                 };
             };
@@ -1807,9 +1976,6 @@ export interface operations {
                 content: {
                     "application/json": {
                         message: string;
-                    } | {
-                        /** @enum {string} */
-                        message: "Appointment tapılmadı";
                     };
                 };
             };
@@ -1820,7 +1986,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                appointmentId: number;
+                /** @description The appointment ID */
+                appointment: number;
             };
             cookie?: never;
         };
@@ -1838,27 +2005,7 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Appointment tapılmadı";
-                    };
-                };
-            };
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message: string;
-                    };
-                };
-            };
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "appointment.completeAppointment": {
@@ -1866,7 +2013,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                appointmentId: number;
+                appointmentId: string;
             };
             cookie?: never;
         };
@@ -1884,17 +2031,6 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Appointment tapılmadı";
-                    };
-                };
-            };
             500: {
                 headers: {
                     [name: string]: unknown;
@@ -2035,7 +2171,7 @@ export interface operations {
                 "application/json": {
                     /** Format: email */
                     email: string;
-                    otp: string;
+                    otp: number;
                 };
             };
         };
@@ -2315,7 +2451,7 @@ export interface operations {
             422: components["responses"]["ValidationException"];
         };
     };
-    "chat.getUserChats": {
+    "chat.index": {
         parameters: {
             query?: never;
             header?: never;
@@ -2336,6 +2472,37 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "chat.sendMessage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendMessageRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: components["schemas"]["ChatMessage"];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
         };
     };
     "clinic.index": {
@@ -3602,6 +3769,125 @@ export interface operations {
                     "application/json": {
                         /** @enum {string} */
                         message: "Product tapılmadı";
+                    };
+                };
+            };
+        };
+    };
+    "profile.getCustomerProfile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        user: components["schemas"]["User"];
+                        profile: components["schemas"]["Customer"] | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "profile.getDoctorProfile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        user: components["schemas"]["User"];
+                        profile: string;
+                        stats: components["schemas"]["Stat"] | null;
+                        today_rezervations: number;
+                        pending_rezervations: number;
+                        completed_rezervations: number;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Həkim profili tapılmadı";
+                    };
+                };
+            };
+        };
+    };
+    "profile.getNotifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        notifications: Record<string, never>[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "profile.markNotificationAsRead": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notificationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Bildiriş oxunmuş kimi qeyd edildi";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Bildiriş tapılmadı";
                     };
                 };
             };

@@ -164,19 +164,19 @@
     loading.value = true;
     try {
       /* BUG: Burasi tamamlanmasi lazim  */
-      const res = await client().GET("/PRO");
+      const res = await client().GET("/profile/customer");
       if (res.data && res.response.status === 200) {
         profile.value = {
           image: res.data.user.image,
           name: res.data.user.name,
-          fin: res.data.details.finCode,
-          gender: res.data.details.gender,
-          birthDate: res.data.details.birthday,
+          fin: res.data.profile?.fin_code,
+          gender: res.data.profile?.gender,
+          birthDate: res.data.profile?.birthday,
           email: res.data.user.email,
-          phone: res.data.details.phone,
-          city: res.data.details.city,
-          region: res.data.details.region,
-          address: res.data.details.address,
+          phone: res.data.profile?.phone,
+          city: res.data.profile?.city,
+          region: res.data.profile?.region,
+          address: res.data.profile?.address,
         };
       }
     } catch (err) {

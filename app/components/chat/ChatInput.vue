@@ -20,26 +20,39 @@
 <script setup lang="ts">
 import { ref, inject } from 'vue'
 import { useMainStore } from '~/stores'
-import type { UseWebSocketReturn } from '~/composables/useWebSocket'
-const socket = inject<UseWebSocketReturn>('chatSocket')
+/* import type { UseWebSocketReturn } from '~/composables/useWebSocket'
+const socket = inject<UseWebSocketReturn>('chatSocket') */
 const message = ref<string>('')
 const user = useState<User | null>('user', () => null)
 const router = useRoute()
 const mainStore = useMainStore()
+const id = ref<number>(Number(router.params.id))
 const submitMessage = async () => {
     if (message.value && user.value) {
-        mainStore.appendMessage(Number(router.params.id),{
-            id: Date.now(),
+        mainStore.appendMessage(id.value,{
+            id: String(Date.now()),
             message: message.value,
             sender_id: user.value.id,
             created_at: new Date().toISOString(),
         })
-         socket?.send({
+        const req = await client().POST("/chats/{chatId}",{
+            params:{
+               path:{
+                chatId:id.value
+               }
+            },
+            body:{
+                message:message.value,
+                type:"text",
+            }
+        })
+        console.log(req)
+        /*  socket?.send({
             "type": "message",
             "message": message.value,
             "message_type": "text",
             "chat_id": router.params.id
-        }) 
+        })  */
         message.value = ''
     }
 }

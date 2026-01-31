@@ -44,6 +44,7 @@
     try {
       const req = await client().GET('/doctors')
       doctors.value = (req.data ?? []) as Doctors
+      console.log(doctors.value)
     } catch (error) {
       console.error(error)
     } finally {

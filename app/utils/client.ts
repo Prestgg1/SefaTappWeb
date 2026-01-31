@@ -11,6 +11,7 @@ export const useApi = () => {
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
+      "Authorization": `Bearer ${token.value}`
     },
   })
 
@@ -24,7 +25,7 @@ export const useApi = () => {
       if (response.status === 401) {
         token.value = null
         
-        await navigateTo('/login')
+        await navigateTo('/application/auth/login')
       }
     }
   })
@@ -38,5 +39,5 @@ export type Doctors = paths['/doctors']['get']['responses']['200']['content']['a
 export type Categories = paths['/doctor-categories']['get']['responses']['200']['content']['application/json']
 export type Reviews = paths['/reviews/{model}/{modelId}']['get']['responses']['200']['content']['application/json']
 export type User = components['schemas']['UserResource']
-export type Chats = paths['/chats']['get']['responses']['200']['content']['application/json']
+export type Chats = paths['/chats']['get']['responses']['200']['content']['application/json']['data']
 

@@ -21,7 +21,7 @@
               </button>
             </div>
   
-            <div class="text-center sm:text-left flex-grow">
+            <div class="text-center sm:text-left grow">
               <h2 class="text-2xl font-bold text-gray-900">Aydan Əliyeva</h2>
               <p class="text-md text-gray-500 mt-1">aydan.aliyeva@example.com</p>
   
@@ -103,9 +103,3 @@
       </div>
     </div>
   </template>
-  
-  <script setup lang="ts">
-  // No dynamic logic needed yet.
-  // In the future, you can fetch user data from Pinia or useAsyncData.
-  </script>
-  
