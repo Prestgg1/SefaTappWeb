@@ -92,7 +92,7 @@ const email = ref('')
 const isLoading = ref(false)
 const password = ref('')
 const user = useState<User | null>('user', () => null)
-const token = useCookie('token')
+
 const router = useRouter()
 const toast = useToast()
 
@@ -100,10 +100,10 @@ const login = async () => {
   try {
     isLoading.value = true
     console.log('Login attempt:', email.value, password.value)
-    const req = await client().POST('/auth/login', { body: { email: email.value, password: password.value } })
-    if ( req.data && req.data.access_token ) {
-      token.value = req.data.access_token
-      user.value = req.data.user
+
+    const req = await client().POST('/auth/login', { body: { email: email.value, password: password.value } }) 
+    if ( req.data ) {
+     user.value = req.data.user
       router.replace('/application')
       toast.add({
         title: 'Daxil oldunuz',
@@ -117,7 +117,7 @@ const login = async () => {
         type: 'background',
         color: 'error'
       })
-    }
+    } 
     isLoading.value = false
   } catch (err) {
     console.error('Login failed:', err)

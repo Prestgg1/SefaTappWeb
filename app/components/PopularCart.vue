@@ -37,13 +37,13 @@
   import type { Doctors } from '~/utils/client'
   import client from '~/utils/client'
   
-  const doctors = ref<Doctors>([])
+  const doctors = ref<Doctors['data']>([])
   const loading = ref(true)
   
   onMounted(async () => {
     try {
       const req = await client().GET('/doctors')
-      doctors.value = (req.data ?? []) as Doctors
+      doctors.value = (req.data?.data ?? [])
       console.log(doctors.value)
     } catch (error) {
       console.error(error)

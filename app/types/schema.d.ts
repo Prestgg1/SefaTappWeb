@@ -338,14 +338,14 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        /** Update the specified blog */
+        put: operations["blog.update"];
         post?: never;
         /** Remove the specified blog */
         delete: operations["blog.destroy"];
         options?: never;
         head?: never;
-        /** Update the specified blog */
-        patch: operations["blog.update"];
+        patch?: never;
         trace?: never;
     };
     "/chats": {
@@ -607,7 +607,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/doctor-categories/{slug}": {
+    "/doctor-categories/{doctorCategory}": {
         parameters: {
             query?: never;
             header?: never;
@@ -642,24 +642,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/doctor-categories/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** Admin: Kateqoriya yenilə */
-        patch: operations["doctorCategory.update"];
-        trace?: never;
-    };
-    "/admin/doctor-categories/{id}": {
+    "/admin/doctor-categories/{doctorCategory}": {
         parameters: {
             query?: never;
             header?: never;
@@ -673,7 +656,8 @@ export interface paths {
         delete: operations["doctorCategory.destroy"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Admin: Kateqoriya yenilə */
+        patch: operations["doctorCategory.update"];
         trace?: never;
     };
     "/favorites/doctor": {
@@ -2396,31 +2380,6 @@ export interface operations {
             422: components["responses"]["ValidationException"];
         };
     };
-    "blog.destroy": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Blog uğurla silindi";
-                    };
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-        };
-    };
     "blog.update": {
         parameters: {
             query?: never;
@@ -2449,6 +2408,31 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "blog.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Blog uğurla silindi";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "chat.index": {
@@ -2877,7 +2861,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorListResource"][];
+                    "application/json": {
+                        data: components["schemas"]["DoctorListResource"][];
+                    };
                 };
             };
         };
@@ -3019,7 +3005,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorCategoryListResource"][];
+                    "application/json": {
+                        data: components["schemas"]["DoctorCategoryListResource"][];
+                    };
                 };
             };
         };
@@ -3041,7 +3029,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorCategoryListResource"][];
+                    "application/json": {
+                        data: components["schemas"]["DoctorCategoryListResource"][];
+                    };
                 };
             };
         };
@@ -3051,7 +3041,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                slug: string;
+                /** @description The doctor category slug */
+                doctorCategory: string;
             };
             cookie?: never;
         };
@@ -3063,20 +3054,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorCategoryResource"];
-                };
-            };
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor Category not found";
+                        data: components["schemas"]["DoctorCategoryResource"];
                     };
                 };
             };
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "doctorCategory.adminIndex": {
@@ -3094,7 +3077,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorCategoryResource"][];
+                    "application/json": {
+                        data: components["schemas"]["DoctorCategoryResource"][];
+                    };
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -3119,11 +3104,36 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorCategoryResource"];
+                    "application/json": {
+                        data: components["schemas"]["DoctorCategoryResource"];
+                    };
                 };
             };
             401: components["responses"]["AuthenticationException"];
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "doctorCategory.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The doctor category slug */
+                doctorCategory: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "doctorCategory.update": {
@@ -3131,7 +3141,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                slug: string;
+                /** @description The doctor category slug */
+                doctorCategory: string;
             };
             cookie?: never;
         };
@@ -3142,63 +3153,19 @@ export interface operations {
         };
         responses: {
             /** @description `DoctorCategoryResource` */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DoctorCategoryResource"];
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-            404: {
+            202: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor Category not found";
+                        data: components["schemas"]["DoctorCategoryResource"];
                     };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
-        };
-    };
-    "doctorCategory.destroy": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor Category deleted successfully";
-                    };
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor Category not found";
-                    };
-                };
-            };
         };
     };
     "favorite.getDoctorFavorites": {
@@ -3850,7 +3817,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        notifications: Record<string, never>[];
+                        notifications: string;
                     };
                 };
             };

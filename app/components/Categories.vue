@@ -44,13 +44,13 @@ import { ref, onMounted } from 'vue'
 import client, { type Categories } from '~/utils/client'
 
 
-const categories = ref<Categories>([])
+const categories = ref<Categories['data']>([])
 const loading = ref(true)
 
 onMounted(async () => {
   try {
     const req = await client().GET('/doctor-categories')
-    categories.value = req.data ?? []
+    categories.value = req.data?.data ?? []
   } catch (err) {
     console.error('Kategoriya yüklənmədi:', err)
     categories.value = []

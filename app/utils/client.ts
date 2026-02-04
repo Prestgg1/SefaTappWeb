@@ -11,16 +11,11 @@ export const useApi = () => {
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": `Bearer ${token.value}`
     },
+    credentials: 'include'
   })
 
-  client.use({
-    onRequest({ request }) {
-      if (token.value) {
-        request.headers.set('Authorization', `Bearer ${token.value}`)
-      }
-    },
+/*   client.use({
     async onResponse({ response }) {
       if (response.status === 401) {
         token.value = null
@@ -28,7 +23,7 @@ export const useApi = () => {
         await navigateTo('/application/auth/login')
       }
     }
-  })
+  }) */
 
   return client
 }

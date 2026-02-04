@@ -56,10 +56,10 @@
   import type { Doctors } from '~/utils/client'
   import useDebounce from '~/composables/useDebounce'
   
-  type Doctor = Doctors extends (infer T)[] ? T : never
+  type Doctor = Doctors['data'][number]
   const props = defineProps<{ doctor: Doctor }>()
   
-  const isFavorite = ref<boolean>(props.doctor.has_favorited)
+  const isFavorite = ref<boolean>(Boolean(props.doctor.has_favorited))
   
   
   const updateFavoriteApi = useDebounce(async (favorited: boolean) => {
