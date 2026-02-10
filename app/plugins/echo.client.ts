@@ -25,7 +25,7 @@ export default defineNuxtPlugin(() => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                   },
-                  credentials: 'include', // Cookie'leri gönder
+                  credentials: 'include',
                   body: JSON.stringify({
                     socket_id: socketId,
                     channel_name: channel.name,

@@ -129,13 +129,3 @@ definePageMeta({
   layout: 'main', 
 })
 </script>
-
-<style scoped>
-.bg-primary {
-  background-color: #226d63;
-}
-
-.text-primary {
-  color: #226d63;
-}
-</style>

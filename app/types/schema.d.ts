@@ -75,7 +75,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/appointments/{appointmentId}": {
+    "/appointments/cancel/{appointmentId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -256,6 +256,23 @@ export interface paths {
         put?: never;
         /** Logout user */
         post: operations["auth.logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Logout All User */
+        post: operations["auth.logoutAll"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1036,16 +1053,6 @@ export interface components {
             /** Format: date-time */
             updated_at: string | null;
         };
-        /** AppointmentBaseResource */
-        AppointmentBaseResource: {
-            full_name: string;
-            phone: string;
-            fin_code: string;
-            complaint: string;
-            date: string;
-            created_at: string;
-            model_type: string;
-        };
         /** AppointmentCustomerResource */
         AppointmentCustomerResource: {
             id: string;
@@ -1071,9 +1078,12 @@ export interface components {
                 id: string;
                 title: string;
             };
+            status: string;
+            complaint: string;
             has_favorited: boolean;
             average_rating: number;
             date: string;
+            created_at: string;
         };
         /**
          * AppointmentModelTypeEnum
@@ -1837,20 +1847,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AppointmentDoctorResource"][];
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
-                        message: string;
+                        data: components["schemas"]["AppointmentDoctorResource"][];
                     };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "appointment.createAppointment": {
@@ -1870,13 +1872,15 @@ export interface operations {
             };
         };
         responses: {
-            /** @description `AppointmentBaseResource` */
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AppointmentBaseResource"];
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Appointment created";
+                    };
                 };
             };
             400: {
@@ -1885,7 +1889,8 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        message: string;
+                        /** @enum {string} */
+                        message: "Mövcud bir appointment var";
                     };
                 };
             };
@@ -1899,7 +1904,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                appointmentId: number;
+                appointmentId: string;
             };
             cookie?: never;
         };
@@ -1916,21 +1921,12 @@ export interface operations {
                 content: {
                     "application/json": {
                         /** @enum {string} */
-                        message: "Appointment cancelled";
+                        message: "Appointment ləğv edildi";
                     };
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message: string;
-                    };
-                };
-            };
+            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
         };
     };
@@ -1949,20 +1945,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AppointmentCustomerResource"][];
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
-                        message: string;
+                        data: components["schemas"]["AppointmentCustomerResource"][];
                     };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "appointment.acceptAppointment": {
@@ -2015,16 +2003,6 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message: string;
-                    };
-                };
-            };
         };
     };
     login: {
@@ -2047,23 +2025,10 @@ export interface operations {
                 content: {
                     "application/json": {
                         user: components["schemas"]["UserResource"];
-                        access_token: string;
                     };
                 };
             };
             422: components["responses"]["ValidationException"];
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Giriş zamanı xəta baş verdi";
-                        error: string | "Server xətası";
-                    };
-                };
-            };
         };
     };
     register: {
@@ -2270,6 +2235,29 @@ export interface operations {
                     "application/json": {
                         /** @enum {string} */
                         message: "Uğurla çıxış edildi";
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+        };
+    };
+    "auth.logoutAll": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        message: "Bütün cihazlardan çıxış edildi";
                     };
                 };
             };

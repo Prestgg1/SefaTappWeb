@@ -13,7 +13,8 @@
       <nav class="hidden md:flex items-center gap-6">
         <NuxtLink to="/application/doctors" class="nav-link">Həkimlər</NuxtLink>
         <NuxtLink to="/application/ai" class="nav-link">AI Dəstək</NuxtLink>
-        <NuxtLink to="/application/reservations" class="nav-link">Rezervasiyalar</NuxtLink>
+        <NuxtLink to="/application/chats" class="nav-link">Söhbət</NuxtLink>
+        <NuxtLink to="/application/appointments" class="nav-link">Rezervasiyalar</NuxtLink>
       </nav>
 
       <!-- Actions -->

@@ -42,7 +42,7 @@
     await navigateTo({ path: route.path, query }, { replace: true })
     try {
       const { data } = await client().GET("/doctors", { params: { query } })
-      doctors.value = data ?? []
+      doctors.value = data?.data ?? []
     } catch {
       doctors.value = []
     } finally {
