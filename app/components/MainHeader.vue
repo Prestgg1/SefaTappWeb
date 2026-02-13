@@ -53,7 +53,6 @@ import Logo from './Logo.vue';
 
 const emit = defineEmits<{ close: [boolean] }>()
 const isOpenLogin = ref(false)
-const token = useCookie("token")
 const isOpen = ref(false)
 const user = useState<User | null>("user", () => null)
 const items = [
@@ -67,8 +66,9 @@ const items = [
     icon: 'mdi:logout',
     onClick: () => {
       emit('close', false)
-      user.value = null
-      token.value = null
+      client().GET('/auth/logout').then(() => {
+        user.value = null
+      })
     }
   }
 ]

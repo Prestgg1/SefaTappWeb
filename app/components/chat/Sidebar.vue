@@ -24,7 +24,7 @@
         <NuxtLink
           v-for="([id, chat]) in lists"
           :key="id"
-          :to="`/application/reservations/${id}`"
+          :to="`/application/chats/${id}`"
           class="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 transition-colors"
           :active-class="'bg-primary/10 dark:bg-primary/20 border-l-4 border-primary'"
         >

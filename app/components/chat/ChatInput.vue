@@ -18,23 +18,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue'
-import { useMainStore } from '~/stores'
-/* import type { UseWebSocketReturn } from '~/composables/useWebSocket'
-const socket = inject<UseWebSocketReturn>('chatSocket') */
+import { ref } from 'vue'
 const message = ref<string>('')
 const user = useState<User | null>('user', () => null)
 const router = useRoute()
-const mainStore = useMainStore()
 const id = ref<number>(Number(router.params.id))
 const submitMessage = async () => {
     if (message.value && user.value) {
-        mainStore.appendMessage(id.value,{
-            id: String(Date.now()),
-            message: message.value,
-            sender_id: user.value.id,
-            created_at: new Date().toISOString(),
-        })
+     
         const req = await client().POST("/chats/{chatId}",{
             params:{
                path:{
@@ -47,12 +38,7 @@ const submitMessage = async () => {
             }
         })
         console.log(req)
-        /*  socket?.send({
-            "type": "message",
-            "message": message.value,
-            "message_type": "text",
-            "chat_id": router.params.id
-        })  */
+   
         message.value = ''
     }
 }

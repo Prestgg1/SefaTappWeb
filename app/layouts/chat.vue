@@ -48,7 +48,54 @@ onMounted(() => {
     console.log(mainStore.messages)
   })
 })
-const token = useCookie('token')
+
+
+const { $echo } = useNuxtApp();
+
+const user = useState<User | null>('user', () => null);
+
+onMounted(() => {
+  if (!user.value) {
+    console.error('User not authenticated');
+    return;
+  }
+
+  console.log('Attempting to subscribe to private channel...');
+  
+  $echo.join(`chat.1`)
+    .listen('.message.sent', (e: any) => {
+      mainStore.appendMessage(e.chat_id, {
+        id: String(Date.now()),
+        sender_id: e.sender_id,
+        message: e.message,
+        type: e.type,
+        attachments: "",
+        is_read: e.is_read,
+        created_at: e.created_at,
+      })
+      console.log('✅ Private channel event received:', e);
+    })
+    .error((error: any) => {
+      console.error('❌ Channel subscription error:', error);
+    });
+  
+  // Connection events
+  $echo.connector.pusher.connection.bind('connected', () => {
+    console.log('✅ WebSocket connected');
+  });
+  
+  $echo.connector.pusher.connection.bind('error', (err: any) => {
+    console.error('❌ WebSocket connection error:', err);
+  });
+});
+
+onUnmounted(() => {
+  if (user.value?.id) {
+    $echo.leave(`chat.1`);
+  }
+});
+
+
 /* Burada neden se envden oxumur */
 /* const chatSocket = useWebSocket(
   config.public.WEB_SOCKET_URL + '/chats?token=' + token.value
