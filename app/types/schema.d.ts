@@ -252,10 +252,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Logout user */
-        post: operations["auth.logout"];
+        get: operations["auth.logout"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -269,10 +269,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
         /** Logout All User */
-        post: operations["auth.logoutAll"];
+        get: operations["auth.logoutAll"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -486,7 +486,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/customers/{customerId}": {
+    "/admin/customers/{customer}": {
         parameters: {
             query?: never;
             header?: never;
@@ -522,7 +522,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/doctors/{doctorId}": {
+    "/doctors/{slug}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1056,6 +1056,7 @@ export interface components {
         /** AppointmentCustomerResource */
         AppointmentCustomerResource: {
             id: string;
+            /** @description Burada id null gelir her defesinde */
             full_name: string;
             phone: string;
             image: string | "";
@@ -1883,17 +1884,6 @@ export interface operations {
                     };
                 };
             };
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Mövcud bir appointment var";
-                    };
-                };
-            };
             401: components["responses"]["AuthenticationException"];
             404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
@@ -1904,7 +1894,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                appointmentId: string;
+                appointmentId: number;
             };
             cookie?: never;
         };
@@ -2025,6 +2015,7 @@ export interface operations {
                 content: {
                     "application/json": {
                         user: components["schemas"]["UserResource"];
+                        access_token: string;
                     };
                 };
             };
@@ -2495,7 +2486,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClinicListResource"][];
+                    "application/json": {
+                        data: components["schemas"]["ClinicListResource"][];
+                    };
                 };
             };
         };
@@ -2517,7 +2510,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClinicDetailResource"];
+                    "application/json": {
+                        data: components["schemas"]["ClinicDetailResource"];
+                    };
                 };
             };
             404: {
@@ -2551,7 +2546,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClinicAdminResource"][];
+                    "application/json": {
+                        data: components["schemas"]["ClinicAdminResource"][];
+                    };
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -2698,7 +2695,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                customerId: number;
+                /** @description The customer ID */
+                customer: number;
             };
             cookie?: never;
         };
@@ -2716,17 +2714,7 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Müştəri tapılmadı";
-                    };
-                };
-            };
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "customer.update": {
@@ -2734,7 +2722,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                customerId: number;
+                /** @description The customer ID */
+                customer: number;
             };
             cookie?: never;
         };
@@ -2756,30 +2745,8 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Müştəri tapılmadı";
-                    };
-                };
-            };
+            404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Müştəri yenilənərkən xəta baş verdi";
-                        error: string;
-                    };
-                };
-            };
         };
     };
     "customer.destroy": {
@@ -2787,7 +2754,8 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                customerId: number;
+                /** @description The customer ID */
+                customer: number;
             };
             cookie?: never;
         };
@@ -2805,29 +2773,7 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Müştəri tapılmadı";
-                    };
-                };
-            };
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Müştəri silinərkən xəta baş verdi";
-                        error: string;
-                    };
-                };
-            };
+            404: components["responses"]["ModelNotFoundException"];
         };
     };
     "doctor.index": {
@@ -2861,7 +2807,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                doctorId: number;
+                slug: string;
             };
             cookie?: never;
         };
@@ -2873,17 +2819,8 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorDetailResource"];
-                };
-            };
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor not found";
+                        data: components["schemas"]["DoctorDetailResource"];
                     };
                 };
             };
@@ -2904,7 +2841,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorAdminResource"][];
+                    "application/json": {
+                        data: components["schemas"]["DoctorAdminResource"][];
+                    };
                 };
             };
             401: components["responses"]["AuthenticationException"];
@@ -2931,8 +2870,6 @@ export interface operations {
                     "application/json": {
                         /** @enum {string} */
                         message: "Doctor registered successfully";
-                        /** @enum {integer} */
-                        status_code: 200;
                     };
                 };
             };
@@ -2945,7 +2882,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                doctorId: number;
+                doctorId: string;
             };
             cookie?: never;
         };
@@ -2959,23 +2896,10 @@ export interface operations {
                     "application/json": {
                         /** @enum {string} */
                         content: "Doctor deleted successfully";
-                        /** @enum {integer} */
-                        status_code: 200;
                     };
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        message: "Doctor not found";
-                    };
-                };
-            };
         };
     };
     "doctorCategory.index": {
@@ -3171,20 +3095,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DoctorFavoriteResource"][];
-                };
-            };
-            401: components["responses"]["AuthenticationException"];
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
-                        message: string;
+                        data: components["schemas"]["DoctorFavoriteResource"][];
                     };
                 };
             };
+            401: components["responses"]["AuthenticationException"];
         };
     };
     "favorite.getPharmacyFavorites": {
@@ -3745,7 +3661,7 @@ export interface operations {
                 content: {
                     "application/json": {
                         user: components["schemas"]["User"];
-                        profile: components["schemas"]["Customer"] | null;
+                        profile: components["schemas"]["Customer"];
                     };
                 };
             };
