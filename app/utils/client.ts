@@ -1,10 +1,8 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "../types/schema";
-/* [nuxt] A composable that requires access to the Nuxt instance was called outside of a plugin, Nuxt hook, Nuxt middleware, or Vue setup function. This is probably not a Nuxt bug. Find out more at `https://nuxt.com/docs/4.x/guide/concepts/auto-imports#vue-and-nuxt-composables`. */
 
 export const useApi = () => {
   const config = useRuntimeConfig()
-  const token = useCookie("token")
 
   const client = createClient<paths>({
     baseUrl: config.public.API_BASE_URL,
