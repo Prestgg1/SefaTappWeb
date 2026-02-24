@@ -16,11 +16,9 @@ export const useMainStore = defineStore('main', {
       })
     },
     addMessage(id: number, message: Chats[number]['messages']) {
-      // Set/replace the entire messages array for a chat
       this.messages.set(id, message)
     },
     appendMessage(id: number, message: Chats[number]['messages'][number]) {
-      // Append a single message to the chat's message list
       const existing = this.messages.get(id) as Chats[number]['messages'] | undefined
       if (existing) {
         existing.push(message)

@@ -12,8 +12,6 @@ export const useApi = () => {
     },
     credentials: 'include'
   })
-
-
   return client
 }
 
